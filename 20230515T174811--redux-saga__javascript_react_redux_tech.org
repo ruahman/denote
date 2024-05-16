@@ -1,0 +1,96 @@
+#+title:      redux-saga
+#+date:       [2023-05-15 Mon 17:48]
+#+filetags:   :javascript:react:redux:tech:
+#+identifier: 20230515T174811
+
+cool middlewhere for redux that allows you to handle sync operations
+
+competition for redux-thunk
+
+by default redux is syncronus. it does not handle async.
+
+make api calls
+
+async operaton such as API calls
+
+generator functions???
+
+it allows you to send actions normally.
+
+the flow works like this.
+1. you dispatch and action
+2. the watcher catches the acction
+3. the watcher calls the handler, which handles the async calls and dispatches to the reducer.
+
+
+== watcher ==
+
+you have a watcher.
+that watches for certain actions to be dispatched.
+
+it catches the action and stopes it from going through to the reducer.
+
+it then executes the async tasks.
+
+once it returns then it will dispatch another action that will go directly to the reducer.
+
+== install ==
+
+#+begin_src bash
+  yarn redux-saga
+#+end_src
+
+== setup ==
+
+first import it
+#+begin_src typescript
+  import createSagaMiddleware from 'redux-saga';
+#+end_src
+
+then create the middleware
+#+begin_src typescript
+  const sagaMiddleware = createSagaMiddleware();
+#+end_src
+
+then pass it in when we create the redux store
+#+begin_src typescript
+  import { createStore, applyMiddleware } form 'redux';
+
+  const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+
+#+end_src
+
+then pass your sagas
+#+begin_src typescript
+  import { watchActions } from "./sagas/saga.ts";
+  
+  sagaMiddleware.run(watchActions)
+#+end_src
+
+== create a sagas file ==
+
+when you dispatch an action you need something to catch it.
+that is what the watcher is for.
+
+saga.ts
+#+begin_src typescript
+  import { delay } from 'redux-saga';
+  import { takeEvery, takeLatest, put, call } from 'redux-saga/effects'
+
+  function usersFetch(){
+      return fetch('https://www.my-api.com/users').then(response => response.json());
+  }
+
+  function* ageUpAsync(){
+      const users = yield call(usersFetch); // this calls and api and waits
+      yield delay(4000);  // delay for 4 seconds.
+      yield put({type: 'AGE_UP', value: 1}) // this is the same as dispatch
+  }
+
+  export function* watchActions(){
+      //yield takeEvery('AGE_UP_ASYNC', ageUpAsync); // take every 'AGE_UP' actions that gets dispatched.
+      yield takeLatest('AGE_UP_ASYNC', ageUpAsync);  // this takes the latest. cancle the actions that did not complete yet. if any did not complete yet, it replaces it
+  }
+#+end_src
+ * this is a generator function, which pauses each time it hits a yield command.
+   and wont start till the function is called again.  this is good for handling async

@@ -1,0 +1,6 @@
+#+title:      rust
+#+date:       [2023-05-11 Thu 22:04]
+#+filetags:   :tech:
+#+identifier: 20230511T220435
+
+1. [[denote:20230511T214233][getting started]]

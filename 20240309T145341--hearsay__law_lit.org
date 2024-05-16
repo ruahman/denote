@@ -1,0 +1,9 @@
+#+title:      hearsay
+#+date:       [2024-03-09 sáb 14:53]
+#+filetags:   :law:lit:
+#+identifier: 20240309T145341
+
+Hearsay:
+Unverified information; rumor
+- needs live testimony, under oath, cross examination
+

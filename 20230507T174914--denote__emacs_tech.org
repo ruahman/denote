@@ -1,0 +1,98 @@
+#+title:      Denote
+#+date:       [2023-05-07 dom 17:49]
+#+filetags:   :emacs:tech:
+#+identifier: 20230507T174914
+
+Simple notes in emacs with an efficient file naming scheme
+
+works will with dired
+
+denote, link, back-links are the major commands
+
+
+
+links notes by using an efficient file naming schema
+--title
+_keyword
+
+* M-x denote
+command for creating a denote
+
+* M-x denote-rename-file
+rename file
+
+* M-x denote-type
+create a denote and ask what type you want it, org, markdown, etc
+
+* setq denote-subdirectory
+create a denote in a subdirectory
+- subdirectory must already be created
+
+* setq denote-known-keywords
+sets the keywords in minibuffer when you create a denote
+
+* setq denote-infer-keywords
+infers keywords from files already in denote directory
+
+* setq denote-prompts
+determins what questions to ask when creating a denote
+- title
+- keywords
+- file-type
+- subdirectory
+
+* M-x denote-keywords-add
+add keywords to front matter and rename file
+
+* M-x denote-keywords-remove
+remove keywords and rename file
+
+* M-x denote-rename-file-using-front-matter
+change front matter and the denote will be renamed accordinatly
+- you first have to save the file with the changed front matter???
+  
+* M-x denote-add-front-matter
+add front matter to file if there is none
+
+* M-x denote-link
+add link to another denote in you note
+
+* denote-link-dired-marked-note
+select notes from dired???
+insert marked dired file as links inside a buffer????
+
+* denote-link-find-file
+
+* M-x denote-link-add-links
+  insert links to notes that match REGX
+
+  ex: find notes with keyword:  _emacs
+
+* M-x denote-link-add-links
+add links that match regex
+
+* M-x denote-link-backlinks
+show all backlinks that are pointing to this note in a buffer
+
+* silos
+a seperate denote directory for storing notes
+- they can not communicate with eachother
+- no linking between them
+- no common keywords between silos
+- a complete seperate directory of notes
+
+** .dir-locals.el
+ - need this in your silo
+ - ((nil . ((denote-directory . default-directory))))
+
+* denote-directory
+directory for you denotes
+
+* org dynamic blocks
+#+begin_src emacs-lisp
+  (require 'denote-org-dblock)
+#+end_src
+
+#+begin_src denote-links :regex (or "_emacs" "_journal")
+  
+#+end_src

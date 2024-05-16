@@ -1,0 +1,32 @@
+#+title:      dired
+#+date:       [2022-12-21 Wed 12:13]
+#+filetags:   :emacs:tech:
+#+identifier: 20221221T121324
+
+* open dired
+| keybinding | command                                 |
+|------------+-----------------------------------------|
+| C-x d      | dired, select directory from buffer     |
+| C-x C-d    | select directory                        |
+|            |                                         |
+
+* keybindings
+| keybinding | command                   |
+|------------+---------------------------|
+| C          | copy                      |
+| D          | delete file               |
+| R          | rename                    |
+| d          | mark file for deletion    |
+| x          | execute                   |
+| u          | unmark                    |
+| U          | unmark all                |
+| m          | mark files                |
+| t          | toogle file marked        |
+| +          | create directory          |
+| C-x C-f    | create file               |
+| g          | refresh buffer            |
+| %m         | mark all files with regex |
+| ^          | up a directory            |
+| j          | jump to file              |
+| k          | kill lines marked         |
+

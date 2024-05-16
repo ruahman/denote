@@ -1,0 +1,16 @@
+#+title:      dotnet
+#+date:       [2023-07-06 Thu 17:57]
+#+filetags:   :tech:
+#+identifier: 20230706T175707
+
+* Entity Framework Core 
+
+* ASP.NET Core
+  - can be hosted in a light weight server such as *Kestrel* or *IIS*
+
+* Blazor
+
+* MAUI
+  Xamarin, or Multi platform App UI
+
+* Unity/Godot

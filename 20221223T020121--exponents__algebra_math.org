@@ -1,0 +1,73 @@
+#+title:      exponents
+#+date:       [2022-12-23 Fri 02:01]
+#+filetags:   :algebra:math:
+#+identifier: 20221223T020121
+
+
+$2^5 = 5 \times 5 \times 5 \times 5 \times 5$
+
+$X^N = X \times X \times X \times ... X$
+
+*base*
+
+*exponenet* (power)
+
+
+* multiplication rule
+
+$x^n \cdot x^m = x^{n+m}$
+
+$2^3 \cdot 2^4 = 2^{3 + 4} = 2^7$
+
+* quotient rule
+
+$\frac{x^n}{x^m} = x^{n - m}$
+
+$\frac{3^6}{3^2} = 3^{6 - 2} = 3^4$
+
+* the power rule
+
+$(x^n)^m = x^{n \cdot m}$
+
+$(3^2)^3 = (3 \cdot 3) \times (3 \cdot 3) \times (3 \cdot 3)$
+
+* power of zero
+
+$x^n=0$
+
+$x^{n - n} = x^0 = 1$
+
+$\frac{2^3}{2^3} = 1$
+
+* negative exponents
+
+$x^{-n} = \frac{1}{x^n}$
+
+* fractional exponents
+
+$x^{\frac{1}{n}} = \sqrt[n]{x}$
+
+$64^{\frac{1}{3}} = \sqrt[3]{64}$
+
+$(5^{\frac{1}{3}})^3 = 5^{\frac{3}{3}} = 5^1 = 5$
+
+* distribute an exponent over a product
+
+$(x \cdot y)^n = x^n \cdot y^n$
+
+$(5 \cdot 7)^3 = (5 \cdot 7) \times (5 \cdot 7) \times (5 \cdot 7) = 5^3 \cdot 7^3$
+
+$(\frac{x}{y})^n = \frac{x^n}{y^n}$
+
+$(\frac{2}{7})^3 = \frac{2}{7} \times \frac{2}{7} \times \frac{2}{7} = \frac{2^3}{7^3}$
+
+* thes apply to only multipilication and division, doesn work with addition and subtraction
+
+$(a + b)^n \neq a^n + b^n$
+
+$(2 + 3)^2 \neq (2^2 + 3^2)
+
+$(a - b)^n \neq a^n - b^n$
+
+$(2 - 3)^2 \neq 2^2 - 3^2$
+

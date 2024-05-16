@@ -1,0 +1,10 @@
+#+title:      lightning-network
+#+date:       [2023-05-19 vie 18:26]
+#+filetags:   :bitcoin:tech:
+#+identifier: 20230519T182645
+
+a second layer on top of bitcoin for making off-chain transactions
+
+* basic terms
+** blockchain :: a distributed ledger that is shared by node in a network 
+** digital signature :: a mathematical method for verifying someone 

@@ -1,0 +1,17 @@
+#+title:      file permission
+#+date:       [2023-07-09 dom 17:07]
+#+filetags:   :linux:tech:
+#+identifier: 20230709T170724
+
+
+user/group/everyone 
+
+rwx
+
+r = 4
+w = 2
+x = 1
+
+#+begin_src bash
+  chmod 775 <file>
+#+end_src

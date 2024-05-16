@@ -1,0 +1,12 @@
+#+title:      Functions
+#+date:       [2023-02-24 Fri 07:55]
+#+filetags:   :algebra:math:
+#+identifier: 20230224T075537
+
+* function
+  a function is a corespondence betweein input numbers (x-values) and output numbers (y-values) that maps each input to
+  one and only one output number
+
+  - a function must pass the vertical line test.  only one y output is maped to an x input
+  - the domain of a function is all possible x-values
+  - the range of a function is all possible y-values

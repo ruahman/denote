@@ -1,0 +1,30 @@
+#+title:      typescript
+#+date:       [2023-05-11 Thu 22:24]
+#+filetags:   :tech:
+#+identifier: 20230511T222451
+
+
+#+begin_src deno :results output
+  console.log("hello world");
+#+end_src
+
+#+RESULTS:
+: hello world
+
+#+begin_src deno :results output
+  console.log("hello deno")
+  return "hi"
+#+end_src
+
+#+RESULTS:
+
+
+* Simple Types
+
+  #+begin_src deno :results value
+    let firstName: string = "Dylan";
+    return firstName
+  #+end_src
+
+  #+RESULTS:
+  : Dylan

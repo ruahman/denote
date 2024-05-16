@@ -1,0 +1,7 @@
+#+title:      web-design
+#+date:       [2023-05-18 Thu 20:26]
+#+filetags:   :art:
+#+identifier: 20230518T202600
+
+you will learn about color, typography, spacing, sizing, and imagery.
+

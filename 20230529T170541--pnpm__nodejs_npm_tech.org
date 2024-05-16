@@ -1,0 +1,25 @@
+#+title:      pnpm
+#+date:       [2023-05-29 Mon 17:05]
+#+filetags:   :nodejs:npm:tech:
+#+identifier: 20230529T170541
+
+performant npm
+
+replacement for npm or yarn
+
+Fast, disk space efficient package manager.
+
+file in node_modules are just hardlink from global repo
+
+all node modules are stored in a single store
+
+all files are save to a single spot in disk,  node_modules folder are just hard links
+
+symlinks to another location
+
+store all the node modules in a single location and the node_modules folder just has sym links
+
+
+#+begin_src bash
+  npm install -g pnpm
+#+end_src

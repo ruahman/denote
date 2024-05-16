@@ -1,0 +1,19 @@
+#+title:      grep
+#+date:       [2023-05-15 Mon 11:59]
+#+filetags:   :tech:
+#+identifier: 20230515T115928
+
+
+* grep -Rin "pattern" /path/to/folder
+  search folder where pattern occurs and show line number
+
+  - R :: recursive
+  - i :: ignore
+  - n :: show line number
+  
+* grep -Ril "pattern" /path/to/folder
+  search folder where patern occurs but list only the files
+
+  - R :: recursive
+  - i :: ignore
+  - l :: list file 

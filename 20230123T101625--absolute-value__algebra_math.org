@@ -1,0 +1,33 @@
+#+title:      absolute-value
+#+date:       [2023-01-23 Mon 10:16]
+#+filetags:   :algebra:math:
+#+identifier: 20230123T101625
+
+start by isolating the absolute value part
+
+- ex1:
+  \begin{align*}
+  3|x| + 2 &= 4\\
+  |x| &= \frac{2}{3}\\
+  x &= \pm \frac{2}{3}
+  \end{align*}
+  
+- ex2:
+  \begin{align*}
+  |3x + 2| &= 4\\
+  3x + 2 &= 4\\
+  3x &= 2\\
+  x &= \frac{2}{3}\\
+  3x + 2 &= -4\\
+  3x &= -6\\
+  x &= -2\\
+  \end{align*}
+
+- ex3:
+  
+  \begin{align*}
+  5|4p - 3| + 16 &= 1\\
+  |4p - 3| &= -3\\
+  \end{align*}
+
+  - this is imposible

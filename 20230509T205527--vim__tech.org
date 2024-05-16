@@ -1,0 +1,149 @@
+#+title:      Vim
+#+date:       [2023-05-09 mar 20:55]
+#+filetags:   :tech:
+#+identifier: 20230509T205527
+
+* commands
+| keys       | command                                                                 |
+|------------+-------------------------------------------------------------------------|
+| i          | insert mode                                                             |
+| C-c        | normal mode                                                             |
+| x          | delete char                                                             |
+| :q         | quit                                                                    |
+| :w         | write                                                                   |
+| :wq        | write and quite                                                         |
+| x          | delete char under cursor                                                |
+| dd         | delete line                                                             |
+| hjkl       | left,down,up,right                                                      |
+| a          | insert after cursor                                                     |
+| o          | insert below line                                                       |
+| O          | insert above line                                                       |
+| cw         | change word                                                             |
+| 0          | go to begining of line                                                  |
+| ^          | go to first none blank character of line                                |
+| $          | go to end of line                                                       |
+| g_         | go to last none blank char of line                                      |
+| /{pattern} | search                                                                  |
+| yy         | copy line                                                               |
+| u          | undo                                                                    |
+| <C-r>      | redo                                                                    |
+| :bn        | next buffer                                                             |
+| .          | repeat last command                                                     |
+| {num}G     | go to line number                                                       |
+| gg         | go to begining of buffer                                                |
+| G          | go to end of buffer                                                     |
+| w          | word                                                                    |
+| W          | goes to next WORD, space serperated and ignores special characters them |
+| e          | end of word                                                             |
+| ge         | go back to end of word                                                  |
+| %          | go to coresponding ({[]})                                               |
+| gU         | uppercase                                                               |
+| g~         | toogle case                                                             |
+| gu         | lowercase                                                               |
+| f{char}    | go to char                                                              |
+| t{char}    | till char                                                               |
+| F{char}    | go to char backwards                                                    |
+| T{char}    | till char backwards                                                     |
+| ,          | go to prev result for                                                   |
+| ;          | repeat f or t commands                                                  |
+| di"        | delete in ""                                                            |
+| da"        | delete around ""                                                        |
+| :split     | create a horizontal split                                               |
+| :vsplit    | create virtical split                                                   |
+| "+y        | copy to clipboard                                                       |
+| dd         | delete line                                                             |
+| d$         | delete till end of line                                                 |
+| D          | delete till end of line                                                 |
+| r<char>    | replace letter                                                          |
+| <C-d>      | scroll down                                                             |
+| <C-u>      | scroll up                                                               |
+| H          | move to TOP part of screen                                              |
+| M          | move to middle of screen                                                |
+| L          | move to lower part of screen                                            |
+| <C-y>      | move screen up                                                          |
+| <C-e>      | move screen down                                                        |
+| <C-o>      | go back to where you jumped                                             |
+| <C-i>      | go forward where you jumped                                             |
+| v          | visual mode                                                             |
+| V          | visual line mode                                                        |
+| <C-v>      | start rectangler visual mode                                            |
+| qa         | record macro to register a                                              |
+| @a         | play macro a                                                            |
+| @@         | play last macro                                                         |
+| ge         | back end of word                                                        |
+| W          | move my WORD_-                                                          |
+| b          | back                                                                    |
+| ?{pattern} | search backward                                                         |
+| n          | next search item                                                        |
+| N          | search backward                                                         |
+| >          | shift left                                                              |
+| <          | shift right                                                             |
+| cc         | change whole line                                                       |
+| dd         | delete whole line                                                       |
+| zz         | center line                                                             |
+| .          | repeat change                                                           |
+| "+         | system clipboard register                                               |
+| qa         | start recording macro to register a                                     |
+| q          | stop recording macro                                                    |
+| #          | search for current word backward                                        |
+| *          | search for current word forward                                         |
+| @a         | run macro a                                                             |
+| @@         | run previous macro                                                      |
+| .          | repeat last change                                                      |
+| s          | same as cl                                                              |
+| ~          | change case of a single character                                       |
+| gi         | go back to where you last made a change                                 |
+| C          | change till end of the line                                             |
+| =          | format code                                                             |
+| <C-o>      | jump out of insert mode                                                 |
+| <C-r> "    | past inside insert mode                                                 |
+| zz         | go to middle                                                            |
+| zt         | go to to                                                                |
+| zb         | go to bottom                                                            |
+| {          | move by paragraph/block of code forward                                 |
+| }          | move by paragraph/block of code  back                                   |
+| <C-o>      | go back it jump list                                                    |
+| <C-i>      | go forward in jump list                                                 |
+
+* gn with searching
+  1. first search for a text 
+  2. on first search result type dgn.
+     - this deletes the search section and moves to
+       the next search result
+  3. type . to repeat
+  4. type n to skip
+
+  think of *gn* as /Go to Next/
+  think of *dgn* as /Delete and Go to Next/ 
+
+* nvim-tree
+  | keys  | command           |
+  |-------+-------------------|
+  | -     | up a director     |
+  | <C-]> | CD into directory |
+
+* splits
+  | keys       | command              |
+  |------------+----------------------|
+  | :sp        | horizontal split     |
+  | :vsp       | vertical split       |
+  | <C-w> s    | horizontal split     |
+  | <C-w> v    | vertical split       |
+  | <C-w> hjkl | move between windows |
+
+* tabs
+  | keys    | command              |
+  |---------+----------------------|
+  | :tabnew | open new tab         |
+  | :tabn   | go to next tab       |
+  | :tabp   | go to prev tab       |
+  | :tabo   | close all other tabs |
+
+* surround
+
+   | keys  | command                       |
+   |-------+-------------------------------|
+   | ds"   | delete surrounding "          |
+   | cs"'  | change surrounding " to '     |
+   | ysaw" | add surrounding " around word |
+   | S"    | add " to selected text        |

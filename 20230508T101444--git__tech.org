@@ -1,0 +1,244 @@
+#+title:      Git
+#+date:       [2023-05-08 Mon 10:14]
+#+filetags:   :tech:
+#+identifier: 20230508T101444
+
+* configure git
+#+begin_src bash
+  git config --global user.name "ruahman"
+  git config --global user.email "dego_vila@yahoo.com"
+#+end_src
+
+* init git
+#+begin_src bash
+  git init
+#+end_src
+
+* git status
+#+begin_src bash
+  git status
+#+end_src
+
+* git add
+
+this stages a file for commit
+#+begin_src bash
+  git add file.txt
+#+end_src
+
+this add all changes, new files and deleted files to be commited
+#+begin_src bash
+  git add --all
+#+end_src  
+
+* git commit
+#+begin_src bash
+  git commit -m "type message for commit"
+#+end_src
+
+* git log
+- to view the history of commitment to repo
+  
+#+begin_src bash
+  git log
+#+end_src  
+
+* git branch
+
+create a new branch
+#+begin_src bash
+  git branch new-branch-name
+#+end_src
+
+list current branches
+#+begin_src bash
+  git branch
+#+end_src
+
+checkout a branch
+#+begin_src bash
+  git checkout new-branch-name
+#+end_src
+
+create a new branch and check it out
+#+begin_src bash
+  git checkout -b new-branch-name
+#+end_src
+
+git switch is basically the same as git checkout
+#+begin_src bash
+  git switch branch-name
+#+end_src
+
+see all braches even remote branches
+#+begin_src bash
+  git branch -a
+#+end_src
+
+you can just checkout that remote branch, and it should track it
+#+begin_src bash
+  git checkout remote-branch
+#+end_src
+
+switch to a remote branch
+#+begin_src bash
+  git switch -c <branch> <remote-branch>
+#+end_src
+
+* git merge
+- first checkout the branch you want to merge to
+- then merge the brach that has the changes you want to your currently checkout branch
+
+#+begin_src bash
+  git merge branch-that-has-changes-you-want
+#+end_src
+
+you can then delete the branch once you are done with it
+#+begin_src bash
+  git branch -d branch-that-you-want-to-delete
+#+end_src
+
+1. in case of conflict check with git status to show which files there are conficts.
+2. got to the file and fix the conflict yourself
+3. then add them to the repo
+4. then commit and conflict should be resolved
+#+begin_src bash
+  git merge
+  git status
+  git add fixed-conflic-file
+  git commit -m "I fixed conflict"
+#+end_src
+
+* git push
+
+to push local repository to github.
+1. create repo in github
+2. add repo as the origin for your project
+   #+begin_src bash
+     git remote add origin https://github.com/github-account/repo.git
+   #+end_src
+3. then push it up to the branch you want
+   #+begin_src bash
+     git push --set-upstream origin main
+   #+end_src
+
+push branch up branch and setup it up for upsteam
+#+begin_src bash
+  git push -u origin new-branch
+  git push --set-upstream origin new-branch
+#+end_src
+
+* git pull
+- it's a combination of `git fetch` and `git merge`
+#+begin_src bash
+  git pull
+#+end_src
+
+* git fetch
+- fetches change history from branch/repo
+
+#+begin_src bash
+  git fetch
+#+end_src
+
+if there where changes it will show on `git status`
+
+to see differenct
+#+begin_src bash
+  git diff origin/master
+#+end_src
+
+if you want to see diff in history
+#+begin_src bash
+  git diff HEAD~X
+#+end_src
+
+see only the files that have changed
+#+begin_src bash
+  git diff --name-only
+#+end_src
+
+see diff after git fetch
+#+begin_src bash
+   git diff HEAD @{u} --name-only
+#+end_src
+
+* git push
+- push up to remote
+#+begin_src bash
+  git push
+#+end_src
+
+* git ssh
+setup a pubkey
+#+begin_src bash
+  ssh-keygen -t rsa -b 4096 -C "ruahman@gmail.com"
+#+end_src
+
+add this keypair to ssh-agent
+#+begin_src bash
+  ssh-add ./ssh/id_rsa
+#+end_src
+
+copy pub key
+#+begin_src bash
+  clip < .ssh/id_rsa.pub
+#+end_src
+
+test ssh connection
+#+begin_src bash
+  ssh -T git@github.com
+#+end_src
+
+add ssh remote
+#+begin_src bash
+  git remote add ssh-origin git@github.com:w3schools-test/hello-world.git
+#+end_src
+
+* git revert
+- when we want to take a previous commit and add it as a new commit
+
+show a shorter git log, oneline per each commit
+#+begin_src bash
+  git log --oneline
+#+end_src
+
+we revert the latest commit
+#+begin_src bash
+  git revert HEAD --no-edit
+#+end_src
+- no-edit is optional. it means that we don't need to add a commit message
+
+to revert any preve commits
+#+begin_src bash
+  git revert HEAD~x
+#+end_src
+- x is any number
+
+* git reset
+- when we want to move the repositiory to a prev commit, disregarding any changes made after that commit
+
+reset to a previous commit
+#+begin_src bash
+  git reset hash-of-commit
+#+end_src
+
+* git restore
+- allows you to unstage or disrecard uncommited changes to a file
+  + it can undo file that you staged
+  + it can revert a file back to what it was before it was changed
+
+get rid of uncommit changes to a file
+#+begin_src bash
+  git restore file-with-uncommited-changes
+#+end_src
+
+get file out of staging area
+#+begin_src bash
+  git restore --staged file-that-was-staged
+#+end_src
+
+you can specify a specific commit of the file
+#+begin_src bash
+  git restore --source commit-hash file-you-wish-to-restore-to-time-of-commit
+#+end_src

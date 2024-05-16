@@ -1,0 +1,193 @@
+#+title:      debug
+#+date:       [2023-05-17 Wed 14:54]
+#+filetags:   :javascript:react:react-native:tech:
+#+identifier: 20230517T145456
+
+just shake the device an options will showup
+
+you need to enable USB debugging on your device
+
+to enable developer options
+- Settings > About phone > Software information
+  * tap `Build number` seven times
+
+to enable USB debuggin
+- Settings > Developer options > USB debugging
+
+plug in your device via USB
+
+check if device is connected
+#+begin_src bash
+  adb devices
+#+end_src
+- you must have only one device connected at a time
+
+run your app
+#+begin_src bash
+  npm react-native run-android
+#+end_src
+
+
+Method 1: Using adb reverse (recommended)
+- if you are runing Android 5.0 or newer,
+  and is connected via USB to your development machine.
+#+begin_src bash
+  adb -s <device name> reverse tcp:8081 tcp:8081
+#+end_src
+
+
+Method 2: connect via Wi-Fi
+
+you will need your development machines' IP address
+
+find you ip in windows
+#+begin_src bash
+  ipconfig
+#+end_src
+
+make sure your machine and phone are on the same wifi network.
+
+open the App `Developer menu`
+
+go to settings > Debug server host & port for device
+- type in you machine's IP address and port of your dev machine
+  (e.g. 10.0.1.1:8081)
+
+go back to `Developer menu` and select Reload JS
+
+* I got it to work
+  1. run react native doctor just to double check
+     #+begin_src bash
+       npx @react-native-community/cli doctor
+     #+end_src
+  2. run the app
+     #+begin_src bash
+       yarn start
+     #+end_src
+     or
+     #+begin_src bash
+       npx react-native start
+     #+end_src
+  3. run android
+     #+begin_src bash
+       yarn android
+     #+end_src
+     or
+     #+begin_src bash
+       npx react-native run-android
+     #+end_src
+  4. make sure port forwarding is setup for the device
+     #+begin_src bash
+       adb reverse tcp:8081 tcp:8081
+     #+end_src
+  5. enable debugging on the device
+     - either by shacking it
+     - or from your dev machine click 'd' on metro
+  6. then open http://localhost:8081/debugger-ui/ in chrome.
+
+* In-App Developer Menu
+  to access it by shaking your device.
+  or
+  #+begin_src bash
+    adb shel input keyevent 82    
+  #+end_src
+  - 82 is the menu key code
+
+  developer menu is disabled in release builds, this comes with react native.
+
+  logBox :: where errors adn warning in develpoment builds are displayed
+
+  
+* Chrome Developer Tools
+  to debug javascript code in Chrome, select `Debug JS Remotely` from the
+  Developer Menu.
+
+  this will open a tab http://localhost:8081/debugger-ui
+
+  open up developer tools in chrome
+
+* React Developer Tools
+
+  install react-devtools on your machine
+  #+begin_src bash
+    npm install -g react-devtools
+  #+end_src
+
+  now run
+  #+begin_src bash
+    react-devtools
+  #+end_src
+  this will launch the standalone Dev Tools app
+
+  if you have problems try
+  #+begin_src bash
+    adb reverse tcp:8097 tcp:8097
+  #+end_src
+
+* Inspecting Component Instances
+
+  make user the dropdown in chrome debug console says debuggerWorker.js
+
+  
+* show console logs
+
+  #+begin_src bash
+    npx react-native log-android
+  #+end_src
+
+* Debugging on a device with Chrome Developer Tools
+  on android 5.0 and up connect via USB,
+
+  setup port forwarding from your device to your computer
+
+  #+begin_src bash
+    adb reverse tcp:8081 tcp:8081
+  #+end_src
+
+  alternatively, select "Dev Settings" from the Developer Menu,
+  then update the "Debug server host for device"
+  - set it to match the ip and port of your device with is the
+    debug server
+
+  it may be possible that one of your chrome extension is messing it up
+  try disabling them and re-enabling them one-by-one
+
+  #+begin_src bash
+     adb -s <device name> reverse tcp:8081 tcp:8081
+  #+end_src
+
+
+  
+  
+* react-devtools
+  used to debug react-native application
+
+  #+begin_src bash
+    npm install -g react-devtools
+  #+end_src
+  or just us
+  #+begin_src bash
+    npx react-devtools
+  #+end_src
+
+  run react-devtools
+  #+begin_src bash
+    react-devtools
+  #+end_src
+
+  if your not using a local simulator,
+  you need to foward ports used by React DevTools:
+  #+begin_src bash
+    adb reverse tcp:8097 tcp:8097
+  #+end_src
+  - by default DevTools listen to port 8097
+
+  if your using React Native 0.43 or higher, it should connect to you device
+  in a few seconds
+
+  alway make sure that the top left corner of the chrome console say
+  "debuggerWorker.js"
+
+* Flipper
+  an extensive React Native debugger
+

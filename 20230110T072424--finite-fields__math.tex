@@ -1,0 +1,90 @@
+% Created 2023-01-12 Thu 10:27
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Diego Vila}
+\date{\textit{[2023-01-10 Tue 07:24]}}
+\title{finite fields}
+\hypersetup{
+ pdfauthor={Diego Vila},
+ pdftitle={finite fields},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{finite field definition}
+\label{sec:org78192f1}
+
+a finite field is a finite set of number and two operations,(+,-) that satisfy the following
+
+\begin{enumerate}
+\item if a and b are in the set then, a + b and a * b are also in the set.
+\begin{itemize}
+\item this is called the \uline{closed} property
+\item the results always stay inside the set
+\end{itemize}
+
+\item zero exists and has the propert a + 0 = a
+\begin{itemize}
+\item this is called the \uline{additive identity} property
+\end{itemize}
+
+\item 1 exitst and a * 1 = a
+\begin{itemize}
+\item this is called the \uline{multiplicative identity} property
+\end{itemize}
+
+\item if a is in the set and -a is in the set, then a - a = 0
+\begin{itemize}
+\item this is called the \uline{additive inverse} property
+\end{itemize}
+
+\item if a is in the set and is not 0, then \(a^{-1}\) is in the set that make \(a \cdot a^{-1} = 1\)
+\begin{itemize}
+\item this is called the \uline{multiplication inverse} property
+\end{itemize}
+
+\item the \uline{order} of the set size of numbers
+
+\item in order to acceive the following properties we need to redefine additon and multiplication for the set.
+\end{enumerate}
+
+\section{defining finite sets}
+\label{sec:org63cbff5}
+
+if the order of the set is defined as p, then the elements of the set are \(\{0,1,2,\dots,p-1\}\)
+
+\begin{itemize}
+\item these are called elements of the set
+\item notice that p is alway one more than its largist element
+\item p is alway prime
+\end{itemize}
+
+\begin{align*}
+F_p  &= \{0,1,2,\dots,p-1\}\\
+F_{11} &= \{0,1,2,3,4,5,6,7,8,9,10\}
+\end{align*}
+
+\section{finite field in python}
+\label{sec:org9260966}
+
+\begin{verbatim}
+print("hello world again")
+\end{verbatim}
+\end{document}

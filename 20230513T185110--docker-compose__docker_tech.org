@@ -1,0 +1,227 @@
+#+title:      docker-compose
+#+date:       [2023-05-13 sáb 18:51]
+#+filetags:   :docker:tech:
+#+identifier: 20230513T185110
+
+run multiple containers together 
+
+docker compose has now been include into the cli.
+you can just type docker compose instead of docker-compose
+
+the is node a plug for docker compose
+- its installed in docker desktop
+- Linux: apt-get install docker compose-plugin
+  + its in goland instead of python
+
+example of a docker compose file
+#+begin_src yaml
+  version: '3.9'
+
+  services:
+    webapi1:
+      image: academy.azurecr.io/webapi1
+      ports:
+	- '8081:80'
+      restart: always
+
+    webapi2:
+      image: academy.azurecr.io/webapi2
+      ports:
+	- '8082:80'
+      restart: always
+
+    apigateway:
+      image: academylazurecr.io/apigateway
+      ports:
+	- '80:80'
+      restart: always
+#+end_src
+
+docker compose is fine when you don't need a full orchestrator
+
+* docker compose build
+
+  build images
+  #+begin_src bash
+    docker compose build
+  #+end_src
+
+* docker compose start
+
+  start containers
+  #+begin_src bash
+    docker compose start
+  #+end_src
+
+* docker compose stop
+
+  stop containers
+  #+begin_src bash
+    docker compose stop
+  #+end_src
+
+* docker compose up
+
+  build and start
+  #+begin_src bash
+    docker compose up
+  #+end_src
+
+  or run it as a demon
+  #+begin_src bash
+    docker compose up -d
+  #+end_src
+
+* docker compose ps
+
+  list what is running
+  #+begin_src bash
+    docker compose ps
+  #+end_src
+
+* docker compose rm
+
+  remove containers
+  #+begin_src bash
+    docker compose rm
+  #+end_src
+
+* docker compose down
+
+  stop and remove containers
+  #+begin_src bash
+    docker compose down
+  #+end_src
+
+* docker compose logs
+
+  get logs
+  #+begin_src bash
+    docker compose logs
+  #+end_src
+
+  
+* docker compose exec
+
+  run a command in a container
+  #+begin_src bash
+    docker compose exec [container] bash
+  #+end_src
+
+  
+* docker compose project
+
+  you can create a project name when running docker compose
+  #+begin_src bash
+    docker compose -p test2 up
+  #+end_src
+
+* docker compose ls
+
+  list running projects
+  #+begin_src bash
+    docker compose ls
+  #+end_src
+
+* docker compose cp
+
+  copy file from containers
+  #+begin_src bash
+    docker compose cp [containerID]:[SRC_PATH] [DEST_PATH]
+  #+end_src
+
+  copy file to container
+  #+begin_src bash
+    docker compose cp [SRC_PATH] [containerID]:[DEST_PATH]
+  #+end_src
+
+* Example
+
+#+begin_src yaml
+   services:
+     backend:
+       build:
+	 args:
+	   - NODE_ENV=development
+	 context: backend
+       command: npm run start-watch
+       environment:
+	 - DATABASE_DB=example
+	 - DATABASE_USER=root
+	 - DATABASE_PASSWORD=/run/secrets/db-password
+	 - DATABASE_HOST=db
+	 - NODE_ENV=development
+       ports:
+	 - 3001:80
+	 - 9229:9229
+	 - 9230:9230
+       secrets:
+	 - db-password
+       volumes:
+	 - ./backend/src:/code/src:ro
+	 - ./backend/package.json:/code/package.json
+	 - ./backend/package-lock.json:/code/package-lock.json
+	 - backend-modules:/opt/app/node_modules
+       networks:
+	 - public
+	 - private
+       depends_on:
+	 - db
+
+   db:
+     image: mariadb:10.6.4-focal
+     command: '--default-authentication-plugin=mysgl_native_password'
+     restart: always
+     secrets:
+       - db-password
+     volumes:
+       - db-data:/var/lib/mysql
+     networks:
+       - private
+     environment:
+       - MYSQL_DATABASE=example
+       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+
+   frontend:
+     build:
+       context: frontend
+       target: development
+     ports:
+       - 3000:3000
+     volumes:
+       - ./frontend/src:/code/src
+       - /code/node_modules
+     networks:
+       - public
+     depends_on:
+       - backend
+
+  volumes:
+    backend-modules:
+    db-data:
+
+  secrets:
+    db-password:
+      file: db/password.txt
+#+end_src
+
+* environment variables
+
+  Linux
+  #+begin_src bash
+    export POSTGRES_VERSION=14.3
+  #+end_src
+
+  PowerShell
+  #+begin_src bash
+    $env:POSTGRES_VERSION="14.3"
+  #+end_src
+
+  docker compose can reference the environment variable
+  #+begin_src yaml
+    service:
+      db:
+	image: "postgres:${POSTGRES_VERSION}"
+  #+end_src
+
+  

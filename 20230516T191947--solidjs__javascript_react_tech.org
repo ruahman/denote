@@ -1,0 +1,166 @@
+#+title:      solidjs
+#+date:       [2023-05-16 Tue 19:19]
+#+filetags:   :javascript:react:tech:
+#+identifier: 20230516T191947
+
+* What is SolidJs
+  it's different when it comes to managing states
+
+  when ever we update the state in react it rereders the component that the state belongs
+  - create a virtual dom snapshot and figures out what dom elements need to be changed
+
+  you use createSingnal() instead of useState()
+
+  component functions are only executed one in solidjs,
+  initialy when the app starts
+
+  all the places where you use singnal is memorized and only they get updated
+
+  solidjs memoriazes where in the dom the signal could affect changes to the dom and changes the dom directly
+  instead of consulting a virtual dom.
+
+  it's not compairing virtual dom snapshoots.  it directly memorizes where the signal might change the dom.
+
+  because there is no comparison happening behind the sceens it is more performant
+
+  easier mental model than the virtual dom.
+
+  since component functions only execute once you can put a timer inside and not worry that it will be run again.
+
+  #+begin_src javascript
+    function App(){
+	setTimout(() => {
+	    setConter(1)
+	})
+    }
+
+  #+end_src
+
+  react uses state but solidjs uses signals
+
+#+begin_src bash
+  npx degit solidjs/templates/js solidjs-basics
+#+end_src
+
+for typescript
+#+begin_src bash
+  npx degit solidjs/templates/ts my-app
+#+end_src
+
+#+begin_src bash
+  yarn start
+  npm run start
+#+end_src
+* state
+  it does state differently
+
+  #+begin_src javascript
+    const [counter, setCounter] = createSignal(0);
+  #+end_src
+
+  also you call the state values
+  #+begin_src javascript
+    {counter()}
+  #+end_src
+
+  it does not use a virtual DOM
+
+  to set counter
+  #+begin_src javascript
+    setCounter(counter() + 1)
+  #+end_src
+  or
+  #+begin_src javascript
+    setCounter((value) => value + 1)
+  #+end_src
+** createEffect
+   code you want to execute when state changes
+
+   #+begin_src javascript
+     createEffect(() => console.log("counter: ", counter())
+   #+end_src
+** computer value
+   set it up as a function
+
+   #+begin_src javascript 
+     const doubleCounter = () => counter() * 2
+   #+end_src
+
+   #+begin_src javascript
+     {doubleCounter()}
+   #+end_src
+* Components
+  can use object deconstrutin when defining component
+
+  #+begin_src javascript
+	function Counter(props){
+	    return <p id="counter">{props.value}</p>
+	}
+  #+end_src
+  - if you use property desconstruction it ruins its reactivity
+
+    
+* Learn Solid
+  solid is all about small composable building blocks
+
+  the two main types of building block are Components and Reactive Primitives
+
+  
+** Components
+   are functions that accept props and return a jsx element
+
+   #+begin_src javascript
+     function MyComponent(props) {
+       return <div>Hello {props.name}</div>;
+     }
+
+     <MyComponent name="Solid" />;
+   #+end_src
+   
+* fine-grain reactivity
+  solids fine-grained reactivity is build on three core primitives
+  - Signals
+  - Memos
+  - Effects
+
+  #+begin_src javascript
+    const [first, setFirst] = createSignal("JSON");
+    const [last, setLast] = createSignal("Bourne");
+
+    createEffect(() => console.log(`${first()} ${last()}`));
+  #+end_src
+
+* vanishing components
+  it hard enough to build your components without taking updates to consideration.
+
+  Solid updates are completely independent of components.
+
+  Component functions are called once and that is it.
+
+* Web components
+  solid was designed for web components to be first class citezens.
+
+  Solid is a great way to author web components.
+
+  checkout solid-elements
+
+  it allows you to wrap a solid component to a web-element
+
+* component
+  only run once
+
+  no virtual dom
+
+  it memorized locations in the dom where it might need to update later
+
+  surgically update when needed
+
+* create a solidjs application
+  #+begin_src bash
+    npx degit solidjs/templates/ts <project>
+  #+end_src
+  or use bun
+  #+begin_src bash
+    bunx degit solidjs/template/ts <project>
+  #+end_src
+

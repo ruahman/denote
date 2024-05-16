@@ -1,0 +1,50 @@
+#+title:      npm-run-all
+#+date:       [2023-05-29 Mon 15:27]
+#+filetags:   :nodejs:tech:
+#+identifier: 20230529T152707
+
+A CLI tool for running multiple npm-scripts in parallel or sequential.
+
+npm run can not run multiple scripts at the same time.
+
+before you would do something like this
+#+begin_src bash
+  npm run clean && npm run build:css && npm run build:js && npm run build:html
+#+end_src
+
+now with npm-run-all
+#+begin_src bash
+  npm-run-all clean build:*
+#+end_src
+
+this provides three cli commands
+ * npm-run-all
+   - this is the main command
+ * run-p
+   - short hand command to run parallel
+ * run-s
+   - short hand command run sequential
+
+#+begin_src bash
+  npm-run-all clean lint build
+#+end_src
+
+is the same as
+#+begin_src bash
+  npm run clean && npm run lint && npm run build
+#+end_src
+
+run scripts in parallel
+#+begin_src bash
+  npm-run-all --parallel lint build
+#+end_src
+
+same as
+#+begin_src bash
+  npm run lint & npm run build
+#+end_src
+
+you can also mix them
+#+begin_src bash
+  npm-run-all clean lint --parallel watch:html watch:js
+#+end_src

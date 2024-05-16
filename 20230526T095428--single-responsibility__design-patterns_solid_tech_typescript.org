@@ -1,0 +1,41 @@
+#+title:      single responsibility
+#+date:       [2023-05-26 Fri 09:54]
+#+filetags:   :design-patterns:solid:tech:typescript:
+#+identifier: 20230526T095428
+
+a class or method should be responsible for a single part of functionality
+
+* common violation of the solid principle
+
+  handling errors in your method
+
+  handling presentation logic in your method 
+
+  handling file and database read writes in you method
+
+
+  
+* example
+  #+begin_src typescript
+    export function filterEmployees(httpClient, filters) {
+	try {
+	    httpClient.get('/api/employees').then(employees => {
+		let result = applyFilter(employees,filters);
+
+		// displaying is handled elsewhere
+		displayEmployees(result);
+
+		// saving is handled else where
+		saveEmployees(result);
+		
+	    }).catch(err => {
+		// error handling is handled else where
+		handleError(err,"somethig when wrong");
+	    })
+	}
+	catch(err) {
+	    // handling errors is manged else where
+	    handleError(err, "Application Critical error");
+	}
+    }
+  #+end_src

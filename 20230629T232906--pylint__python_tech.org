@@ -1,0 +1,11 @@
+#+title:      pylint
+#+date:       [2023-06-29 jue 23:29]
+#+filetags:   :python:tech:
+#+identifier: 20230629T232906
+
+to setup a .pylintrc file
+#+begin_src bash
+  pylint --generate-rcfile > .pylintrc
+#+end_src
+- locate the [MESSAGES CONTROL] section,
+  to specify what warning to supress

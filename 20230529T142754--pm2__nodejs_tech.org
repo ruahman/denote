@@ -1,0 +1,54 @@
+#+title:      pm2
+#+date:       [2023-05-29 Mon 14:27]
+#+filetags:   :nodejs:tech:
+#+identifier: 20230529T142754
+
+a process manager
+
+restart applications in case that they crash
+
+built in loadbalancer
+
+install pm2 globaly
+#+begin_src bash
+  npm install pm2 -g
+#+end_src
+
+there is a disadvantage doing it the old way
+#+begin_src bash
+  node app.js
+#+end_src
+ - if terminal closes then app close with it,
+ - also when you run it you need to setup a tab to get access to terminal while app is running
+
+
+with pm2
+#+begin_src bash
+  pm2 start app.js
+#+end_src
+ - run it in background
+
+monitor your applications you ran with pm2
+#+begin_src bash
+  pm2 ls
+#+end_src
+
+restart application
+#+begin_src bash
+  pm2 restart <id>
+#+end_src
+
+stop application
+#+begin_src bash
+  pm2 stop <id>
+#+end_src
+
+show logs
+#+begin_src bash
+  pm2 logs <id>
+#+end_src
+
+moniter your apps
+#+begin_src bash
+  pm2 monit
+#+end_src

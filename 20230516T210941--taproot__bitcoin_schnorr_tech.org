@@ -1,0 +1,29 @@
+#+title:      taproot
+#+date:       [2023-05-16 Tue 21:09]
+#+filetags:   :bitcoin:schnorr:tech:
+#+identifier: 20230516T210941
+
+* Segwit
+  <version> <witness program>
+  - P2WSH = 34 bytes
+  - P2WPKH = 22 bytes
+
+  P2TR(bech32m)
+
+* schnorr
+  allows signature aggregation easy
+
+  - you can aggregate the key need to spend a multisig
+
+
+  
+* MAST
+  merkilized abstract sysntax tree
+
+  you can hash together a bunch of script into a merkell tree,
+
+  the merkell root gets transformed into the Taproot output which is P2TR
+
+  just provide the signature need for one path the and rest of the hashes in the merkel tree and you can spend it.
+
+  all script that use MAST look exactly the same

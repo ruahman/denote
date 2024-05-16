@@ -1,0 +1,105 @@
+#+title:      greenlight
+#+date:       [2023-06-28 Wed 15:38]
+#+filetags:   :bitcoin:lsp:tech:
+#+identifier: 20230628T153855
+
+Your personal Core Lightning node.
+
+developers and integrate lightning to their apps, while giving your users full control over their funds.
+
+keys are stored on users devices.
+
+you can move it to your own self-hosted infrastructure
+
+we take care of the infrastructure while you hold on to your keys
+
+nodes can be registered and started within seconds
+
+you can offboard it to your own infastructure
+
+Greenlight provision Core-lightning nodes on behalf of users
+
+the node expose a grpc-interface
+
+* Authentication
+  all communication are authenticated and encripted via mTLS(mutual transport layer security)
+
+  each client receives it's identity in the form of a private key and certificate
+  which are use to authenticate and encript communication to greenlight
+
+* Install
+#+begin_src bash
+npm install gl-client
+#+end_src
+
+* Registering a Node
+  the node identity consists of the node seed secret and it's mTLS certificate.
+
+  the seed is a random 32 bytes
+  - it is sugested to the the seed from a BIP39 seed phrase
+
+#+begin_src python
+import bip39
+import secrets  # Make sure to use cryptographically sound randomness
+
+rand = secrets.randbits(256).to_bytes(32, 'big')  # 32 bytes of randomness
+phrase = bip39.encode_bytes(rand)
+
+# Prompt user to safely store the phrase
+
+seed = bip39.phrase_to_seed(phrase)[:32]  # Only need 32 bytes
+
+# Store the seed on the filesystem, or secure configuration system
+#+end_src
+
+next we create a mTLS identity that we will use to authenticate with greenlight
+
+#+begin_src python
+from glclient import TlsConfig
+
+# Creating a new `TlsConfig` object will automatically load the dummy identity
+tls = TlsConfig()
+#+end_src
+
+create signer
+#+begin_src python
+from glclient import Signer
+
+signer = Signer(seed, network="bitcoin", tls=tls)
+#+end_src
+
+the scheduler creates the node,
+but you need to use the sighner with it
+#+begin_src python
+from glclient import Scheduler
+
+scheduler = Scheduler(
+    node_id=signer.node_id(),
+    network="bitcoin",
+    tls=tls,
+)
+
+# Passing in the signer is required because the client needs to prove
+# ownership of the `node_id`
+res = scheduler.register(signer, invite_code=invite_code)
+#+end_src
+
+* Starting a node
+  now that a node has been registered, we can schedule it.  the scheduler will start the node and setup the GRPCUrls needs
+  to communicate with it
+
+#+begin_src python
+from glclient import TlsConfig, Scheduler, 
+cert, key = b'...', b'...'
+node_id = bytes.fromhex("02058e8b6c2ad363ec59aa136429256d745164c2bdc87f98f0a68690ec2c5c9b0b")
+network = "testnet"
+tls = TlsConfig().identity(cert, key)
+
+scheduler = Scheduler(node_id, network, tls)
+node = scheduler.node()
+#+end_src
+
+#+begin_src python
+info = node.get_info()
+peers = node.list_peers()
+#+end_src

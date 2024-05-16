@@ -1,0 +1,24 @@
+#+title:      solid
+#+date:       [2023-05-25 Thu 12:35]
+#+filetags:   :design-patterns:tech:typescript:
+#+identifier: 20230525T123513
+
+* Single Responsibility 
+  a function, class or module should have only one responsibility
+  
+* Open/Close Principle
+  open to extention
+
+  close to modification
+  
+* Liskov Substitution
+  you should be able to substitute a child class for a parent class.
+
+* Interface Segregation
+  the cost to implement an interface should be low.
+
+  should not be forced to implement interfaces that you don't need.
+
+* Dependency Inversion
+  you should depend on abstraction.
+  not implementations

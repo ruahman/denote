@@ -1,0 +1,353 @@
+#+title:      Emacs
+#+date:       [2022-12-21 Wed 12:07]
+#+filetags:   :lit:tech:
+#+identifier: 20221221T120747
+
+  
+Ctr = C
+Alt = M
+Shift = S
+Comand/Windows/Super key = s
+
+Alt + x = M-x
+Ctr + x = C-x
+
+C-x = primary key bindings
+C-c = major and minor mode commands
+M-x = run command
+C-u = universal argument
+- adds extra argument before command
+
+if you add C-h to any key combo then a list of options appears in a buffer
+ex: C-x 8 C-h  ::  show all key combos that could complet =C-x 8=
+
+
+killing = cut
+yanking = past
+save to kill ring = copy
+
+major mode is attached to a file type
+- only one per buffer
+
+minor mode is an add-on mode to the buffer
+- you can have many minor modes attached to a buffer
+
+
+packages
+[[https://melpa.org/#/][melpa]]
+
+[[https://elpa.gnu.org/][elpa]]
+
+#+begin_src emacs-lisp
+      (setq package-archives
+	    '(("gnu" . "http://elpa.gnu.org/packages/")
+	      ("melpa" . "http://melpa.org/packages/"))) 
+#+end_src
+
+
+* help
+  emacs is self documenting
+  C-h i  :: info
+  - then checkout =An Introduction to Programming in Emacs Lisp=
+  - u :: goes up a level
+  - [ :: previous node
+  - ] :: next node
+  - n :: next
+  - p :: prev
+  - RET :: open link
+
+  | keys        | command                                                    |
+  |-------------+------------------------------------------------------------|
+  | C-h f       | find a function                                            |
+  | C-h a       | if your not sure what your looking for                     |
+  | C-x apropos | find all variable, functions and comands that match patern |
+  | C-h m       | find  mode                                                 |
+  | C-h f       | find function                                              |
+  | C-h v       | find variable                                              |
+  | C-h k       | describe keybinding                                        |
+
+  apropos :: related or connected to something
+
+  
+* file
+| keybindings | command               |
+|-------------+-----------------------|
+| C-x C-f     | open or create file   |
+| C-x C-w     | write / save as       |
+| C-x f       | find file             |
+| C-x C-s     | save file             |
+| C-x s       | save all open buffers |
+
+* buffer
+| keybindings | command       |
+|-------------+---------------|
+| C-x b       | switch buffer |
+| C-x C-b     | list buffers  |
+| C-x left    | prev buffer   |
+| C-x right   | next buffer   |
+| C-x k       | kill buffer   |
+
+* region
+| keybinding | command                           |
+|------------+-----------------------------------|
+| C-SPC      | mark region                       |
+| C-x SPC    | select rectangle region           |
+| C-r t      | fill rectangle region with text   |
+| C-x h      | select whole buffer               |
+| C-x C-x    | return back to where you set mark |
+
+* kill/copy/yank
+| keybinding       | command                        |
+|------------------+--------------------------------|
+| C-w              | kill region                    |
+| M-w              | copy region                    |
+| C-y              | yank                           |
+| M-y              | yank prev to kill ring         |
+| M-Y              | move to next item in kill ring |
+| C-k              | kill till end of line          |
+| C-u <number> C-k | Kill till number of lines      |
+| C-S-Backspace    | kill line                      |
+| M-d              | kill word                      |
+| C-d              | kill char                      |
+
+* undo
+| keybinding | command                               |
+|------------+---------------------------------------|
+| C-/        | undo                                  |
+| C-x u      | undo                                  |
+| C-g C-_    | Switch undo direction and now we redo |
+| C-g        | cancel                                |
+
+* movement
+| keycommand | command                         |
+|------------+---------------------------------|
+| C-p        | prev                            |
+| C-n        | next                            |
+| M-f        | forward word                    |
+| M-b        | backward word                   |
+| M-e        | end of sentence                 |
+| M-a        | backward a sentence             |
+| M-}        | forward paragraph               |
+| M-{        | backward paragraph              |
+| M-<        | beging of buffer                |
+| M->        | end of buffer                   |
+| C-x ]      | page forward                    |
+| C-x [      | page back                       |
+| C-v        | scroll down                     |
+| M-v        | scroll up                       |
+| C-f        | forward char                    |
+| C-b        | backward char                   |
+| C-e        | end of line                     |
+| C-a        | begining of line                |
+| C-l        | mover curser and text to center |
+| C-l C-l    | move curser and text to top     |
+
+* bookmark
+| keycommand | command            |
+|------------+--------------------|
+| C-x r m    | bookmark           |
+| C-x r l    | show bookmark list |
+
+* help
+| keybinding | command               |
+|------------+-----------------------|
+| C-h k      | describe key          |
+| C-h b      | show all key bindings |
+| C-h t      | tutorial              |
+| C-h i      | info                  |
+| C-h a      | apros                 |
+| C-h f      | function              |
+| C-h m      | mode specific info    |
+| C-h r      | Emacs manual          |
+| C-h ?      | help for emacs help?  |
+
+* windows
+| keybinding  | command                    |
+|-------------+----------------------------|
+| C-x 0       | close current window       |
+| C-x 1       | close all other windows    |
+| C-x 2       | horizontal split           |
+| C-x 3       | vertical split             |
+| C-x o       | move through other windows |
+| C-M-v       | scroll down other window   |
+| C-M-Shift-v | scroll up other window     |
+
+* search
+| keybinding | command                                   |
+|------------+-------------------------------------------|
+| C-s        | search, move to next search match         |
+| C-r        | reverse search, move to prev search match |
+| C-M-s      | regex search                              |
+| C-M-r      | reverse regex search                      |
+
+* Unicode
+| keybindings | command                |
+|-------------+------------------------|
+| C-x 8 , c   | ç                      |
+| C-x 8 ' a   | á                      |
+| C-x 8 ` e   | è                      |
+| C-x 8 ~ n   | ñ                      |
+| C-x 8 RET   | select unicode by name |
+
+* terminal command
+
+| keybindings | command              |
+|-------------+----------------------|
+| M-!         | run terminal command |
+
+* close emacs
+| keys    | command     |
+|---------+-------------|
+| C-x C-c | close emacs |
+
+* FIDO/IDO
+  a completer
+
+* Window Management
+| key       | command                     |
+|-----------+-----------------------------|
+| C-x 0     | close current window        |
+| C-x 1     | delete all other window     |
+| C-x 2     | horizontal window split     |
+| C-x 3     | vertical window split       |
+| C-x o     | switch active window        |
+| C-x 4 C-f | find a file in other window |
+| C-x 4 d   | open dired in other window  |
+| C-x 4 C-o | open buffer in other window |
+
+* Frame Management
+| key     | command                 |
+|---------+-------------------------|
+| C-x 5 2 | create a new frame      |
+| C-x 5 0 | delete active frame     |
+| C-x 5 1 | delete all other frames |
+
+* Navigation Movements
+| key       | command                   |
+|-----------+---------------------------|
+| M-f       | move forward by word      |
+| M-b       | move back by word         |
+| C-f       | move forward by char      |
+| C-b       | move back by char         |
+| C-p       | move to previous line     |
+| C-n       | move to next line         |
+| C-a       | move to beginning of line |
+| C-e       | move to end of line       |
+| C-<right> | move forward by a word    |
+| C-<left>  | move back by word         |
+
+* moving by page and scrolling
+| key     | command                     |
+|---------+-----------------------------|
+| C-x ]   | move forward one page       |
+| C-x [   | move back one page          |
+| C-v     | scroll down                 |
+| M-v     | scroll up                   |
+| C-M-v   | scroll down other window    |
+| C-M-S-v | scroll up other window      |
+| C-x <   | scroll left                 |
+| C-x >   | scroll right                |
+| M->     | move to end of buffer       |
+| M-<     | move to beginning of buffer |
+| C-l     | recenter text line          |
+
+* bookmark
+| key     | command          |
+|---------+------------------|
+| C-x r m | set a bookmark   |
+| C-x r l | list bookmarks   |
+| C-x r b | jump to bookmark |
+|         |                  |
+
+* mark
+| key     | command  |
+|---------+----------|
+| C-<SPC> | set mark |
+|         |          |
+
+* search
+| key | command        |
+|-----+----------------|
+| C-s | search         |
+| C-r | reverse search |
+|     |                |
+
+* grep
+| key           | command          |
+|---------------+------------------|
+| M-x grep      | grep file system |
+| M-x grep-find | grep and find    |
+- this doesn not work on windows
+
+* kill
+| key             | command                  |
+|-----------------+--------------------------|
+| C-d             | kill char                |
+| M-d             | kill word                |
+| C-k             | kill till end of line    |
+| C-S-<backspace> | kill line                |
+| C-w             | kill region              |
+| M-w             | copy region to kill ring |
+| C-y             | yank last kill           |
+| M-y             | cycle through kill ring  |
+- the are not deleted but move to the kill ring
+
+* transpose
+| key     | command        |
+|---------+----------------|
+| C-t     | transpose char |
+| M-t     | transpose word |
+| C-x C-t | transpose line |
+
+* comment
+| key             | command        |
+|-----------------+----------------|
+| M-;             | comment        |
+| C-x C-;         | comment line   |
+| M-x comment-box | comment region |
+|                 |                |
+
+* macros
+| key | command                                  |
+|-----+------------------------------------------|
+| F3  | start recording macro                    |
+| F4  | stop macro recording, or play last macro |
+|     |                                          |
+
+* TRAMP
+C-x C-f then /ssh:username@url:/path/to/file
+
+- you can also make file into a book mark with C-x r m
+
+* EWW
+M-x eww
+
+* DIRED
+| key                 | command                    |
+|---------------------+----------------------------|
+| C-x d               | open dired                 |
+| C-x 4 d             | open dired in other window |
+| ^                   | go up a directory          |
+| q                   | quit dired                 |
+| n,p,C-n,C-p         | up/down                    |
+| m                   | mark                       |
+| u                   | unmark                     |
+| d                   | flag for deletion          |
+| U                   | unmark everything          |
+| * m                 | mark region                |
+| * u                 | unmark region              |
+| * %                 | mark by regex              |
+| * .                 | mark by file extention     |
+| t, * t              | toogle marked file         |
+| C                   | copy files                 |
+| R                   | rename                     |
+| D                   | delete                     |
+| x                   | delete flaged d            |
+| g                   | refresh dired              |
+| +                   | create subdirectory        |
+| M-x find-grep-dired | find and grep              |
+
+* shell
+- M-x shell :: shell wraper
+- M-x eshell :: shell writen in elisp
+- M-x ansi-term :: a shell 

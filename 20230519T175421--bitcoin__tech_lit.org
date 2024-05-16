@@ -1,0 +1,98 @@
+#+title:      bitcoin
+#+date:       [2023-05-19 vie 17:54]
+#+filetags:   :tech:lit:
+#+identifier: 20230519T175421
+
+* How it works
+
+
+*change address* :: an output that point back to the sender.
+- this is where you get your change.
+- if you don't specify this it will be counted as the fee to the miner.
+
+a transaction move value from a transaction inputs to transaction outputs.
+
+a transaction output is created in the form of a script.
+- to redeem that output you need to provide a solution to the script, which only the owner should be able to do.
+
+any system that communicates the bitcoin protocol is called a bitcoin node.
+
+transactions are bundled into blocks
+
+a miner constructs a new block and then tries to verify that block by (Proof-of-Work) algorithm.
+
+transaction added to the the block are prioritized by mining fee.
+
+each additional block mined on top of it counts as another confirmation.
+- after 6 blocks it is considered irrevocable. 
+
+  
+* Bitcoin Core: Reference
+
+  BIP39: Mnemonic Seeds
+  BIP32: HD Wallets
+
+  start the build process by generating the build scripts
+  #+begin_src bash
+    ./autogen.sh
+    ./configure
+  #+end_src
+  - insures that you can all the necessary libraries for building 
+
+  start compiling
+  #+begin_src bash
+    ./make
+  #+end_src
+  - to make it go faster you use more cores
+    #+begin_src bash
+      ./make -j 2
+    #+end_src
+
+  check if everything went okay
+  #+begin_src bash
+    ./make check
+  #+end_src
+
+  now install it
+  #+begin_src bash
+    ./make install
+  #+end_src
+
+** Running a bitcoin core node
+
+bitcoin core will not run until the entire block chain is downloaded
+
+** Configure bitcoin core
+
+bitcoin core will look for a configuration file
+
+to find the location of the config file
+#+begin_src bash
+  bitcoind -printtoconsole
+#+end_src
+- this runs bitcoind in the foreground
+
+there are more than 100 configurations that you can set
+to see them all
+#+begin_src bash
+  bitcoind --help
+#+end_src
+
+here are some of the more important options
+- conf :: set different config file,  must be passed through command line
+- datadir :: location where you store your blockchain data
+- prune :: disregard old blocks to save space, though you still need to download the entire blockchain you don't need to save it.
+- txindex :: maintain an index of all transactions, which means you can look up any transaction you want
+  + you need this set if you want to use =getrawtransaction= for transaction that don't belong to your wallet
+- minrelaytxfee :: minimum fee the node will accept.  anything below this gets rejected
+
+run bitcoind as a daemon
+#+begin_src bash
+  bitcoind --daemon
+#+end_src
+
+see status of bitcoind
+#+begin_src bash
+  bitcoin-cli -getinfo
+#+end_src
+ 

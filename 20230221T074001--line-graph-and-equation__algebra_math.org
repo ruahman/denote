@@ -1,0 +1,26 @@
+#+title:      Line Graph and Equation
+#+date:       [2023-02-21 Tue 07:40]
+#+filetags:   :algebra:math:
+#+identifier: 20230221T074001
+#+LATEX_CLASS: article
+#+LATEX_HEADER: \usepackage{pgfplots}
+
+* graph
+\begin{tikzpicture}
+  \begin{axis}[xmin=0,xmax=20,ymin=0,ymax=20,axis lines=left,xlabel=x,ylabel=y,title={diego's graph}]
+    \addplot[
+      color=blue,
+      domain=0:20
+    ]{0.5*x+2};
+  \end{axis}
+\end{tikzpicture}
+
+* equation
+  $$ y = mx + b $$
+  - m is the slope
+  - y is the y-intercept
+
+  slope = $\frac{rise}{run}$ = $\frac{\Delta x}{\Delta y}$ = $\frac{y_2 - y_1}{x_2 - x_1}$
+
+  - you can solve the equation if you have the slop or the y-intercept and a couple of points
+

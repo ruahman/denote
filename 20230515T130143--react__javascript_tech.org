@@ -1,0 +1,1143 @@
+#+title:      react
+#+date:       [2023-05-15 Mon 13:01]
+#+filetags:   :javascript:tech:
+#+identifier: 20230515T130143
+
+* What is react?
+  a JavaScript library for creating UIs
+
+  allow us to create reusable UI components
+
+  #+begin_src javascript
+    import React from "react";
+    import ReactDOM from "react-dom/client";
+
+    function Hello(props) {
+      return <h1>Hello World!</h1>;
+    }
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<Hello />);
+  #+end_src
+
+* Create a react app
+  #+begin_src bash
+    npx create-react-app my-react-app
+    cd my-react-app
+    npm start
+  #+end_src
+
+* How does react work
+  React creates a virtual DOM in memory
+
+* Get started in HTML
+  #+begin_src html
+    <!DOCTYPE html>
+    <html>
+      <head>
+	<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+      </head>
+      <body>
+
+	<div id="mydiv"></div>
+
+	<script type="text/babel">
+	  function Hello() {
+	    return <h1>Hello World!</h1>;
+	  }
+
+	  const container = document.getElementById('mydiv');
+	  const root = ReactDOM.createRoot(container);
+	  root.render(<Hello />)
+	</script>
+
+      </body>
+    </html>
+  #+end_src
+
+* App.js
+#+begin_src javascript
+  function App() {
+    return (
+      <div className="App">
+	<h1>Hello World!</h1>
+      </div>
+    );
+  }
+
+  export default App;
+#+end_src
+
+* render html
+#+begin_src javascript
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+root.render(<p>Hello</p>);
+#+end_src
+
+#+begin_src javascript
+const myelement = (
+  <table>
+    <tr>
+      <th>Name</th>
+    </tr>
+    <tr>
+      <td>John</td>
+    </tr>
+    <tr>
+      <td>Elsa</td>
+    </tr>
+  </table>
+);
+
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+root.render(myelement);
+
+#+end_src
+
+* Expressions in JSX
+#+begin_src js
+  const myElement = <h1>React is {5 + 5} times better with JSX</h1>;
+
+#+end_src
+
+* Fragment
+#+begin_src js
+  const myElement = (
+    <>
+      <p>I am a paragraph.</p>
+      <p>I am a paragraph too.</p>
+    </>
+  );
+
+
+#+end_src
+
+* set css class
+#+begin_src javascript
+  const myElement = <h1 className="myclass">Hello World</h1>;
+
+#+end_src
+
+* conditions
+#+begin_src javascript
+  const x = 5;
+
+  const myElement = <h1>{(x) < 10 ? "Hello" : "Goodbye"}</h1>;
+
+
+#+end_src
+
+* React Components
+
+** class component
+   #+begin_src javascript
+     class Car extends React.Component {
+       render() {
+	 return <h2>Hi, I am a Car!</h2>;
+       }
+     }
+   #+end_src
+
+** Function Components
+   #+begin_src javascript
+     function Car() {
+       return <h2>Hi, I am a Car!</h2>;
+     }
+   #+end_src
+
+** Props
+   #+begin_src javascript
+     function Car(props) {
+       return <h2>I am a {props.color} Car!</h2>;
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Car color="red"/>);
+   #+end_src
+
+** Component in Component
+   #+begin_src javascript
+     function Car() {
+       return <h2>I am a Car!</h2>;
+     }
+
+     function Garage() {
+       return (
+	 <>
+	   <h1>Who lives in my Garage?</h1>
+	   <Car />
+	 </>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Garage />);
+   #+end_src
+*** State
+    #+begin_src javascript
+      class Car extends React.Component {
+	constructor() {
+	  super();
+	  this.state = {color: "red"};
+	}
+	render() {
+	  return <h2>I am a {this.state.color} Car!</h2>;
+	}
+      }
+    #+end_src
+    
+*** Props
+    #+begin_src javascript
+      class Car extends React.Component {
+	render() {
+	  return <h2>I am a {this.props.color} Car!</h2>;
+	}
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<Car color="red"/>);
+    #+end_src
+
+**** pass props to constructor
+     #+begin_src javascript
+       class Car extends React.Component {
+	constructor(props) {
+	  super(props);
+	}
+	render() {
+	  return <h2>I am a {this.props.model}!</h2>;
+	}
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<Car model="Mustang"/>);
+     #+end_src
+     
+**** change state
+     #+begin_src javascript
+	      class Car extends React.Component {
+		constructor(props) {
+		  super(props);
+		  this.state = {
+		    brand: "Ford",
+		    model: "Mustang",
+		    color: "red",
+		    year: 1964
+		  };
+		}
+		changeColor = () => {
+		  // schedule to change the state
+		  this.setState({color: "blue"});
+		}
+		render() {
+		  return (
+		    <div>
+		      <h1>My {this.state.brand}</h1>
+		      <p>
+			It is a {this.state.color}
+			{this.state.model}
+			from {this.state.year}.
+		      </p>
+		      <button
+			type="button"
+			onClick={this.changeColor}
+		      >Change color</button>
+		    </div>
+		  );
+		}
+       }
+       
+     #+end_src
+** Components in file
+   #+begin_src javascript
+     function Car() {
+       return <h2>Hi, I am a Car!</h2>;
+     }
+
+     export default Car;
+   #+end_src
+
+   import it
+   #+begin_src javascript
+     import React from 'react';
+     import ReactDOM from 'react-dom/client';
+     import Car from './Car.js';
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Car />);
+   #+end_src
+   
+** Life Cycle of Component
+   
+*** Mounting
+
+*** Updating
+
+*** UnMounting
+
+* React Properties
+  #+begin_src javascript
+    function Car(props) {
+      return <h2>I am a { props.brand }!</h2>;
+    }
+
+    function Garage() {
+      return (
+	<>
+	  <h1>Who lives in my garage?</h1>
+	  <Car brand="Ford" />
+	</>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Garage />);
+  #+end_src
+
+* React Events
+  #+begin_src javascript
+    function Football() {
+      const shoot = () => {
+	alert("Great Shot!");
+      }
+
+      return (
+	<button onClick={shoot}>Take the shot!</button>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Football />);
+  #+end_src
+
+** Pass arguments
+   #+begin_src javascript
+     function Football() {
+       const shoot = (a) => {
+	 alert(a);
+       }
+
+       return (
+	 <button onClick={() => shoot("Goal!")}>Take the shot!</button>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Football />);
+   #+end_src
+
+* React Conditions
+  
+** if statement
+   #+begin_src javascript
+     function Goal(props) {
+       const isGoal = props.isGoal;
+       if (isGoal) {
+	 return <MadeGoal/>;
+       }
+       return <MissedGoal/>;
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Goal isGoal={false} />);
+   #+end_src
+
+** Logica && operator
+   #+begin_src javascript
+     function Garage(props) {
+       const cars = props.cars;
+       return (
+	 <>
+	   <h1>Garage</h1>
+	   {cars.length > 0 &&
+	     <h2>
+	       You have {cars.length} cars in your garage.
+	     </h2>
+	   }
+	 </>
+       );
+     }
+
+     const cars = ['Ford', 'BMW', 'Audi'];
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Garage cars={cars} />);
+   #+end_src
+
+** Ternary Operator
+   #+begin_src javascript
+     function Goal(props) {
+      const isGoal = props.isGoal;
+      return (
+	<>
+	  { isGoal ? <MadeGoal/> : <MissedGoal/> }
+	</>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Goal isGoal={false} />);
+   #+end_src
+
+* React List
+  #+begin_src javascript
+    function Car(props) {
+      return <li>I am a { props.brand }</li>;
+    }
+
+    function Garage() {
+      const cars = ['Ford', 'BMW', 'Audi'];
+      return (
+	<>
+	  <h1>Who lives in my garage?</h1>
+	  <ul>
+	    {cars.map((car) => <Car brand={car} />)}
+	  </ul>
+	</>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Garage />);
+  #+end_src
+
+** Keys
+   give a unique id to each list item so that only the list item that needs to be changed is updated,
+   instead of deleteing and rerendering the entire list
+   #+begin_src javascript
+     function Car(props) {
+       return <li>I am a { props.brand }</li>;
+     }
+
+     function Garage() {
+       const cars = [
+	 {id: 1, brand: 'Ford'},
+	 {id: 2, brand: 'BMW'},
+	 {id: 3, brand: 'Audi'}
+       ];
+       return (
+	 <>
+	   <h1>Who lives in my garage?</h1>
+	   <ul>
+	     {cars.map((car) => <Car key={car.id} brand={car.brand} />)}
+	   </ul>
+	 </>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Garage />);
+   #+end_src
+
+* React Forms
+  #+begin_src javascript
+    import { useState } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    function MyForm() {
+      const [name, setName] = useState("");
+
+      return (
+	<form>
+	  <label>Enter your name:
+	    <input
+	      type="text" 
+	      value={name}
+	      onChange={(e) => setName(e.target.value)}
+	    />
+	  </label>
+	</form>
+      )
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<MyForm />);
+  #+end_src
+
+** submit forms
+   #+begin_src javascript
+     import { useState } from 'react';
+     import ReactDOM from 'react-dom/client';
+
+     function MyForm() {
+       const [name, setName] = useState("");
+
+       const handleSubmit = (event) => {
+	 event.preventDefault();
+	 alert(`The name you entered was: ${name}`)
+       }
+
+       return (
+	 <form onSubmit={handleSubmit}>
+	   <label>Enter your name:
+	     <input 
+	       type="text" 
+	       value={name}
+	       onChange={(e) => setName(e.target.value)}
+	     />
+	   </label>
+	   <input type="submit" />
+	 </form>
+       )
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<MyForm />);
+   #+end_src
+
+** handle multiple fields
+   #+begin_src javascript
+     import { useState } from 'react';
+     import ReactDOM from 'react-dom/client';
+
+     function MyForm() {
+       const [inputs, setInputs] = useState({});
+
+       const handleChange = (event) => {
+	 const name = event.target.name;
+	 const value = event.target.value;
+	 setInputs(values => ({...values, [name]: value}))
+       }
+
+       const handleSubmit = (event) => {
+	 event.preventDefault();
+	 alert(inputs);
+       }
+
+       return (
+	 <form onSubmit={handleSubmit}>
+	   <label>Enter your name:
+	   <input 
+	     type="text" 
+	     name="username" 
+	     value={inputs.username || ""} 
+	     onChange={handleChange}
+	   />
+	   </label>
+	   <label>Enter your age:
+	     <input 
+	       type="number" 
+	       name="age" 
+	       value={inputs.age || ""} 
+	       onChange={handleChange}
+	     />
+	     </label>
+	     <input type="submit" />
+	 </form>
+       )
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<MyForm />);
+   #+end_src
+
+* React Router
+  to install
+  #+begin_src bash
+    npm i -D react-router-dom 
+  #+end_src
+
+  
+** index.js
+   #+begin_src javascript
+     import ReactDOM from "react-dom/client";
+     import { BrowserRouter, Routes, Route } from "react-router-dom";
+     import Layout from "./pages/Layout";
+     import Home from "./pages/Home";
+     import Blogs from "./pages/Blogs";
+     import Contact from "./pages/Contact";
+     import NoPage from "./pages/NoPage";
+
+     export default function App() {
+       return (
+	 <BrowserRouter>
+	   <Routes>
+	     <Route path="/" element={<Layout />}>
+	       <Route index element={<Home />} />
+	       <Route path="blogs" element={<Blogs />} />
+	       <Route path="contact" element={<Contact />} />
+	       <Route path="*" element={<NoPage />} />
+	     </Route>
+	   </Routes>
+	 </BrowserRouter>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<App />);
+   #+end_src
+
+** Layout.js
+   #+begin_src javascript
+     import { Outlet, Link } from "react-router-dom";
+
+     const Layout = () => {
+       return (
+	 <>
+	   <nav>
+	     <ul>
+	       <li>
+		 <Link to="/">Home</Link>
+	       </li>
+	       <li>
+		 <Link to="/blogs">Blogs</Link>
+	       </li>
+	       <li>
+		 <Link to="/contact">Contact</Link>
+	       </li>
+	     </ul>
+	   </nav>
+
+	   <Outlet />
+	 </>
+       )
+     };
+
+     export default Layout;
+   #+end_src
+
+* React Memo
+  skip rendering component if props have not changed
+  #+begin_src javascript
+    import { useState } from "react";
+    import ReactDOM from "react-dom/client";
+    import Todos from "./Todos";
+
+    const App = () => {
+      const [count, setCount] = useState(0);
+      const [todos, setTodos] = useState(["todo 1", "todo 2"]);
+
+      const increment = () => {
+	setCount((c) => c + 1);
+      };
+
+      return (
+	<>
+	  <Todos todos={todos} />
+	  <hr />
+	  <div>
+	    Count: {count}
+	    <button onClick={increment}>+</button>
+	  </div>
+	</>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  #+end_src
+
+  store result untill props change
+  #+begin_src javascript
+    import { memo } from "react";
+
+    const Todos = ({ todos }) => {
+      console.log("child render");
+      return (
+	<>
+	  <h2>My Todos</h2>
+	  {todos.map((todo, index) => {
+	    return <p key={index}>{todo}</p>;
+	  })}
+	</>
+      );
+    };
+
+    export default memo(Todos);
+
+  #+end_src
+  - Now the Todos component only re-renders when the todos that are passed to it through props are updated.
+
+* React Hooks
+  Hooks allow function components to have state
+
+** useState
+   #+begin_src javascript
+     import { useState } from "react";
+     import ReactDOM from "react-dom/client";
+
+     function Car() {
+       const [car, setCar] = useState({
+	 brand: "Ford",
+	 model: "Mustang",
+	 year: "1964",
+	 color: "red"
+       });
+
+       const updateColor = () => {
+	 setCar(previousState => {
+	   return { ...previousState, color: "blue" }
+	 });
+       }
+
+       return (
+	 <>
+	   <h1>My {car.brand}</h1>
+	   <p>
+	     It is a {car.color} {car.model} from {car.year}.
+	   </p>
+	   <button
+	     type="button"
+	     onClick={updateColor}
+	   >Blue</button>
+	 </>
+       )
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Car />);
+   #+end_src
+
+** useEffect
+   allows you to perform side effects in your component.
+
+   
+*** runs on every render
+    #+begin_src javascript
+      useEffect(() => {
+	//Runs on every render
+      });
+    #+end_src
+    
+*** runs only on the first render
+    #+begin_src javascript
+      useEffect(() => {
+	//Runs only on the first render
+      }, []);
+    #+end_src
+
+*** run on first time and any time dependencies change.
+    #+begin_src javascript
+      useEffect(() => {
+	//Runs on the first render
+	//And any time any dependency value changes
+      }, [prop, state]);
+    #+end_src
+
+* React useContext
+  is a way to manage state globally
+
+  #+begin_src javascript
+    import { useState, createContext } from "react";
+    import ReactDOM from "react-dom/client";
+
+    const UserContext = createContext()
+  #+end_src
+
+  
+** context provider
+   #+begin_src javascript
+     function Component1() {
+       const [user, setUser] = useState("Jesse Hall");
+
+       return (
+	 <UserContext.Provider value={user}>
+	   <h1>{`Hello ${user}!`}</h1>
+	   <Component2 user={user} />
+	 </UserContext.Provider>
+       );
+     }
+   #+end_src
+
+** useContext hook
+   #+begin_src javascript
+     function Component5() {
+       const user = useContext(UserContext);
+
+       return (
+	 <>
+	   <h1>Component 5</h1>
+	   <h2>{`Hello ${user} again!`}</h2>
+	 </>
+       );
+     }
+   #+end_src
+
+   
+** full example
+   #+begin_src javascript
+     import { useState, createContext, useContext } from "react";
+     import ReactDOM from "react-dom/client";
+
+     const UserContext = createContext();
+
+     function Component1() {
+       const [user, setUser] = useState("Jesse Hall");
+
+       return (
+	 <UserContext.Provider value={user}>
+	   <h1>{`Hello ${user}!`}</h1>
+	   <Component2 />
+	 </UserContext.Provider>
+       );
+     }
+
+     function Component2() {
+       return (
+	 <>
+	   <h1>Component 2</h1>
+	   <Component3 />
+	 </>
+       );
+     }
+
+     function Component3() {
+       return (
+	 <>
+	   <h1>Component 3</h1>
+	   <Component4 />
+	 </>
+       );
+     }
+
+     function Component4() {
+       return (
+	 <>
+	   <h1>Component 4</h1>
+	   <Component5 />
+	 </>
+       );
+     }
+
+     function Component5() {
+       const user = useContext(UserContext);
+
+       return (
+	 <>
+	   <h1>Component 5</h1>
+	   <h2>{`Hello ${user} again!`}</h2>
+	 </>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Component1 />);
+   #+end_src
+
+* useRef
+  allows you to preserve values between renders
+
+  does not cause a rerender when updated
+
+  it can be use to access dom elements directory
+
+  #+begin_src javascript
+    import { useState, useEffect, useRef } from "react";
+    import ReactDOM from "react-dom/client";
+
+    function App() {
+      const [inputValue, setInputValue] = useState("");
+      const count = useRef(0);
+
+      useEffect(() => {
+	count.current = count.current + 1;
+      });
+
+      return (
+	<>
+	  <input
+	    type="text"
+	    value={inputValue}
+	    onChange={(e) => setInputValue(e.target.value)}
+	  />
+	  <h1>Render Count: {count.current}</h1>
+	</>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  #+end_src
+
+** access to DOM elements
+   you can use ref to have access to a dom element if you need it
+   #+begin_src javascript
+     import { useRef } from "react";
+     import ReactDOM from "react-dom/client";
+
+     function App() {
+       const inputElement = useRef();
+
+       const focusInput = () => {
+	 inputElement.current.focus();
+       };
+
+       return (
+	 <>
+	   <input type="text" ref={inputElement} />
+	   <button onClick={focusInput}>Focus Input</button>
+	 </>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<App />);
+   #+end_src
+
+** keep track of previous state values
+   you can use ref to store the previous state of a state
+   #+begin_src javascript
+     import { useState, useEffect, useRef } from "react";
+     import ReactDOM from "react-dom/client";
+
+     function App() {
+       const [inputValue, setInputValue] = useState("");
+       const previousInputValue = useRef("");
+
+       useEffect(() => {
+	 previousInputValue.current = inputValue;
+       }, [inputValue]);
+
+       return (
+	 <>
+	   <input
+	     type="text"
+	     value={inputValue}
+	     onChange={(e) => setInputValue(e.target.value)}
+	   />
+	   <h2>Current Value: {inputValue}</h2>
+	   <h2>Previous Value: {previousInputValue.current}</h2>
+	 </>
+       );
+     }
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<App />);
+   #+end_src
+
+* useReducer
+  for complex state,  state is not just a single value but a complex object then reducer is best
+  #+begin_src javascript
+    import { useReducer } from "react";
+    import ReactDOM from "react-dom/client";
+
+    const initialTodos = [
+      {
+	id: 1,
+	title: "Todo 1",
+	complete: false,
+      },
+      {
+	id: 2,
+	title: "Todo 2",
+	complete: false,
+      },
+    ];
+
+    const reducer = (state, action) => {
+      switch (action.type) {
+	case "COMPLETE":
+	  return state.map((todo) => {
+	    if (todo.id === action.id) {
+	      return { ...todo, complete: !todo.complete };
+	    } else {
+	      return todo;
+	    }
+	  });
+	default:
+	  return state;
+      }
+    };
+
+    function Todos() {
+      const [todos, dispatch] = useReducer(reducer, initialTodos);
+
+      const handleComplete = (todo) => {
+	dispatch({ type: "COMPLETE", id: todo.id });
+      };
+
+      return (
+	<>
+	  {todos.map((todo) => (
+	    <div key={todo.id}>
+	      <label>
+		<input
+		  type="checkbox"
+		  checked={todo.complete}
+		  onChange={() => handleComplete(todo)}
+		/>
+		{todo.title}
+	      </label>
+	    </div>
+	  ))}
+	</>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Todos />);
+  #+end_src
+
+* useCallback
+  returns a memorized callback function
+
+  cached value???
+
+  allows use to isolate resource intese function so that they will not always run on every render
+
+  only runs when dependencies update
+
+  
+** index.js
+   #+begin_src javascript
+     import { useState, useCallback } from "react";
+     import ReactDOM from "react-dom/client";
+     import Todos from "./Todos";
+
+     const App = () => {
+       const [count, setCount] = useState(0);
+       const [todos, setTodos] = useState([]);
+
+       const increment = () => {
+	 setCount((c) => c + 1);
+       };
+
+       // cache this result so that it does not change with each rerender	 
+       const addTodo = useCallback(() => {
+	 setTodos((t) => [...t, "New Todo"]);
+       }, [todos]);
+
+       return (
+	 <>
+	   {/* addTodo does not change each render so memo stays the same unless props change   */}
+	   <Todos todos={todos} addTodo={addTodo} />
+	   <hr />
+	   <div>
+	     Count: {count}
+	     <button onClick={increment}>+</button>
+	   </div>
+	 </>
+       );
+     };
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<App />);
+   #+end_src
+
+** todo.js
+   #+begin_src javascript
+     import { memo } from "react";
+
+     // since addTodo does not change memo persists
+     const Todos = ({ todos, addTodo }) => {
+       console.log("child render");
+       return (
+	 <>
+	   <h2>My Todos</h2>
+	   {todos.map((todo, index) => {
+	     return <p key={index}>{todo}</p>;
+	   })}
+	   <button onClick={addTodo}>Add Todo</button>
+	 </>
+       );
+     };
+
+     export default memo(Todos);
+   #+end_src
+
+* useMemo
+  cache value
+  similar to useCallback except that useCallback caches a function
+  useMemo caches a value
+
+  run fuction only when needed
+
+  #+begin_src javascript
+    import { useState, useMemo } from "react";
+    import ReactDOM from "react-dom/client";
+
+    const App = () => {
+      const [count, setCount] = useState(0);
+      const [todos, setTodos] = useState([]);
+
+      // cache this result unless count changes,  this is a computation expensive function
+      // so only runn it if something changed
+      const calculation = useMemo(() => expensiveCalculation(count), [count]);
+
+      const increment = () => {
+	setCount((c) => c + 1);
+      };
+      const addTodo = () => {
+	setTodos((t) => [...t, "New Todo"]);
+      };
+
+      return (
+	<div>
+	  <div>
+	    <h2>My Todos</h2>
+	    {todos.map((todo, index) => {
+	      return <p key={index}>{todo}</p>;
+	    })}
+	    <button onClick={addTodo}>Add Todo</button>
+	  </div>
+	  <hr />
+	  <div>
+	    Count: {count}
+	    <button onClick={increment}>+</button>
+	    <h2>Expensive Calculation</h2>
+	    {calculation}
+	  </div>
+	</div>
+      );
+    };
+
+    const expensiveCalculation = (num) => {
+      console.log("Calculating...");
+      for (let i = 0; i < 1000000000; i++) {
+	num += 1;
+      }
+      return num;
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  #+end_src
+
+* Custom Hooks
+  when you have component logic that can be shared between components
+
+** useFetch.js
+   #+begin_src javascript
+     import { useState, useEffect } from "react";
+
+     const useFetch = (url) => {
+       const [data, setData] = useState(null);
+
+       useEffect(() => {
+	 fetch(url)
+	   .then((res) => res.json())
+	   .then((data) => setData(data));
+       }, [url]);
+
+       return [data];
+     };
+
+     export default useFetch;
+   #+end_src
+
+** index.js
+   #+begin_src javascript
+     import ReactDOM from "react-dom/client";
+     import useFetch from "./useFetch";
+
+     const Home = () => {
+       // reusable component logic
+       const [data] = useFetch("https://jsonplaceholder.typicode.com/todos");
+
+       return (
+	 <>
+	   {data &&
+	     data.map((item) => {
+	       return <p key={item.id}>{item.title}</p>;
+	     })}
+	 </>
+       );
+     };
+
+     const root = ReactDOM.createRoot(document.getElementById('root'));
+     root.render(<Home />);
+   #+end_src

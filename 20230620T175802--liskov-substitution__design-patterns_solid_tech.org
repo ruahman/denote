@@ -1,0 +1,9 @@
+#+title:      Liskov Substitution
+#+date:       [2023-06-20 Tue 17:58]
+#+filetags:   :design-patterns:solid:tech:
+#+identifier: 20230620T175802
+
+a subclass should be able to replace a parent class
+
+you should be able to just replace the parent class with one
+of it's subclasses and it will still work

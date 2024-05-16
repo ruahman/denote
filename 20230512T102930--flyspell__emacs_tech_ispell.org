@@ -1,0 +1,57 @@
+#+title:      flyspell
+#+date:       [2023-05-12 Fri 10:29]
+#+filetags:   :emacs:tech:ispell:
+#+identifier: 20230512T102930
+
+* add hook 
+  #+begin_src emacs-lisp
+    (dolist (hook '(text-mode-hook))
+      (add-hook hook (lambda () (flyspell-mode 1))))
+  #+end_src
+
+* ispell
+  flyspell uses ispell by default
+
+  install ispell for linux
+  #+begin_src bash
+    apt-get install ispell
+  #+end_src
+
+* start flyspell
+  #+begin_src bash
+    M-x flyspell-mode
+  #+end_src
+
+* check spelling to current buffer
+  #+begin_src bash
+    M-x flyspell-buffer
+  #+end_src
+
+* flyspell-correct-word-before-point (C-c $)
+  display list of possible correction for word marked as mispelled  
+
+* flyspell-auto-correct (C-.)
+  auto correct misspelled word.
+  sequential goes through list
+
+* flyspell-prog-mode
+  turn on flyspell-mode for comments and strings.
+
+* flyspell-goto-next-error (C-,)
+  got to next detected misspelling
+
+* spell checking
+| key               | command                               |
+|-------------------+---------------------------------------|
+| M-$               | spellcheck word at point              |
+| M-x flyspell-mode | minor mode that highlight mispellings |
+| M-x ispell-buffer | run spellcheck on buffer              |
+
+* LaTex
+#+begin_src emacs-lisp
+  (add-hook 'tex-mode-hook #'(lambda () (setq ispell-parser 'tex)))
+
+#+end_src
+
+
+

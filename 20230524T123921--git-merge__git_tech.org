@@ -1,0 +1,31 @@
+#+title:      git merge
+#+date:       [2023-05-24 Wed 12:39]
+#+filetags:   :git:tech:
+#+identifier: 20230524T123921
+
+first be on the branch that you want to merge into
+#+begin_src bash
+  git switch main
+#+end_src
+
+then merge the branch that has the changes you want
+#+begin_src bash
+  git merge <branch-that-has-your-changes>
+#+end_src
+
+
+fastfoward
+recursive
+conflict // when two people push changes to the same position in text
+
+
+add fixed conflict
+#+begin_src bash
+  git add fixed-merged-conflicted-file
+#+end_src
+
+then do a commit to commplete merge
+#+begin_src 
+  git commit
+#+end_src
+- now merge is complete

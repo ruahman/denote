@@ -1,0 +1,23 @@
+#+title:      distance formula
+#+date:       [2023-02-03 Fri 09:39]
+#+filetags:   :algebra:math:
+#+identifier: 20230203T093909
+#+LATEX_CLASS: article
+#+LATEX_HEADER: \usepackage{pgfplots}
+
+* graph
+\begin{tikzpicture}
+  \begin{axis}[xmin=0,xmax=20,ymin=0,ymax=20,axis lines=left,xlabel=x,ylabel=y,title={diego's graph}]
+    \addplot[
+      color=blue,
+      mark=square,
+    ]
+    coordinates {
+      (5,5)(10,10)(15,15)(20,20)
+    };
+  \end{axis}
+\end{tikzpicture}
+
+$$ distance = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} $$
+
+- this comes from the pathagrian theorem

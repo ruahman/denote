@@ -1,0 +1,115 @@
+#+title:      zero-conf
+#+date:       [2023-05-18 Thu 15:19]
+#+filetags:   :bitcoin:lightning:lnd:tech:
+#+identifier: 20230518T151945
+
+* What are zero-conf channels
+  are channels that do not require confirmations to be used.
+
+  because of this the fundee must trust the funder to not double-spend
+  and steal the balance of the channel
+
+* Starup
+  Two options must be specified either on the command line or in the config
+  * protocol.option-scid-alias
+  * protocol.zero-conf
+
+  note: if one of these are missing then it wont work,
+  this applies to both funder and fundee
+
+* Initiator requirements
+  When opening the channel, the initiator must ensure that the "anchors"
+  channel_type is enabled.
+
+  Additionally, the initiator must specify on the openchannel command line    call that zero-conf flag is set
+
+  
+* Responder requirements
+  if the responder has not specified a ChannelAcceptor, then ALL open
+  channel requests will fail regardless if they are zero-conf or not.
+
+  The ChannelAcceptor RPC will give the responder information on whether
+  the initiator is requesting a zero-conf channel via the channel type.
+
+  If the responder has specified a ChannelAcceptor and the funder has set
+  the zero-conf channel type, then the responder should set the ZeroConf
+  flag to true.
+
+  If ZeroConf is true, then MinAcceptDepth should be zero
+
+
+
+what are SCIDs???
+Short Channel IDs
+
+* Channel Acceptor
+  allows you to enforce custom logic on whether an incomming channel
+  should be accepted or not
+
+  define custom logic with regard to whether an incoming channel should
+  be accepted or not.
+
+  nodes must meet certain criteria
+
+  it can be use to accept zero-confirmation channels.
+
+  When no channel acceptor is set, all incoming zero-confirmation channels
+  are denied by default.
+
+
+  When using the channel acceptor to accept zero-confirmation channels,
+  please note that both the initiator and the respondent
+  must have the following set in their lnd.conf:
+
+  protocol.option-scid-alias=true
+  protocol.zero-conf=true
+
+  it is possible to have multiple channel acceptors. If any channel
+  acceptor denies a channel request, LND will deny the channel request
+  as well
+
+  The channel acceptor is used in Pool to make sure that the channels
+  opened through the marketplace have the desired attributes.
+
+* Anchor channel
+  include up to two special output called anchors which are used for timely
+  CPFP fee-bumping or forch-closed channels
+
+* Commitment fee
+  the commitment fee is the fee a commitment transaction pays to the bitcoin
+  miner.  Since the commitment fee needs to be calculated will in advance,
+  it can sometimes be larger than necessary.
+
+  anchor channels help alleviate this problem
+
+* CPFP
+  Child Pays For Parent is a method of effectively increasing the fee of
+  an unconfirmed on-chain transaction
+
+* LDK Zero-Confirmation Channels
+  Support for 0-conf channels became available in the LDK.
+
+  A 0-conf channel allows peers to start using a channel as soon as the funding transaction is broadcast instead of waiting for it to confirm.
+
+  By temporarily trusting the person initiating the channel open.
+
+  enable instant onboarding to the Lightning Network
+
+  
+  The only way a miner can reverse a transaction is by a process called
+  reorganization.  This requires the miner to build a chanin of blocks
+  with more work than the currently accepted chain.
+
+  0-conf transaction is dangerous to accept if you don't trust the sender.
+  since there is no guarentee that it will ever be included in the block.
+
+  If you receive money over a channel where the funding transaction is
+  never confirmed, you will lose money.
+
+  if you accept a 0-conf that means you trust the party.
+
+
+[[eww:https://github.com/lightningnetwork/lnd/blob/master/docs/zero_conf_channels.md][zero-conf-lnd]]
+[[https:https://github.com/BlueWallet/rn-ldk/blob/master/ios/RnLdk.swift][rn-ldk]]
+[[eww:https://docs.rs/lightning/0.0.115/lightning/ln/channelmanager/struct.ChannelManager.html#method.accept_inbound_channel_from_trusted_peer_0conf][ldk-0-conf]]
+[[eww:https://docs.rs/lightning/0.0.115/lightning/util/config/struct.ChannelHandshakeLimits.html#structfield.trust_own_funding_0conf][ldk-0-conf2]]

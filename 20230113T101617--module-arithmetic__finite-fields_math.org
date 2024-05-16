@@ -1,0 +1,37 @@
+#+title:      module arithmetic
+#+date:       [2023-01-13 Fri 10:16]
+#+filetags:   :finite-fields:math:
+#+identifier: 20230113T101617
+
+* module arithmetic
+one of the ways we can make finite fields closed under addition, subtraction, multiplication and division
+is by module arithmetic
+
+we can define addition on a finite set using module arithmetic
+
+7 % 3 = 1
+
+- the module is the remander
+
+  1747 % 241 = 60
+
+- it helps to think of module arithmetic as a clock
+
+- ex:
+  what will be the time if now is 3:00 in 47 hours?
+
+  (3 + 47) % 12 = 2
+
+- ex:
+  what was the time 16 hours ago?
+
+  (3 - 16) % 12 = 11
+
+- ex:
+  what will be the time minutes from now?
+
+  (12 + 843) % 60 = 15
+
+- we will be using module arithmetic when defining finite field arithmetic
+
+

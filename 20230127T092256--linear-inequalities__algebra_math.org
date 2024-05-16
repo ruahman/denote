@@ -1,0 +1,67 @@
+#+title:      linear inequalities
+#+date:       [2023-01-27 Fri 09:22]
+#+filetags:   :algebra:math:
+#+identifier: 20230127T092256
+
+no $x^2$ or higher
+
+\begin{equation*}
+3x + 2 \leq x - 7
+\end{equation*}
+
+* ex1:
+- you solve them the same way you solve inequalities
+- however if yo multiplie or divided an inequalitie then you need to reverse the direction of the inequalitie
+  \begin{align*}
+  -x &< -5\\
+  x  &> 5
+  \end{align*}
+
+  
+\begin{align*}
+-5(x + 2) + 3 &> 8\\
+-5x - 7 &> 8\\
+-5x &> 15\\
+x &< -3
+\end{align*}
+
+* ex2:
+-for compound inequalites just do each one seperatly 
+$3x - 4 \leq x - 8$ OR $6x + 1 > 10$
+\begin{align*}
+3x - 4 &\leq x - 8\\
+3x &\leq x -4\\
+2x &\leq -4\\
+x &\leq -2
+\end{align*}
+
+\begin{align*}
+6x + 1 &> 10\\
+6x &> 9\\
+x &> \frac{9}{6}\\
+x &> \frac{3}{2}
+\end{align*}
+
+$(-\infty, -2] \cup (\frac{3}{2}, \infty)$
+
+* ex3:
+$-\frac{2}{3}y > -12$ AND $-4y + 2 > 5$
+
+\begin{align*}
+y < 12 \cdot -\frac{3}{2}\\
+y < 18
+\end{align*}
+
+\begin{align*}
+-4y^7 &> 3\\
+y &< -\frac{3}{4} 
+\end{align*}
+
+* ex4:
+- think of it as a compound enequality
+- apply to both sides
+\begin{align*}
+-3 &\leq 6x - 2 < 10\\
+-1 &\leq 6x < 12\\
+-\frac{1}{16} &\leq x < 2
+\end{align*}

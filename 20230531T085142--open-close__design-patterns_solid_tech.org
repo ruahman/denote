@@ -1,0 +1,10 @@
+#+title:      open close
+#+date:       [2023-05-31 Wed 08:51]
+#+filetags:   :design-patterns:solid:tech:
+#+identifier: 20230531T085142
+
+open to extension
+- if you want to add functionality you need to extend the class
+
+close to modification
+- don't modify the class if you want to add a feature, extend it.

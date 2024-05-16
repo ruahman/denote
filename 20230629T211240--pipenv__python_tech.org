@@ -1,0 +1,70 @@
+#+title:      pipenv
+#+date:       [2023-06-29 jue 21:12]
+#+filetags:   :python:tech:
+#+identifier: 20230629T211240
+
+#+begin_src bash
+  pip install pipenv
+#+end_src
+
+start shell in virtual environment
+#+begin_src bash
+  pipenv shell
+#+end_src
+
+install packages, it will also setup a virtual env if none has been create yet for your folder
+#+begin_src bash
+  pipenv install <package-name>
+#+end_src
+
+uninstall package
+#+begin_src bash
+  pipenv uninstall <package>
+#+end_src
+
+only install for dev
+#+begin_src bash
+  pipenv install <package> --dev
+#+end_src
+
+install vrom Pipfile.lock
+#+begin_src bash
+  pipenv install
+#+end_src
+
+show our dependencies
+#+begin_src bash
+  pipenv graph
+#+end_src
+
+run stuff outside shell
+#+begin_src bash
+  pipenv run <comand>
+#+end_src
+
+create the lock file
+#+begin_src bash
+  pipenv lock
+#+end_src
+
+check for security vunralbilites
+#+begin_src bash
+  pipenv check
+#+end_src
+
+remove virtual environment create
+#+begin_src bash
+  pipenv --rm
+#+end_src
+
+uninstall all pacakges not specified in Pipfile.lock
+#+begin_src bash
+  pipenv clean
+#+end_src
+
+to see the path to your virtual environment
+#+begin_src bash
+  pipenv --venv
+#+end_src
+
+you can create a .env file to automaticaly set enviroment variable when you enter the virtaul environment

@@ -1,0 +1,51 @@
+% Created 2023-05-22 lun 15:55
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\author{Diego Vila}
+\date{\textit{[2023-02-03 vie 09:39]}}
+\title{distance formula}
+\hypersetup{
+ pdfauthor={Diego Vila},
+ pdftitle={distance formula},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.7-pre)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{graph}
+\label{sec:orgca8dfe1}
+\begin{tikzpicture}
+  \begin{axis}[xmin=0,xmax=20,ymin=0,ymax=20,axis lines=left,xlabel=x,ylabel=y,title={diego's graph}]
+    \addplot[
+      color=blue,
+      mark=square,
+    ]
+    coordinates {
+      (5,5)(10,10)(15,15)(20,20)
+    };
+  \end{axis}
+\end{tikzpicture}
+
+$$ distance = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2} $$
+
+\begin{itemize}
+\item this comes from the pathagrian theorem
+\end{itemize}
+\end{document}

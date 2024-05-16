@@ -1,0 +1,72 @@
+#+title:      addition-and-subtraction
+#+date:       [2023-01-19 Thu 12:29]
+#+filetags:   :finite-fields:math:module-arithmetic:
+#+identifier: 20230119T122951
+
+* Finite Field Addition and Subtraction
+- we must define addition in such a way that the results are still in the set
+  - we must make sure that addition in a finite set is _closed_
+
+- let say we have a finite field of 19
+\begin{equation*}
+F_{19} = \{0,1,2, \dots 18\}
+\end{equation*}
+
+  - where $a,b \in F_{19}$, this means a and b are elements in $F_{19}$
+  - for addition to be closed $a +_f b \in F_{19}$,
+    - note $+_f$ represents field addition so that you don't get confused with normal aditiion
+  - we define addition using module arithmetic this way
+    - $a +_f b = (a + b) \mod p$
+  - we can also define subtraction using module arithmetic
+    - $a -_f b = (a - b) \mod p$
+ 
+** python implementation
+
+#+begin_src python :results output
+    class FieldElement:
+
+        def __init__(self, num, prime):
+            if num >= prime or num < 0:
+                raise ValueError(f"{num} is not in finite field {prime}")
+            self.num = num
+            self.prime = prime
+
+        def __repr__(self):
+            return f"FieldElement_{self.prime}({self.num})"
+
+        def __eq__(self, other):
+            if other is None:
+                return False
+            return self.num == other.num and self.prime == other.prime
+
+        def __ne__(self, other):
+            return not (self == other)
+
+        def __add__(self, other):
+            if self.prime != other.prime:
+                raise TypeError("they dont belong to the same finite-field")
+            num = (self.num + other.num) % self.prime
+            return self.__class__(num, other.prime)
+
+        def __sub__(self, other):
+            if self.prime != other.prime:
+                raise TypeError("they dont belong to the same finite-field")
+            num = (self.num - other.num) % self.prime
+            return self.__class__(num, other.prime)
+
+    a = FieldElement(7, 13)
+    b = FieldElement(12, 13)
+    c = FieldElement(6, 13)
+    d = FieldElement(8, 13)
+
+    print(a+b==c)
+    print(a-b==d)
+#+end_src
+
+#+RESULTS:
+: False
+: True
+: True
+: True
+: True
+  d = FieldElement(8, 13)

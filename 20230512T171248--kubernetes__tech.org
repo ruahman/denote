@@ -1,0 +1,528 @@
+#+title:      kubernetes
+#+date:       [2023-05-12 Fri 17:12]
+#+filetags:   :tech:
+#+identifier: 20230512T171248
+
+* What is kubernetes
+
+  Kubernetes a.k.a K8s
+
+  Container Orchestration Framework
+
+  created at google
+
+  designed as a loosely coupled collection of components centered
+  around deploying, maintaining, and scaling containers
+
+  Hight Availability :: no downtime
+
+  Scalability :: you can scale up or down if needed
+
+  Disaster Recovery :: backup restore
+
+  a kubernetes set is made up of one master node and multiple worker nodes
+
+  in docker-desktop check "Enable Kubernetes"
+
+* K8s Components
+
+** Pod
+    - a abstraction over a container
+    - or a layer ontop of a container
+    - is not ties down to a specific container technology
+    - is meant to run only one container at a time
+    - each pod gets it's own ip address
+      + because each pod is ephemeral each time a pod is close and restarted
+	a new ip is assigned to a pod
+  
+** Service
+    - static ip address assigned to a pod
+    - it's also a load balancer
+
+*** External Service
+     exposes outside of the cluster so that a browser can access it
+
+*** Internal Service
+     use for internal network not exposed to the outside
+
+*** Ingress
+     handles routing through urls not ips??
+     exposes service using a url???
+
+** ConfigMap
+   external configuration to your application
+
+** Secret
+   like configmap but stores secrets
+   - passwords
+   - creds
+   - certs
+
+   base64 and encoded
+
+** Volumes
+   data storage
+   think of it as an external harddrive
+
+** Deployment
+   blueprint to how you would like to create and start pods
+
+   in practice you would be mostly configuring Deployments not Pods
+
+   you can scale up or scale down the number of pods you want running
+
+   it is another abstraction on top of Pods
+
+** StatefulSet
+   blueprint to how you want to replicate databases
+
+   for stateful apps, ex databases, mysql, mongodb
+
+   make sure that databse reads and writes are syscronized
+
+   this can be hard.
+
+   DBs are usually hosted outside the K8s cluster.
+
+* K8s Architecture
+
+** master
+   * usually you have 2 running for backup
+   * require less resources than worker nodes
+     
+   handles the management of the worker nodes
+
+   it has 4 processes running on it.
+   1. APIServer :: this is where you interacte with the cluser
+   2. Scheduler :: in charge of scheduling to run a pod on one of the worker nodes
+      - it desides which node the pod will run on
+   3. Control Manager :: detects state changes to cluster and tells scheduler to restart some pods
+
+** slave / worker machine / nodes
+   they actually do the work
+   
+   each node will have multiple Pods running containers in them
+
+   three process must be installed on each node
+   1. the container runtime
+   2. kublet :: starts the pod that runs the container and asigns resources
+   3. kubproxy :: incharge of forwarding requests to services
+      - incharge of forwarding request to services???
+   4. etcd:  key-value store of the cluster state
+
+
+
+   
+master node / control point
+
+Master Node
+- runs several kubernetes processesz
+  + API Server
+    * its also a container
+    * entry point to the kubernetes cluster
+    * this is the process that different kubernetes clients will talk too.
+  + Control Manager
+    * keeps an overview of what is going on.
+  + Scheduler
+    * decides which worker node to schedule running a container based on workload and availability.
+  + etcd
+    * backup storage
+    * keeps track of the state of the cluster, configs, etc
+    * stores snapshots of cluster state
+- can use less resources but is more important
+
+Virtual Network
+- one unified machine
+
+working nodes
+- each worker node has a kublet process working on it
+- each worker node has containers running on it
+- worker nodes is where the actual work is happening.
+- worker nodes usually have more resources allocated for it.
+
+
+Kubernetes Master
+- kube-controller-manager
+- cloud-controller-manager
+- kube-apiserver
+- etcd
+- kube-scheduler
+  
+Kubernetes Nodes / worker nodes
+- kubelet
+- kube-proxy
+
+a container runs in a Pod
+a Pod runs in a Node
+a Node runs in a Cluster
+
+
+* install kubernetes
+  how to run kubernetes locally
+  - docker desktop
+    + Enable kubernetes
+  - MicroK8s
+  - MiniKube
+    + just need a hyperviser like VirtualBox
+  - Kind
+    + stands for "Kubernetes IN Docker"
+    + runs on top of docker desktop
+
+
+* validate if kubernetes is working
+  #+begin_src bash
+    kubectl cluster-info
+  #+end_src
+
+* Main Kubernetes Components
+
+** worker node / Node
+   machine or virtual machine
+
+** Pod
+   - smallest unit in kubernets
+   - an abstraction over a container
+   - running environment or layer ontop of the container
+     + that way your not tied down to a specific container technologie
+   - usually one application per pod
+   - each pod gets it's own ip address, not the container
+
+** Service
+   - static ip address attached to a pod
+   - even if pod dies the ip will stay
+   - pods communicate with each other using services
+   - is also a load balancer
+   
+*** External Service
+    opens up assess from external sources
+
+*** Internal Service
+    only for internal use
+
+** Ingress
+   forwards request to the services
+
+** ConfigMap
+   - attach url to service ip
+   - external configuration to your application
+   - you connect it to a pod
+
+** Secret
+   - just like ConfigMap but is used to store secret data like passwords
+   - not stored in a external config file but base64 encoded formate
+   - passwords
+   - certificates
+   - creds
+   - also encrypted
+   - just like ConfigMap you connect it to a pod
+
+** Volume
+   data storage
+
+   attaches a physical location on a hard drive to your pod
+
+** Deployment
+   - blueprint for a pod
+     + specify how many replicas
+   - in practice you would not be working with pods directly but Deployments
+   - it is another abstraction on top of pods
+
+** StatefulSet
+   so that pods that are running the same database cordinate when accessing the data
+   - for STATEFULL apps
+     + MYSQL
+     + MONGODB
+   - make sure database read and writes are syncrnized beween two runnning database instances
+   - make sure there are no database inconsistencies
+   - if more common to hold database application outside the database cluster.
+   - STATEFULSet are kinda difficult and it's more common to use and external database source
+
+* Summary
+  - Pods :: host containers
+  - Services :: communication
+  - Ingress :: routes trafic to cluster
+  - External Configuration
+    + ConfigMap :: configs that your app needs, like .hosts urls
+    + Secret :: stores passwords, certs, creds
+  - Volumes :: data persistence
+  - Blueprints :: how to launch Pods
+    - Deployment :: how to replicate pods
+    - STATEFULLSet :: how to manage database syscrnization between two database containers?? 
+
+* Kubernetes Configuration
+  kubectl :: k8s cli
+  - communicates through API Server
+    + only entry point into the cluster
+
+  requests must be in yaml or json
+
+  control manager makes sure that the state you declared stays
+
+
+  every configuration file in kubernetes have 3 parts
+
+  1. meta data
+     - meta data for the component you are setting up
+  2. specs
+     - set every configuration you need for that specific component
+     - different depending on the kind of component you are specifying
+  3. status
+     - added automatically by kubernetes
+     - compare status to specs to see if kubernetes needs to fix anything
+
+
+
+  kind
+     - specify what type of component you are declaring
+     - each component has their own apiVersion
+
+  etcd :: stores the cluster data
+  - hold the current status of any kubernetes component
+  
+** Deployment example
+   #+begin_src yaml
+     apiVersion: app/v1
+     kind: Deployment
+     metadata:
+       name: nginx-deployment
+       lables: ...
+     specs:
+       replicas: 2
+       selector: ...
+       template: ...
+
+   #+end_src
+
+** Service example
+   #+begin_src yaml
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: nginx-service
+     spec:
+       selector: ...
+       ports: ...
+
+   #+end_src
+
+* minikube and kubectl
+
+  - minikube allows running kubernetes on local.
+    + master and worker both run on the same machine
+
+  install docker and minikube
+  #+begin_src bash
+    sudo pacman -Ss docker minikube kubectl
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo usermod -aG docker $USER
+  #+end_src
+
+  start minikube
+  #+begin_src bash
+    minikube start --driver docker
+  #+end_src
+  - run minikube on docker
+
+  see status
+  #+begin_src bash
+    minikube status
+  #+end_src
+
+  kubectl gets installed with minikube
+
+  list all node in cluster
+  #+begin_src bash
+    kubectl get node
+  #+end_src
+
+  minikube cli is for starting up the cluster
+
+  kubectl is user for configuring the minikube cluster
+
+* Demo APP
+
+  config files we need to setup
+  
+  - ConfigMap
+    + for mongodb endpoint
+  - Secret
+    + for username and password
+  - Deployment
+  - Service
+
+  
+** mongo-config.yaml
+   #+begin_src yaml
+     apiVersion: v1
+     kind: ConfigMap
+     metadata:
+       name: mongo-config
+     data:
+       mongo-url: mongo-service
+   #+end_src
+
+** mongo-secret.yaml
+   #+begin_src yaml
+     apiVersion: v1
+     kind: Secret
+     metadata:
+       name: mongo-secret
+     type: Opaque
+     data:
+       mongo-user: bW9uZ291c2Vy
+       mongo-password: bW9uZ29wYXNzd29yZA==
+   #+end_src
+
+   you need to set the value to base64
+   #+begin_src bash
+     echo -n mongouser | base64
+     echo -n mongopassword | base65
+   #+end_src
+
+** mongo.yaml
+   - this is a deployment config
+
+   #+begin_src yaml
+       apiVersion: apps/v1
+       kind: Deployment
+       metadata:
+	 name: mongo-deployment
+	 lables:
+	   app: mongo
+       spec:
+	 replicas: 1
+	 selector:
+	   matchLables:
+	     app: mongo
+	 template:
+	   metadata:
+	     labels:
+	       app: mongo
+	   spec:
+	     containers:
+	     - name: mongodb
+	       image: mongo:5.0
+	       ports:
+	       - containerPort: 27017
+	       env:
+		 - name: MONGO_INITDB_ROOT_USERNAME
+		   valueFrom:
+		     secretKeyRef:
+		       name: mongo-secret
+		       key: mongo-user
+		 - name: MONGO_INITDB_ROOT_PASSWORD
+		   valueFrom:
+		     secretKeyRef:
+		       name: mongo-secret
+		       key: mongo-password
+     ---
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: mongo-service
+     spec:
+       selector:
+	 app: mongo
+       ports:
+	 - protocol: TCP
+	   port: 27017
+	   targetPort: 27017
+   #+end_src
+   - template is the configuration of the Pod
+     + has it's own metadata and spec
+     + this configures the Pod
+     + containers: is the list of containers in the pod, usuall one one
+     + labels :: label the Pod so Deployment knows which pods it's associated with
+
+** webapp.yaml
+   - this is a deployment config and service config for webapp
+
+   #+begin_src yaml
+       apiVersion: apps/v1
+       kind: Deployment
+       metadata:
+	 name: webapp-deployment
+	 lables:
+	   app: webapp
+       spec:
+	 replicas: 1
+	 selector:
+	   matchLables:
+	     app: webapp
+	 template:
+	   metadata:
+	     labels:
+	       app: webapp
+	   spec:
+	     containers:
+	     - name: webapp
+	       image: my/node-js-app:67
+	       ports:
+	       - containerPort: 3000
+	       env:
+		 - name: USER_NAME
+		   valueFrom:
+		     secretKeyRef:
+		       name: mongo-secret
+		       key: mongo-user
+		 - name: USER_PASS
+		   valueFrom:
+		     secretKeyRef:
+		       name: mongo-secret
+		       key: mongo-password
+		 - name: DB_URL
+		   valueFrom:
+		     configMapKeyRef:
+		       name: mongo-config
+		       key: mongo-url
+     ---
+     apiVersion: v1
+     kind: Service
+     metadata:
+       name: webapp-service
+     spec:
+       type: NodePort
+       selector:
+	 app: webapp
+       ports:
+	 - protocol: TCP
+	   port: 3000
+	   targetPort: 3000
+	   nodePort: 30100
+   #+end_src
+   - set this as an external service so that someone can access the cluster from outside
+
+
+   
+** Deploy components
+
+   see pods deployed
+   #+begin_src bash
+     kubectl get pod
+   #+end_src
+
+   first deploy configs
+   #+begin_src bash
+     kubectl apply -f mongo-config.yaml
+     kubectl apply -f mongo-secret.yaml
+     kubectl apply -f mongo.yaml
+     kubectl apply -f webapp.yaml
+   #+end_src
+
+   show all components in cluseter
+   #+begin_src bash
+     kubectl get all
+   #+end_src
+
+   show all config and secret
+   #+begin_src bash
+     kubectl get configmap
+     kubectl get secret
+   #+end_src
+
+   show all pods
+   #+begin_src bash
+     kubectl get pod
+   #+end_src
+

@@ -1,0 +1,300 @@
+#+title:      docker
+#+date:       [2023-05-12 Fri 19:34]
+#+filetags:   :tech:
+#+identifier: 20230512T193459
+
+* WSL2
+  allow you to run a linux distro in your windows machine
+
+  the docker runtime can me installed inside a wsl machine which is faster than virtualization
+
+  check "Use the WSL 2 based engine"
+
+  under resources make sure to enable WSL integration
+
+* docker info
+
+  display system information
+  #+begin_src bash
+    docker info
+  #+end_src
+
+* docker version
+
+  display docker version
+  #+begin_src bash
+    docker version
+  #+end_src
+
+* docker login
+
+  login to docker registry
+  #+begin_src bash
+    docker login
+  #+end_src
+
+* docker pull
+
+  pull image from repository
+  #+begin_src bash
+    docker pull [imageName]
+  #+end_src
+
+* docker run
+
+  run a container
+  #+begin_src bash
+    docker run [imageName]
+  #+end_src
+
+  run container in background
+  #+begin_src bash
+    docker run -d [imageName]
+  #+end_src
+
+  example 1:
+  #+begin_src bash
+    docker run -p 80:80 -n webserver nginx
+  #+end_src
+
+  example 2:
+  #+begin_src bash
+    docker run -d -p 80:80 --name webserver nginx
+  #+end_src
+
+  Attach container to a shell
+  #+begin_src bash
+    docker run -it nginx -- /bin/bash
+  #+end_src
+
+* docker container exec
+  execute command on top of running container
+
+  attach to an already running shell
+  #+begin_src bash
+    docker container exec -it [containerName] -- bash
+  #+end_src
+
+  example 1:
+  #+begin_src bash
+    docker container exec -it webserver bash
+  #+end_src
+
+* docker start
+  restart stopped container
+
+  restart container to shell??
+  #+begin_src bash
+    docker start -ai [containerName] -- bash
+  #+end_src
+  
+* docker stop
+
+  stop container
+  #+begin_src bash
+    docker stop [containerName]
+  #+end_src
+  
+* docker start
+
+  start stopped container
+  #+begin_src bash
+    docker start [containerName]
+  #+end_src
+
+  ex 1:
+  #+begin_src bash
+    docker stop webserver
+  #+end_src
+
+* docker ps
+
+  list running containers
+  #+begin_src bash
+    docker ps
+  #+end_src
+
+  list running and stop containers
+  #+begin_src bash
+    docker ps -a
+  #+end_src
+
+* docker kill
+
+  kill container
+  #+begin_src bash
+    docker kill [containerName]
+  #+end_src
+
+  
+* docker image inspect
+
+  get image info
+  #+begin_src bash
+    docker image inspect [imageName]
+  #+end_src
+
+* docker rm
+
+  remove container stopped container
+  #+begin_src bash
+    docker rm [containerName]
+  #+end_src
+
+  remove all stopped containers
+  #+begin_src bash
+    docker rm $(docker ps -a -q)
+  #+end_src
+
+  ex1:
+  #+begin_src bash
+    docker rm webserver
+  #+end_src
+  
+* docker image
+
+  list images
+  #+begin_src bash
+    docker images
+  #+end_src
+
+
+* docker rmi
+
+  remove image
+  #+begin_src bash
+    docker rmi [imageName]
+  #+end_src
+
+  ex1:
+  #+begin_src bash
+    docker rmi nginx
+  #+end_src
+
+* docker system prune
+
+  remove images not used by any containers
+  #+begin_src bash
+    docker system prune -a
+  #+end_src
+
+* docker build
+
+  build an image using a Dockerfile located in same directory
+  #+begin_src bash
+    docker build -t [name:tag] .
+  #+end_src
+
+  if docker file is located somewhere else
+  #+begin_src bash
+    docker build -t [name:tag] -f [path/to/Dockerfile]
+  #+end_src
+  
+* docker tag
+
+  tag an existing image
+  #+begin_src bash
+    docker tag [imageName] [name:tag]
+  #+end_src
+
+  
+* Dockerfile
+
+  ex1:
+  #+begin_src dockerfile
+    FROM nginx:alpine
+    COPY . /user/share/nginx/html
+  #+end_src
+  - copy content from current directory to path on container
+
+  build it like this
+  #+begin_src bash
+    docker build -t webserver-image:v1 .
+  #+end_src
+
+  ex2:
+  #+begin_src dockerfile
+    FROM alpine
+    RUN apk add --update nodejs nodejs-npm
+    COPY . /src
+    WORKDIR /src
+    RUN npm install
+    EXPOSE 8080
+    ENTRYPOINT ["node", "./app.js"]
+  #+end_src
+  - ENTRYPOINT :: allow the person running the container to attach extra parameters
+  - CMD :: just command you want to run.  if your add something to container it overrides it
+
+  ex3:
+  #+begin_src dockerfile
+    FROM node:12.18-alpine
+    ENV NODE_ENV production
+    WORKDIR /usr/src/app
+    COPY ["package.json", "package-lock.json", "./"]
+    RUN npm install --production --silent mv node_modules ../
+    COPY . .
+    EXPOSE 3000
+    CMD ["npm", "start"]
+  #+end_src
+  - CMD :: if you add something at the end of this it will get overiden
+
+* .dockerignore
+
+  list of file not to deploy to our container
+
+  
+* Volumes
+
+  data stored in containers is lost when it is removed
+
+  you usually dont store data in containers
+
+  you store data you want to keep in a Volume
+  - a volume is mapped to a logical folder
+
+  
+** docker create volume
+
+ create a new volume
+ #+begin_src bash
+   docker create volume [volumeName]
+ #+end_src
+
+** docker volume ls
+
+ list volumes
+ #+begin_src bash
+   docker volume ls
+ #+end_src
+
+** docker volume inspect
+
+ display volume info
+ #+begin_src bash
+   docker volume inspect [volumeName]
+ #+end_src
+
+** docker volume rm
+
+ delete a volume
+ #+begin_src bash
+   docker volume rm [volumeName]
+ #+end_src
+
+** docker volume prune
+
+ delete all volumes not mounted
+ #+begin_src bash
+   docker volume prune
+ #+end_src
+
+ ex1:
+ #+begin_src bash
+   docker run -d --name devtest -v myvol:/app nginx:latest
+ #+end_src
+
+ ex2: instead of a volume you can use a local folder
+ #+begin_src bash
+   docker run -d --name devtest -v ./src:/app nginx:latest
+ #+end_src
+ - this is good for testing your source code

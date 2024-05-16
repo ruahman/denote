@@ -1,0 +1,333 @@
+#+title:      btcd
+#+date:       [2023-06-16 Fri 14:24]
+#+filetags:   :bitcoin:crypto:
+#+identifier: 20230616T142449
+
+btcd is an alternative full node to bitcoin
+but it is not a wallet
+
+it has been in production since 2013
+
+properly downloads, validates, and serves the block chain
+
+take great care to not cause a fork.
+
+one key difference between bitcoin core is that btcd does
+not include a wallet.  this was intentional.
+
+you cant make or receive payments directly with btcd.
+
+that functionality is provided by btcwallet
+
+to make and receive payment you need to hookup btcwallet
+
+first you need go installed
+
+set you GOPATH
+
+#+begin_src bash
+  export GOROOT=/path/to/golang
+  export GOPATH=~/gocode
+  export PATH=$PATH:$GOPATH/bin
+#+end_src
+
+to compile btcd
+#+begin_src bash
+  cd $GOPATH/src/github.com/btcsuite/btcd
+  GO111MODULE=on go install -v . ./cmd/...
+#+end_src
+- btcd (and utilities) will now be installed in $GOPATH/bin.
+
+
+* getting started
+  #+begin_src bash
+    ./btcd
+  #+end_src
+
+* btcd: not your mama's bitcoin daemon
+  decided to separate chain and wallet architecture
+
+  btcwallet:  the wallet implementation which works with btcd to
+  provide wallet services
+
+  
+* install
+  #+begin_src bash
+    git clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
+    cd $GOPATH/src/github.com/btcsuite/btcd
+    GO111MODULE=on go install -v . ./cmd/...
+  #+end_src
+  -- btc (and utilites) will now be installed in $GOPATH/bin
+
+  typically btcd will run and start downloading the block chain with
+  no extra configuration.
+
+* Docker
+  hostname: btcd
+  by default, docker is recreating the hostname every time you change
+  docker-compose.yml.
+  the RPC port is using a certificate to validate the hostname.
+  if the host name changes you need to recreate the certificate.
+  to avoid this you should set a fixed hostname before the first start.
+  This ensures, that the docker volume is created with a certificate with this
+  hostname.
+
+  restart:unless-stopped.
+  
+** full node without RPC port
+   #+begin_src yaml
+     version: "2"
+
+	  services:
+	    btcd:
+	      container_name: btcd
+	      hostname: btcd
+	      image: btcsuite/btcd:latest
+	      restart: unless-stopped
+	      volumes:
+		- btcd-data:/root/.btcd
+	      ports:
+		- 8333:8333
+
+		volumes:colnamesl
+	    btcd-data:
+   #+end_src
+** Full node with RPC port
+   #+begin_src yaml
+     version: "2"
+
+services:
+  btcd:
+    container_name: btcd
+    hostname: btcd
+    image: btcsuite/btcd:latest
+    restart: unless-stopped
+    volumes:
+      - btcd-data:/root/.btcd
+    ports:
+      - 8333:8333
+      - 8334:8334
+    command: [
+        "--rpcuser=[CHOOSE_A_USERNAME]",
+        "--rpcpass=[CREATE_A_VERY_HARD_PASSWORD]"
+    ]
+
+volumes:
+  btcd-data:
+   #+end_src
+** Full node with RPC running on TESTNET
+   #+begin_src yaml
+     version: "2"
+
+services:
+  btcd:
+    container_name: btcd
+    hostname: btcd
+    image: btcsuite/btcd:latest
+    restart: unless-stopped
+    volumes:
+      - btcd-data:/root/.btcd
+    ports:
+      - 18333:18333
+      - 18334:18334
+    command: [
+        "--testnet",
+        "--rpcuser=[CHOOSE_A_USERNAME]",
+        "--rpcpass=[CREATE_A_VERY_HARD_PASSWORD]"
+    ]
+
+volumes:
+  btcd-data:
+   #+end_src
+
+* btcctl
+  btcctl is a command line utility that can be used to controlling and query
+  btcd via RPC.  btcd does not enable its RPC server by default.
+  you must configure that manualy.
+
+* minning
+  add the payment address with the miningaddr option
+  #+begin_src config
+    [Application Options]
+    rpcuser=admin
+    rpcpass=password
+    miningaddr=<binding address>
+  #+end_src
+
+* wallet
+  btcd was intentionally developed without an integrated wallet for
+  security reasons.  see btcwallet
+
+* JSON-RPC API
+  is fully compatible with bitcoind
+
+* btcwallet
+  a daemon handling bitcoin wallet functionality.
+  funtion as an RPC client to btcd and an RPC server for wallet clients.
+
+  is not a SPV client and is required to connect to a local or remote btcd
+  instance
+
+  wallet clients can use one of two RPC servers
+  1. Legacy JSON-RPC server mostly compatible with Bitcoin core
+
+  2. Experimental gRPC server
+     not stable
+
+** install
+   #+begin_src bash
+     $ cd $GOPATH/src/github.com/btcsuite/btcwallet
+     $ GO111MODULE=on go install -v . ./cmd/...
+   #+end_src
+
+** getting started
+   start btcd
+   #+begin_src 
+     btcd -u rpcuser -P rpcpass
+   #+end_src
+
+   create a wallet
+   #+begin_src bash
+     btcwallet -u rpcuser -P rpcpass --create
+   #+end_src
+
+   now start btcwallet
+   #+begin_src bash
+     btcwallet -u rpcuser -P rpcpass
+   #+end_src
+
+* start btcd
+  this creates rpc.cert and btcd.conf
+  #+begin_src bash
+    btcd --testnet --rpcuser=REPLACEME --rpcpass=REPLACEME
+  #+end_src
+  - if you want to use testnet then btcd needs to fully sync
+  - --txindex is optional but lnd will go faster
+
+  check your progress
+  #+begin_src bash
+    btcctl --testnet --rpcuser=REPLACEME --rpcpass=REPLACEME getinfo
+	{
+	      "version": 120000,
+	      "protocolversion": 70002,
+	      "blocks": 1114996,
+	      "timeoffset": 0,
+	      "connections": 7,
+	      "proxy": "",
+	      "difficulty": 422570.58270815,
+	      "testnet": true,
+	      "relayfee": 0.00001,
+	      "errors": ""
+	    }
+  #+end_src
+
+  
+* simnet
+  is simmular to regtest, you can instanatly mine blocks
+
+ 
+* Docker
+  we need to pass all configuration parameters as commandline arguments, so it doesn't make sence to make a btcd.conf
+
+  #+begin_src yaml
+    version: "2"
+
+    services:
+      btcd:
+	container_name: btcd
+	hostname: btcd
+	build: https://github.com/btcsuite/btcd.git#master
+	restart: unless-stopped
+	volumes:
+	  - btcd-data:/root/.btcd
+	ports:
+	  - 18333:18333
+	  - 18334:18334
+	command: [
+	    "--testnet",
+	    "--rpcuser=[CHOOSE_A_USERNAME]",
+	    "--rpcpass=[CREATE_A_VERY_HARD_PASSWORD]"
+	]
+
+    volumes:
+      btcd-data:
+	
+
+  #+end_src
+
+* btcwallet
+  the wallet functionality has be unbundled to btcwallet
+
+* Bitcoin Simulation Network
+  simnet stands for simulation network
+  you decide when new blocks can be minded
+  no blockchain download is needed
+
+  simnet runs immediatly, withou download additional data from the internet
+
+  #+begin_src bash
+    ./btcd --simnet --rpcuser=admin --rpcpas=password
+  #+end_src
+
+  before we can run a wallet we need to create one.
+  #+begin_src bash
+    ./btcwallet --simnet -u admin -P password --create
+  #+end_src
+
+  now we can start the btcwallet
+  #+begin_src bash
+    ./btcwallet --simnet -u admin -P password 
+  #+end_src
+
+  then create and address for the miner
+
+  first enter passphase to wallet
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet walletpassphrase velas787 600
+  #+end_src
+
+  then get address
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet getnewaddress
+  #+end_src
+
+  then restart btcd and set minning address
+  #+begin_src bash
+     btcd --miningaddr=SgogkzDMQKBhgyn6BASLeSnPnaQKA7pDMr
+  #+end_src
+
+  generate blocks to receive money
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet generate 21
+  #+end_src
+
+  show the balance
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet getbalance
+  #+end_src
+
+  create another account
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet createnewaccount account1
+  #+end_src
+
+  show accounts
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet listaccounts
+  #+end_src
+
+  genearte an address for account
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet getnewaddress account1
+  #+end_src
+
+  send to address
+  #+begin_src bash
+    btcctl --simnet --rpcuser=admin --rpcpass=password --wallet sendtoaddress Sa9oZEa5J1DwRxp6iEHptMqe1CShk5bUBD 21
+  #+end_src
+
+  show balance for new account
+  #+begin_src bash
+     btcctl --simnet --rpcuser=admin --rpcpass=password --wallet getbalance account1
+  #+end_src
+  

@@ -1,0 +1,33 @@
+#+title:      react-native
+#+date:       [2023-05-16 Tue 19:02]
+#+filetags:   :javascript:mobile:react:tech:
+#+identifier: 20230516T190258
+
+first install expo
+
+install expo on your system
+#+begin_src bash
+  npm install -g expo-cli
+#+end_src
+
+create a project
+#+begin_src bash
+  expo init <name-of-project>
+#+end_src
+
+
+first start the expo server
+#+begin_src bash
+  npm run start
+#+end_src
+- you can see it in your browser and run commands from there
+
+tell the expo server to deploy to android
+#+begin_src bash
+  npm run android
+#+end_src
+
+tell the expo server to deploy to ios
+#+begin_src bash
+  npm run ios
+#+end_src

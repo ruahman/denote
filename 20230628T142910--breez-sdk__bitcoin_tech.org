@@ -1,0 +1,236 @@
+#+title:      breez sdk
+#+date:       [2023-06-28 Wed 14:29]
+#+filetags:   :bitcoin:tech:
+#+identifier: 20230628T142910
+
+allow mobile developers to integrate lighting and bitcoin payments to their app.
+
+it is non-custodial
+powered by greenlight, a built-in LSP
+on-chain interoperability
+third party fiat on ramps???
+
+* Signer
+  this module is incharge of everything related to signing lightning messages.
+  
+* InputParser
+  parses input that is related to sending and receiving payment and determens which protocol it is using.
+  lightning,
+  lnurl-pay,
+  lightning address,
+  lnurl-withdraw,
+  btc addresses 
+
+* LightningNode
+  defines how the SDK interacts with the user's lightning node.
+
+* BTCSwapper
+  provide ability to send and receive on-chain payment via submarine swaps
+
+* FiatCurrencies
+  fiat to bitcoion conversion services via MoonPay
+
+* LSP
+  interface to LSPs
+
+* Getting Started
+  Connecting to a node requires a seed and credentials.
+  - seed is a bip 39 mnemonic
+  - the credentials are retrieved when registering a new node or recovering an existing one.
+
+  
+** register a new node
+   #+begin_src rust
+     let seed = <your seed>;
+     let invite_code = <your greenlight invite code>;
+
+     // register_node takes either greenlight credentials (certifate & key) or invite code. 
+     // At this example we are using the invite code option.
+     let credentials = BreezServices::register_node(Network::Bitcoin, seed, None, Some(invite_code)).await?;  
+   #+end_src
+   - you can use a certificate or invite code
+
+** recover an existing node
+   #+begin_src rust
+     let seed = <your seed>;
+     let credentials = BreezServices::register_node(Network::Bitcoin, seed).await?;
+   #+end_src
+   - credentials should be saved
+   - once you have the credentials you need to initialize the sdk
+
+** Initialize the SDK
+   #+begin_src rust
+     // Create the default config
+     let config = BreezServices::default_config(EnvironmentType::Production)
+
+     // Customize the config object according to your needs
+     config.api_key = Some("your API key".into());
+     config.working_dir = "path to an existing directory".into();
+
+     let sdk = BreezServices::init_services(
+        config,
+        seed.to_vec(),
+        credentials.clone(),
+        Box::new(AppEventListener {}),
+    )
+    .await?;
+
+    BreezServices::start(rt(), &sdk).await?;
+   #+end_src
+
+   we can now fetch our balance
+   #+begin_src rust
+     if let Some(node_state) = sdk.node_info()? {
+       let balance_ln = node_state.channels_balance_msat;
+       let balance_onchain = node_state.onchain_balance_msat;
+     }
+
+   #+end_src
+
+* Lightning Transactions
+  
+** Receive Lightning Payments
+
+   
+   #+begin_src rust
+     let invoice = sdk.receive_payment(3000, "Invoice for 3000 sats".into()).await?;
+   #+end_src
+   - you don't need to setup a channel and provide inbound liquidity.
+     Breez opens a channel with an LSP and they provide the liquidity to receive payments
+
+** Sending Payments
+   #+begin_src rust
+     let bolt11 = "...";
+     sdk.send_payment(bolt11.into(), Some(3000)).await?;
+   #+end_src
+
+** Spontaneous Payments????
+   #+begin_src rust
+     let node_id = "...";
+     sdk.send_payment(node_id.into(), Some(3000)).await?;
+   #+end_src
+   - you can just send to the node ID????
+
+* Receiving OnChain
+  in case you want to send some funds to your lightning node.
+  #+begin_src rust
+    let swap_info = sdk.receive_onchain().await?;
+
+    // Send your funds to the bellow bitcoin address
+    let address = swap_info.bitcoin_address;
+  #+end_src
+  - gives you address to send funds
+
+  the SDK will now monitor this address as an unspent input
+  #+begin_src rust
+    let swap_info = sdk.in_progress_swap().await?
+  #+end_src
+
+* Sending OnChain
+  First fetch the reverse swap fees.
+  #+begin_src rust
+let current_fees = sdk.fetch_reverse_swap_fees().await?;
+
+info!("Percentage fee for the reverse swap service: {}", current_fees.fees_percentage);
+info!("Estimated miner fees in sats for locking up funds: {}", current_fees.fees_lockup);
+info!("Estimated miner fees in sats for claiming funds: {}", current_fees.fees_claim);
+
+  #+end_src
+- the reverse swap involves two onchain transactions.
+
+  once fees are acceptable you can reverse swap
+  #+begin_src rust
+let destination_address = String::from("bc1..");
+let amount_sat = current_fees.min;
+
+sdk.send_onchain(amount_sat, destination_address, current_fees.fees_hash).await?;
+
+  #+end_src
+
+* Using LNURL
+  
+** LNURL-Pay
+   #+begin_src rust
+// Endpoint can also be of the form:
+// lnurlp://domain.com/lnurl-pay?key=val
+// lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttsv9un7um9wdekjmmw84jxywf5x43rvv35xgmr2enrxanr2cfcvsmnwe3jxcukvde48qukgdec89snwde3vfjxvepjxpjnjvtpxd3kvdnxx5crxwpjvyunsephsz36jf
+let lnurl_pay_url = "lightning@address.com";
+
+if let Ok(LnUrlPay{data: pd}) = parse(lnurl_pay_url).await {
+    // TODO Show payment details in UI, read user input
+    let amount_msat = pd.min_sendable;
+    let comment = "Test payment".to_string();
+    
+    sdk.lnurl_pay(amount_msat, Some(comment), pd).await?;
+}
+
+   #+end_src
+
+** LNURL-WithDraw
+#+begin_src rust
+  // Endpoint can also be of the form:
+// lnurlw://domain.com/lnurl-withdraw?key=val
+let lnurl_withdraw_url = "lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4exctthd96xserjv9mn7um9wdekjmmw843xxwpexdnxzen9vgunsvfexq6rvdecx93rgdmyxcuxverrvcursenpxvukzv3c8qunsdecx33nzwpnvg6ryc3hv93nzvecxgcxgwp3h33lxk";
+
+if let Ok(LnUrlWithdraw{data: wd}) = parse(lnurl_withdraw_url).await {
+    // TODO Determine withdraw amount
+    let amount_msat = wd.min_withdrawable;
+    let description = "Test withdraw".to_string();
+    
+    sdk.lnurl_withdraw(wd, amount_msat, Some(description)).await?;
+}
+
+
+#+end_src
+
+** LNURL-Auth
+#+begin_src rust
+// Endpoint can also be of the form:
+// keyauth://domain.com/auth?key=val
+let lnurl_auth_url = "lnurl1dp68gurn8ghj7mr0vdskc6r0wd6z7mrww4excttvdankjm3lw3skw0tvdankjm3xdvcn6vtp8q6n2dfsx5mrjwtrxdjnqvtzv56rzcnyv3jrxv3sxqmkyenrvv6kve3exv6nqdtyv43nqcmzvdsnvdrzx33rsenxx5unqc3cxgeqgntfgu";
+
+if let Ok(LnUrlAuth{data: ad}) = parse(lnurl_auth_url).await {
+    match sdk.lnurl_auth(ad).await {
+        Ok(LnUrlCallbackStatus::Ok) => {
+            info!("Successfully authenticated")
+        }
+        Ok(LnUrlCallbackStatus::ErrorStatus { data }) => {
+            error!("Failed to authenticate: {}", data.reason)
+        }
+        Err(e) => {
+            error!("Failed to connect: {e}")
+        }
+    }
+}
+
+#+end_src
+
+** Receiving OnChain (swap-in)
+
+there are cases where you have funds in some bitcoin address and you would like to send those to a lightning node
+
+#+begin_src javascript
+try {
+    const swapInfo = await receiveOnchain()
+
+    // Send your funds to the below bitcoin address
+    const address = swapInfo.bitcoinAddress;
+} catch (error) {
+    console.log(error)
+}
+
+#+end_src
+
+
+once you have sent the funds to the above address, the SDK will monitor this address and use a submarine swap to move funds to
+your lightning wallet
+
+you can monitor the progress of a pending swap with
+
+#+begin_src javascript
+try {
+    const swapInfo = await inProgressSwap()
+} catch (error) {
+    console.log(error)
+}
+#+end_src

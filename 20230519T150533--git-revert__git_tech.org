@@ -1,0 +1,5 @@
+#+title:      git-revert
+#+date:       [2023-05-19 Fri 15:05]
+#+filetags:   :git:tech:
+#+identifier: 20230519T150533
+

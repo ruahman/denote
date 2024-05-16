@@ -1,0 +1,12 @@
+#+title:      HTML-CSS
+#+date:       [2023-05-18 Thu 20:44]
+#+filetags:   :tech:
+#+identifier: 20230518T204413
+
+Live Server for MS Code is a must have
+- a server that will automatically cause your browser to refresh when you make changes to your code
+
+
+UX is about you the user interacts with the app.
+
+UI is about the visualy appleling aspects of the design

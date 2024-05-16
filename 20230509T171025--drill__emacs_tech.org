@@ -1,0 +1,114 @@
+#+title:      Drill
+#+date:       [2023-05-09 mar 17:10]
+#+filetags:   :emacs:tech:
+#+identifier: 20230509T171025
+
+
+* What is org-drill
+org-drill uses a Space Repetition Algorithm (SRA)
+- Anki
+- SuperMemo
+
+you can drill any org-header by adding tag :drill:
+
+"drill items" are org-headers that are taged with :drill:
+
+each org-header taged with :drill: becomes a flashcard
+
+when a "drill item" is being reviewed all the subheadings will be hidden.
+only the content directly underneath the heading will show.
+after hitting any key all the content is shown.
+then you rate how well you recall it
+
+0 = didn't even try
+1 = wrong
+2 = wrong but close
+3 = right but had to think for a while
+4 = right
+5 = imediate
+
+all you drill card will be in one org file.
+
+the org file will be it's own database
+
+*M-x org-drill* :: this start the drill session 
+
+you can press *q* to quit the drill session
+
+you can press *e* to quit but you can start editing where you left off,
+
+*org-drill-resume* :: resume where you left off
+
+each time you start org-drill it scans your org file, this can be slow sometimes,
+
+*org-drill-again* :: restart drill session without resan your org-file
+
+*org-drill-cram* :: reviews everything
+
+#+begin_src emacs-lisp
+  (setq org-drill-maximum-items-per-session 20)  ;; max items you can review during an org session
+  (setq org-drill-mazimum-duration 20) ;; max time that your org-drill session can take
+#+end_src
+
+org-drill priorities overdue items
+
+#+begin_src emacs-lisp
+  (setq org-drill-overdue-interval-factor 1.2)  ;; set overdue base on the interval of the last time it was reviewed????, if it's 20% bigger than lass session then it's overdue???
+  (setq org-drill-space-repetition-algorithm 'sm5) ;; SRA algorithm org-drill is using
+#+end_src
+
+org-drill-leech-method :: if you got it wrong enought time then it gets marked as leach,  if you set /warning/ it will show as worning when drill
+
+so that schedule cards don't feel so clumped
+#+begin_src emacs-lisp
+  (setq org-drill-add-random-noise-to-intervals-p t)
+#+end_src
+
+earlly or later doesn't mess things up
+#+begin_src emacs-lisp
+  (setq org-drill-adjust-intervals-for-early-and-late-repetitions-p t)
+#+end_src
+
+by what factor to incress the next interval
+#+begin_src emacs-lisp
+  (setq org-drill-learn-fraction 0.45) 
+#+end_src
+* drill examples
+
+** Item                                                              :drill:
+Question blblbla? # only this shows
+
+*** The Answer  # this is hidden untill anykey is pressed
+asfdu n;askfdj
+
+** Noun                                                              :drill:
+:PROPERTIES:
+:DRILL_CARD_TYPE: twoside
+:END:
+
+translate this word.....
+
+# either one of these will show.  its determand randomly
+*** Spanish
+asdfaf
+
+*** English
+adsfasdf
+
+*** Notes  # this always gets shown at the end
+
+** Fact                                                              :drill:
+bla blas [answer] blabasl   # [..] is obsured untill any key is hit
+
+** Fact1
+bal bal [answer||hint]  # [..] is obsured but a hint is left
+
+** Word                                                              :drill:
+a;lskdfja ?
+
+*** answer
+adsfasdf
+
+*** note  # this getts shown alway after any key is shown  
+a;lsdkfja;sfj
+

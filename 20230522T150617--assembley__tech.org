@@ -1,0 +1,11 @@
+#+title:      assembley
+#+date:       [2023-05-22 lun 15:06]
+#+filetags:   :tech:
+#+identifier: 20230522T150617
+
+* instruction set
+in a processor you have what is know as an instruction set.
+all these instruction sets are just circuits arranged in a certain way.
+
+* And gate
+  if both inputs are one then the output is one

@@ -1,0 +1,92 @@
+#+title:      pacman
+#+date:       [2023-06-25 dom 19:37]
+#+filetags:   :arch:tech:
+#+identifier: 20230625T193734
+
+pacman = package manager
+
+/ect/pacman.conf : confige file for pacman
+
+sync/install programs
+#+begin_src bash
+  pacman -S <name-of-package>
+#+end_src
+
+sync packages database
+#+begin_src bash
+  pacman -Sy
+#+end_src
+
+force sync database
+#+begin_src bash
+  pacman -Syy
+#+end_src
+
+update your packages that were installed
+#+begin_src bash
+  pacman -Su
+#+end_src
+
+sync package database and update your packages
+#+begin_src bash
+  pacman -Syu
+#+end_src
+
+fixed problem with hello-manjaro
+#+begin_src bash
+  sudo pacman -Syyuu
+#+end_src
+
+
+search for package
+#+begin_src bash
+  pacman -Ss <package>
+#+end_src
+
+remove
+#+begin_src bash
+  pacman -R <package>
+#+end_src
+
+remove and get ride of dependencies that are not needed anymore
+#+begin_src bash
+  pacman -Rs <package>
+#+end_src
+
+remove package, dependencies and config files
+#+begin_src bash
+  pacman -Rns <package>
+#+end_src
+- recommended way
+
+list out every package you have installed
+#+begin_src bash
+  pacman -Q
+#+end_src
+
+list out every package you explicitly installed
+#+begin_src bash
+  pacman -Qe
+#+end_src
+
+list package installed from main repo
+#+begin_src bash
+  pacman -Qn
+#+end_src
+
+list package installed from aur
+#+begin_src bash
+  pacman -Qm
+#+end_src
+
+list orpan dependencies
+#+begin_src bash
+  pacman -Qdt
+#+end_src
+
+search local repo
+#+begin_src bash
+  pacman -Qs <package>
+#+end_src
+
+

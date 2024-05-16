@@ -1,0 +1,89 @@
+% Created 2023-01-19 Thu 10:12
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Diego Vila}
+\date{\textit{[2023-01-02 Mon 09:53]}}
+\title{radicals}
+\hypersetup{
+ pdfauthor={Diego Vila},
+ pdftitle={radicals},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{exmaples}
+\label{sec:org4079bd2}
+\(\sqrt[3]{8} = 2\)
+
+\(\sqrt{25} = 5\)
+
+\section{the radical of the product}
+\label{sec:orgd364880}
+
+\(\sqrt[n]{a \cdot b} = \sqrt[n]{a} \cdot \sqrt[n]{b}\)
+
+\section{the radical of a fraction}
+\label{sec:org05cbd3c}
+
+\(\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}\)
+
+\section{warning}
+\label{sec:org068edfa}
+
+\(\sqrt[n]{a + b} \neq \sqrt[n]{a} + \sqrt[n]{b}\)
+
+\(\sqrt[n]{a - b} \neq \sqrt[n]{a} - \sqrt[n]{b}\)
+
+\section{think of them as exponents}
+\label{sec:org6fb8e7b}
+
+\(a^{\frac{m}{n}} = \sqrt[n]{a^m} = (\sqrt[n]{a})^m\)
+
+\section{Solving Radical Equations}
+\label{sec:org94867a6}
+\begin{itemize}
+\item ex1:
+\begin{itemize}
+\item try to isolate the square root
+\end{itemize}
+\begin{align*}
+  x + \sqrt{x} &= 12\\
+  \sqrt{x} &= 12 - x\\
+  x        &= (12 - x)^2\\
+  x &= 144 - 24x + x^2\\
+  0 &= x^2 - 25x + 144\\
+  0 &= (x - 9)(x - 16)\\
+\end{align*}
+
+\item ex2:
+\begin{itemize}
+\item when the root is a an even number the answer is alwasy \(\pm\)
+\end{itemize}
+\begin{align*}
+2p^{\frac{4}{5}} &= \frac{1}{8}\\
+p^{\frac{4}{5}} &= \frac{1}{16}\\
+p^4 &= (\frac{1}{16})^5\\
+p &= (\frac{1}{16})^{\frac{5}{4}}\\
+p &= (\sqrt[4]{\frac{1}{16}})^5\\
+p &= \pm (\frac{1}{2})^5\\
+p &= \pm \frac{1}{32}\\
+\end{align*}
+\end{itemize}
+\end{document}

@@ -1,0 +1,51 @@
+#+title:      git diff
+#+date:       [2023-05-24 Wed 10:10]
+#+filetags:   :git:tech:
+#+identifier: 20230524T101001
+
+won't show diff in staging area.  You need to use a flag for that.
+
+show diff between working copy and repository
+#+begin_src bash
+  git diff
+#+end_src
+
+show diff of staged files to repo
+#+begin_src bash
+  git diff --cached
+#+end_src
+
+or --staged
+#+begin_src bash
+  git diff --staged
+#+end_src
+
+compair two commitments
+#+begin_src bash
+  git diff <commitment-hash1> <commitment-hash2>
+#+end_src
+
+compair commitment to head
+#+begin_src bash
+  git diff <commitment-hash> head
+#+end_src
+
+only show the files that changed
+#+begin_src bash
+  git diff --name-only
+#+end_src
+
+compair two refrence objects, tag, commitment hash, branch
+#+begin_src bash
+  git diff <ref1>..<ref2>
+#+end_src
+
+compair to upstream branch
+#+begin_src bash
+  git diff HEAD @{u}
+#+end_src
+
+or you could just write the path to the upstream branch
+#+begin_src bash
+  git diff HEAD origin/mybranch
+#+end_src

@@ -1,0 +1,20 @@
+---
+title:      "bdk"
+date:       2023-07-25T20:41:00-04:00
+tags:       ["bitcoin", "tech"]
+identifier: "20230725T204100"
+---
+
+Bitcoin Dev Kit
+
+lightweight as you need it to be
+
+the simplest way to integrate bitcoin to any application
+
+Through descriptors and miniscript we support generillized spending conditions
+without having to resort to bitcoin script
+
+you can use a full node, an SPV node, or your own Electrum or Esplora servers
+
+
+

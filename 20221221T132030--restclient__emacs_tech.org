@@ -1,0 +1,46 @@
+#+title:      restclient
+#+date:       [2022-12-21 Wed 13:20]
+#+filetags:   :emacs:tech:
+#+identifier: 20221221T132030
+
+allows you to do rest tests like postman
+
+* install
+#+begin_src emacs-lisp
+  (use-package restclient)
+#+end_src
+
+* GET
+# comments are the bourndries between calls
+GET http://localhost/foobar
+
+# pass in jwt
+GET http://localhost/events
+Authorization: XXXXXXX
+
+* POST
+# comments are the boundries between calls
+POST http://localhost/sessions
+
+{"username": "ruahman", "password": "ruahman333"}
+
+# pass jwt
+POST http://localhost/events
+Authorization: xxxx
+
+{"name": "this is a new event"}
+
+* variable
+:auth-token = xxxxxxxxx
+
+GET http://localhost/events
+Authorization: :auth-token
+
+POST http://localhost/events
+Authorization: :auth-token
+
+* keybindings
+
+| keybindings | command       |
+|-------------+---------------|
+| C-c C-c     | run rest call |

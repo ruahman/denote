@@ -1,0 +1,166 @@
+% Created 2023-05-22 lun 17:44
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Diego Vila}
+\date{\textit{[2023-01-03 mar 09:27]}}
+\title{factoring}
+\hypersetup{
+ pdfauthor={Diego Vila},
+ pdftitle={factoring},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.7-pre)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{breaking things down to their factors}
+\label{sec:org3795e08}
+\begin{align*}
+30           &= 6 \cdot 5 = 2 \cdot 3 \cdot 5\\
+x^2 + 5x + 6 &= (x+2)(x+3)
+\end{align*}
+
+\begin{itemize}
+\item when things are added they are called terms
+\item when things are multiplied they are called factors
+\end{itemize}
+
+\section{pull out the greates common factor}
+\label{sec:org5289827}
+
+\begin{equation*}
+15 + 25x = 5(3 + 5x)
+\end{equation*}
+
+\begin{flalign*}
+x^{2}y + y^{2}x^3 = x^{2}y(1 + xy)\\
+                  = x^{2}y(1 + xy)
+\end{flalign*}
+
+\section{factoring by grouping}
+\label{sec:org2db1a32}
+\begin{itemize}
+\item if the equation has 4 term or could be split up into 4 terms, it maybe a good canidate for factoring by grouping
+\end{itemize}
+
+\begin{flalign*}
+x^3 + 3x^2 + 4x + 12 &= x^2(x + 3) + 4(x + 3)\\
+                     &= (x^2 + 4)(x + 3)
+\end{flalign*}
+
+\subsection{examples}
+\label{sec:org18ba7dd}
+
+\begin{itemize}
+\item ex1:
+\begin{flalign*}
+x^3 + 2x^2 + 3x + 6 &= x^2(x + 2) + 3(x + 2)\\
+                    &= (x + 2)(x^2 + 3)
+\end{flalign*}
+
+\item ex2:
+\begin{itemize}
+\item find a combination of number that add to -14 but multiply to 40 which is (5 \texttimes{} 8)
+\end{itemize}
+
+\begin{flalign*}
+5x^2 - 14x + 8 &= 5x^2 - 4x - 10x + 8\\
+               &= x(5x -4) - 2(5x - 4)\\
+               &= (5x - 4)(x - 2)
+\end{flalign*}
+\end{itemize}
+
+\section{factoring by quadratics}
+\label{sec:org2bd7e36}
+\begin{itemize}
+\item a quadratic is of the form \(ax^2 + bx + c\)
+\item find a pair of number that add to b but multiply to c
+\end{itemize}
+
+\begin{equation*}
+x^2 - 6x + 8 &= (x-2)(x-4)
+\end{equation*}
+
+\begin{itemize}
+\item ex:
+\begin{itemize}
+\item convert it to 4 terms then use factoring by grouping
+\begin{itemize}
+\item multiply a by c
+\begin{itemize}
+\item \(10 \times -6\)
+\end{itemize}
+\item find to numbers that add to b but multiply to (a * b)
+\begin{itemize}
+\item \(-4 + 15\)
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\begin{flalign*}
+10x^2 + 11x - 6 &= 10x^2 -4x + 15x -6\\
+                &= 2x(5x -2) + 3(5x - 2)\\
+                &= (2x + 3)(5x -2)
+\end{flalign*}
+\end{itemize}
+
+\section{difference of squares}
+\label{sec:org76359c2}
+\begin{equation*}
+a^2 - b^2 = (a + b)(a - b)
+\end{equation*}
+
+\begin{itemize}
+\item ex:
+\begin{flalign*}
+x^2 - 16 &= x^2 - 4^2\\
+         &= (x + 4)(x - 4) 
+\end{flalign*}
+
+\item ex:
+\begin{flalign*}
+9p^2 - 1 &= (3p)^2 - 1^2\\
+         &= (3p + 1)(3p - 1)
+\end{flalign*}
+
+\item note:
+\begin{itemize}
+\item some of squares does not work
+\end{itemize}
+\begin{equation*}
+x^2 + 4 \neq x^2 + 2^2
+\end{equation*}
+\end{itemize}
+
+\section{difference or sum of cubes}
+\label{sec:org2e7f49e}
+\begin{align*}
+a^3 - b^3 &= (a - b)(a^2 + ab + b^2)\\
+a^3 + b^3 &= (a + b)(a^2 - ab + b^2)
+\end{align*}
+
+\subsection{examples}
+\label{sec:orgd63f7b4}
+
+\begin{itemize}
+\item ex:
+\begin{flalign*}
+y^3 + 27 &= y^3 + 3^3\\
+         &= (y + 3)(y^2 - 3y + 3^2)
+\end{flalign*}
+\end{itemize}
+\end{document}

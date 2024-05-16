@@ -1,0 +1,34 @@
+#+title:      terminal
+#+date:       [2023-07-09 dom 16:23]
+#+filetags:   :tech:linux:
+#+identifier: 20230709T162346
+
+* adduser
+  create a new user
+  #+begin_src bash
+    adduser <username>
+  #+end_src
+
+* passwd
+  add password to username
+  #+begin_src bash
+    passwd <username>
+  #+end_src
+
+* gpasswd
+  give root access to user
+  #+begin_src bash
+    gpasswd -a <username> wheel
+  #+end_src
+
+* su
+  loging
+  #+begin_src bash
+    su - <username>
+  #+end_src
+
+* userdel
+  delete user
+  #+begin_src bash
+    sudo userdel -r <username>
+  #+end_src

@@ -1,0 +1,7 @@
+#+title:      midpoint formula
+#+date:       [2023-02-13 Mon 09:23]
+#+filetags:   :algebra:math:
+#+identifier: 20230213T092331
+
+* midpoint
+$$ midpoint = (\frac{x_2 - x_1}{2}, \frac{y_2 - y_1}{2}) $$

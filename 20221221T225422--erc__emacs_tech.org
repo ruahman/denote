@@ -1,0 +1,64 @@
+#+title:      Erc
+#+date:       [2022-12-21 Wed 22:54]
+#+filetags:   :emacs:tech:
+#+identifier: 20221221T225422
+
+bitlbee, https://www.bitlbee.org/main.php/news.r.html
+
+* run
+M-x erc-tls
+
+- irc.libera.chat
+
+* join a channel
+/join #channel
+- C-c C-j #channel
+
+* leave channel
+/part
+
+* list channels in server
+/list
+
+* find details for user
+/whois username
+
+* send a private message
+/query username msg
+/msg username msg
+
+* quit irc server
+/quit
+
+* reconnect
+/reconnect
+
+* direct message someone
+/msg name message
+
+* list channels on server
+/list
+
+* register you nickname
+/nick <name>
+/msg nickserv register <password> <email>
+/msg nickserv identify <nickname> <password>
+
+* topic of channel
+/topic
+
+* exit channel
+/part
+
+* change nickname
+/nick <name>
+
+* send private message without opening a message
+/msg <name> msg
+
+* send private message and open window
+/query <name> msg
+
+* quit network
+/quite
+

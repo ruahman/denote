@@ -1,0 +1,46 @@
+#+title:      Polynomial and Rational Inequalites
+#+date:       [2023-01-30 Mon 10:03]
+#+filetags:   :algebra:math:
+#+identifier: 20230130T100327
+
+* ex 1:
+- x < 2 does not work
+- pull everything to one side, so that one side has zero
+\begin{align*}
+x^2 &< 4\\
+x^2 - 4 &< 0
+\end{align*}
+- now soleve $x^2 - 4 = 0&
+\begin{align*}
+x^2 - 4 &= 0
+(x - 2)(x + 2) &= 0 
+\end{align*}
+- x = 2 and x = -2
+- now test values between the points wher $x^2 - 4 = 0$
+- answer: $-2 < x < 2$ or (-2,2)
+
+* ex 2:
+- move everything to one side
+\begin{align*}
+x^3 &\geq 5x^2 + 6x\\
+x^3 -5x^2 - 6x &\geq 0
+\end{align*}
+
+\begin{align*}
+x^3 - 5x^2 - 6x &= 0\\
+x(x^2 - 5x - 6) &= 0\\
+x(x - 6)(x + 1 ) &= 0
+\end{align*}
+- x = 0, x = 6, x = -1
+
+- now test the value in between
+
+* ex 3:
+\begin{align*}
+\frac{x^2 + 6x + 9}{x - 1} \leq 0
+\end{align*}
+- convert this to an equation and try to solve it
+\begin{align*}
+\frac{x^2 + 6x + 9}{x - 1} &= 0\\
+\frac{(x + 3)^2}{x - 1} &= 0
+\end{align*}

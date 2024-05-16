@@ -1,0 +1,20 @@
+#+title:      file system
+#+date:       [2023-07-09 dom 16:58]
+#+filetags:   :linux:tech:
+#+identifier: 20230709T165800
+
+* /home
+  where user home folders are located
+
+* /bin
+  binaries / executables
+
+* /lib
+  libaries
+
+* /boot
+  what you need to help get the system up
+
+* /var
+  where we put things like our html pages
+  ex: /var/www

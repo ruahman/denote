@@ -1,0 +1,122 @@
+#+title:      swc
+#+date:       [2023-05-29 Mon 16:36]
+#+filetags:   :nodejs:npm:tech:
+#+identifier: 20230529T163634
+
+
+install
+#+begin_src bash
+  npm i -D @swc/cli @swc/core
+#+end_src
+
+babel is a tool to help us transpile newer versions of javascript code such as ES6 into older versions of javascript that can run on more
+platforms.  it can even transpile typescript
+
+SWC (speedy web compiler) is also a transpiler for javascript, writen in rust
+
+install swc core and cli tools
+#+begin_src bash
+  npm install --save-dev @swc/core @swc/cli
+#+end_src
+ - core will help us in our build setup
+ - cli will run in the terminal
+
+output to the screen
+#+begin_src bash
+  npx swc async.js
+#+end_src
+
+output it to a file
+#+begin_src bash
+  npx swc async.js -o output.js
+#+end_src
+
+output it to a directory
+#+begin_src bash
+  npx swc src -d transpiledDir
+#+end_src
+
+you can configure webpack to use swc-loader
+
+to tell swc how you want to transpile you need to specify a /.swcrc/
+
+example of *.swcrc*
+#+begin_src json
+  {
+    "test": ".*.ts$",
+    "jsc": {
+      "parser": {
+	"syntax": "typescript",
+	"tsx": false,
+	"decorators": true,
+	"dynamicImport": true
+      }
+    }
+  }
+#+end_src
+
+here is a webpack example
+#+begin_src javascript
+  const path = require('path');  
+
+  module.exports = {  
+    entry: './src/index.js',  
+    output: {  
+	filename: 'main.js',  
+	path: path.resolve(__dirname, 'dist'),  
+    },  
+    module: {  
+      rules: [  
+	{  
+	  test: /\.?js$/,  
+	   exclude: /node_modules/,  
+	   use: {  
+	    loader: "babel-loader",  
+	   }  
+	},  
+      ],  
+    },  
+  };
+#+end_src
+- this is setup to use babel-loader
+- you can use swc-loader
+- or you can use swc bundler called spack
+
+this is a spack config, spack.config.js
+#+begin_src javascript
+    module.exports = {
+      entry: { web: __dirname + "/src/index.js", },
+      output: { path: __dirname + "/lib", },
+    };
+#+end_src
+
+then just run
+#+begin_src bash
+  npx spock
+#+end_src
+
+
+replace babel loader with swc-loader
+#+begin_src javascript
+  module.exports = {  
+    entry: './src/index.js',  
+   output: {  
+      filename: 'main.js',  
+   path: path.resolve(__dirname, 'dist'),  
+   },  
+   module: {  
+      rules: [  
+	{  
+	  test: /\.m?js$/,  
+	  exclude: /(node_modules|bower_components)/,  
+	   use: {  
+	    // `.swcrc` can be used to configure swc  
+	       loader: "swc-loader"  
+	   }  
+	}  
+      ],  
+   },  
+  };
+
+
+#+end_src

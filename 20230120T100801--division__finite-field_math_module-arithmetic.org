@@ -1,0 +1,25 @@
+#+title:      division
+#+date:       [2023-01-20 Fri 10:08]
+#+filetags:   :finite-field:math:module-arithmetic:
+#+identifier: 20230120T100801
+
+In $F_{19}$, we know that
+
+\begin{align*}
+3 \cdot_f 7 &= 21 \mod 19 = 2\\
+9 \cdot_f 5 &= 45 \mod 19 = 7\\
+\end{align*}
+
+then
+
+\begin{align*}
+2 \div_f 7 &= 3\\
+7 \div_f 5 &= 9\\
+\end{align*}
+
+but how do we figure out the division we don't now 3 or 9? $2 \div_f 7 = x$ or $7 \div_f 5 = x$
+
+* Fermat's Little Theorem
+\begin{equation*}
+n^{(p-1)}\mod p = 1
+\end{equation*}

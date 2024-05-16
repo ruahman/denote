@@ -1,0 +1,54 @@
+#+title:      getting-started
+#+date:       [2023-05-11 Thu 21:42]
+#+filetags:   :rust:tech:
+#+identifier: 20230511T214233
+
+* install
+
+ for linux or mac
+ #+begin_src bash
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+ #+end_src
+
+** show version
+ #+begin_src bash
+   rustc --version
+ #+end_src
+
+** update rust
+ #+begin_src bash
+   rustup update
+ #+end_src
+
+** uninstall rust and rustup
+ #+begin_src bash
+   rustup self uninstall
+ #+end_src
+
+* Hello, World
+#+begin_src rust :results output
+  println!("Hello, World!!!");
+#+end_src
+- println!, is a macro
+
+#+RESULTS:
+: Hello, World
+
+** compile
+ #+begin_src bash
+   rustc main.rs
+   ./main
+ #+end_src
+
+* Hello, Cargo
+
+** show version of cargo
+ #+begin_src bash
+   cargo --version
+ #+end_src
+
+** create project with cargoi
+ #+begin_src bash
+   cargo new hello_cargo
+ #+end_src
+
