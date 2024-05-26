@@ -1,5 +1,0 @@
-#+title:      rust
-#+date:       [2023-05-11 Thu 22:01]
-#+filetags:   :tech:
-#+identifier: 20230511T220111
-

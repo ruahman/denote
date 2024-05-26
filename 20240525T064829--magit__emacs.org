@@ -1,0 +1,49 @@
+#+title:      magit
+#+date:       [2024-05-25 Sat 06:48]
+#+filetags:   :emacs:
+#+identifier: 20240525T064829
+
+* magit-status 
+C-x g :: magit-status
+
+q :: close
+
+g :: refresh
+
+tab :: show changes
+
+s :: stage
+
+? :: help
+
+c :: commit
+  * press c again
+  * press C-c C-c to close
+
+u :: unstage
+
+f :: fetch
+
+F :: Pull
+
+P :: push
+
+r :: rebase
+
+b :: branch
+  * c :: create branch
+  * b :: checkout branch 
+
+l :: log
+
+m :: merge
+
+o :: submodule
+
+v :: revert
+
+x :: reset
+
+z :: stash
+
+

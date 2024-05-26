@@ -15,8 +15,7 @@ Ctr + x = C-x
 C-x = primary key bindings
 C-c = major and minor mode commands
 M-x = run command
-C-u = universal argument
-- adds extra argument before command
+C-u = universal argument adds extra argument before command
 
 if you add C-h to any key combo then a list of options appears in a buffer
 ex: C-x 8 C-h  ::  show all key combos that could complet =C-x 8=
