@@ -1,0 +1,326 @@
+#+title:      org
+#+date:       [2022-12-21 Wed 12:12]
+#+filetags:   :emacs:
+#+identifier: 20221221T121223
+
+* link
+- [[link][test link]]
+  + to see link just delete bracket from end???
+| keybinding                  | command                     |
+|-----------------------------+-----------------------------|
+| C-c C-l                     | create link                 |
+| C-c C-o                     | open link                   |
+| M-x org-toggle-link-display | toggle the display of links |
+
+* export
+| keybinding | command |
+|------------+---------|
+| C-c C-e    | export  |
+
+* todo list
+SCHEDULED: <2023-05-09 mar>
+| keybindings | command                               |
+|-------------+---------------------------------------|
+| S-arrow     | toogle through todo options           |
+| C-c C-t     | select todo options                   |
+| M-Shift-RET | create todo                           |
+| C-c C-s     | schedule                              |
+| C-u C-c C-s | clear schedule                        |
+| C-c C-d     | deadline                              |
+| C-c C-q     | insert tag                            |
+| C-c C-w     | refile                                |
+
+- to select a date use S-<arrows>
+
+you can add more todo options if you add the following to the top of your org file
+#+SEQ_TODO: NEXT(n) TODO(t) WAITING(w) SOMEDAY(s) | DONE(d) CANCLED(c)
+- every thing on the right side is concidered completed or cancled.  either way you are done with task
+
+* time-stamp
+| keybindings | command          |
+|-------------+------------------|
+| S-[up/down] | change timestamp |
+
+* agenda
+| keybindings | command                             |
+|-------------+-------------------------------------|
+| C-c a a     | agenda                              |
+| l           | log display                         |
+| SHIFT-F     | follow mode                         |
+| f           | forward a week                      |
+| b           | back a week                         |
+| C-c a t     | list todos                          |
+| C-c a m     | match tags                          |
+| C-c a s     | search keywords                     |
+
+- you can restrict agenda to your current by pressing *C-c a*, *<*, then *a* to restrict to current buffer
+- follow mode shows which task you click in agenda
+* headline
+| keybindings | command                 |
+|-------------+-------------------------|
+| C-Enter     | create headline         |
+| M-Enter     | create headline or note |
+| M-arrows    | move/adjust headline    |
+| Shift-Tab   | toggle all headlines    |
+
+#+STARTUP: hidestars
+- this hides stars for a org file
+
+* markup
+| **bold**          | bold          |
+| //italic//        | italic        |
+| ==verbatum==      | verbatum      |
+| ++strikethrough++ | strikethrough |
+
+* archiving
+
+| keybindings | commands |
+|-------------+----------|
+| C-c C-x C-a | archive  |
+
+* checklist
+
+** TODO test [2/4]
+- [ ] task1
+- [X] task2
+- [ ] 
+- [X] task3
+
+| keybinding | command                       |
+|------------+-------------------------------|
+| C-c C-c    | check off item                |
+| S-M-Enter  | create another checklist item |
+
+* unordered lists
+  -,+,*
+  M-RET creates a new one
+
+* descriptions
+- text1 :: alksdfj
+- text2 :: asfaf
+- text3 :: asfdafa
+
+* timer
+| keybinding | command                 |
+| C-c C-x ;  | start countdown         |
+| C-c C-x ,  | pause or continue timer |
+| C-c C-x 0  | start timer             |
+| C-c C-x _  | stop timer              |
+
+* archive
+
+| keybindings | commands |
+|-------------+----------|
+| C-c C-x C-a | archive  |
+
+* timer
+| keybinding | command                 |
+| C-c C-x ;  | start countdown         |
+| C-c C-x ,  | pause or continue timer |
+| C-c C-x 0  | start timer             |
+| C-c C-x _  | stop timer              |
+
+* archive
+#+ARCHIVE: %s_archive::
+
+| keybindings | commands |
+|-------------+----------|
+| C-c C-x C-a | archive  |
+
+
+* tags
+#+TAGS: WORK(w) MATH(+) CRYPTO(c) GTD(g) PROGRAMING(p) TECH(t) MUSIC(m) SPANISH(s) HOME(h) PERSONAL(i)
+
+| keybinding | command |
+|------------+---------|
+| C-c C-q    | tag     |
+
+* logging
+| keybinding | command |
+| C-c C-z    | log     |
+
+* clock in / clock out
+| keybinding  | command   |
+|-------------+-----------|
+| C-c C-x TAB | clock in  |
+| C-c C-x o   | clock out |
+
+* org-bable
+| keybinding | command         |
+|------------+-----------------|
+| C-c C-c    | eval code block |
+
+* set properties
+| keybinding | command                   |
+|------------+---------------------------|
+| C-c C-x p  | set property of todo item |
+
+- can define what values a propertie can have.
+  like `story_points`
+
+#+PROPERTY: Story_ALL 1 2 3 5 8 13
+- to shift through these values just =S-<left/right>=
+    
+* tables
+  - just type | stuff |
+  - | <TAB>, creates colomn
+  - |- <TAB>, creates horizontal seperator
+  - jumb to the next row by tab
+  - C-c | creates a table for you, you need to specify rows and colomns,
+  - ex: 3x2
+  |   |   |   |
+  |---+---+---|
+  |   |   |   |
+  - ex: if you want to create a seperator then just go down and type |-, and then tab
+    | a | b | c |
+    |---+---+---|
+    |   |   |   |
+  - if you want to move colomns M-right, or M-left
+  - if you want to swap rows, M-up, M-down
+  - if you want to add or remove columns, S-M-left or S-M-right
+  - if you want to add or remove rows, S-M-up or S-M-down
+
+* repeat
+
+- you need to embed the the time you want to repeat in timestamp
+
+#+SEQ_TODO: REPEAT(r) NEXT(n) TODO(t)....
+
+- when you mark a repeating task as done it does not show up as done
+  it will get the first keyword in your todo sequece
+
+** test task
+SCHEDULED: <2023-07-11 Tue +1w>
+   - repeats every week in agenda
+   - every time you set to done it get loged
+
+     
+** repeat specifiers
+- w :: week
+- m :: month
+- y :: year
+- + :: will be reschedule starting from the date it was marked as done.
+- ++ :: will be rescheduled starting from the original date you set it. 
+
+
+* log
+ C-c C-z  :: log the task
+ - think of z for zorro
+** TODO test
+:LOGBOOK:
+- Note taken on [2023-07-14 Fri 22:01] \\
+  this is a log
+:END:
+
+* archive
+  set the archive file
+  #+ARCHIVE: myarchive.org::
+
+  to archive C-c C-x C-a
+
+* automatic loggin
+  - @ :: log and timestamp when you enter
+  - ! :: timestamp when you leave
+
+  #+SEQ_TODO: NEXT(n/!) TODO(t@/!) | DONE(d@)
+
+* properties
+C-c C-x p
+you can search properties
+
+* archive from properties
+you can set the archive property so that you can archive to a different file
+
+* ordered tasks
+you can make a project with task that can only be closed in order
+C-c C-x o  :: set project to orderd which means tasks underneath it must be closed in order
+
+* timer
+
+** count down
+C-c C-x ;
+
+*** pause/start
+C-c C-x ,
+
+** count up
+C-c C-x 0
+
+* clocking
+- C-c C-x C-i :: clock in
+- C-c C-x C-o :: clock out
+
+* column view
+#+COLUMNS: %7TODO(To Do) %40ITEM(Task) %TAGS(Tags) %6CLOCKSUM(Clock)
+
+- C-c C-c :: reload changes to org file
+
+- C-c C-x C-c :: to invoke column view
+
+- q :: close column view when you are ontop of a column 
+
+* linking
+- C-c C-l :: create link
+- C-x C-o :: open link 
+
+* tables
+| name  | Adress        | role     |
+|-------+---------------+----------|
+| diego | quebradiillas | diciple  |
+| andy  | chicago       | enginear |
+|       |               |          |
+
+** you can move colomns by =M <left|right>=
+
+** you can move rows up or down =M <up|down>=
+
+** insert new colomn =M shift <right>=
+
+** delete colomn =M shift <left>=
+
+* exporting
+=C-c C-e= :: to export
+
+* org capture
+
+* column view
+define a special view for you tasks that you can toogle. 
+
+you can define the columns you want in the header of you org file
+
+#+COLUMNS: %58ITEM(Task) %7TODO %6CLOCKSUM(Clock)
+- % :: specifies width
+  
+- C-c C-x C-c :: show column view
+- q :: to quit column view
+
+
+* habits
+in order to use habits you need to set property STYLE to habit
+
+** REPEAT habit example
+SCHEDULED: <2024-01-30 Tue +1d/2d>
+:PROPERTIES:
+:STYLE:    habit
+:END:
+
+* priorities
+- S-<up|down> :: assign priorities to task,  A,B,C,D
+  + A : Important and Urgent
+  + B : Important but not Urgent
+  + C : Not important but Urgent
+  + D : Not important and not Urgent
+
+
+
+
+* source code blocks
+#+begin_src python :results output
+  print("hello world")
+#+end_src
+
+#+RESULTS:
+: hello world
+
+- C-c C-c :: to execute code in block
+

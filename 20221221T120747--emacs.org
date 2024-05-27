@@ -1,6 +1,6 @@
 #+title:      Emacs
 #+date:       [2022-12-21 Wed 12:07]
-#+filetags:   :lit:tech:
+#+filetags:   
 #+identifier: 20221221T120747
 
   
