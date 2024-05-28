@@ -1,6 +1,6 @@
 #+title:      Denote
 #+date:       [2023-05-07 dom 17:49]
-#+filetags:   :emacs:tech:
+#+filetags:   :emacs:
 #+identifier: 20230507T174914
 
 Simple notes in emacs with an efficient file naming scheme

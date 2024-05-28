@@ -1,6 +1,6 @@
 #+title:      dired
 #+date:       [2022-12-21 Wed 12:13]
-#+filetags:   :emacs:tech:
+#+filetags:   :emacs:
 #+identifier: 20221221T121324
 
 * open dired
@@ -30,3 +30,10 @@
 | j          | jump to file              |
 | k          | kill lines marked         |
 
+* search dired
+M-x file-name-dired
+- search all folders and sub folders for file with name.
+
+* search grep
+M-x rgrep
+- search all files in folders and subfolders that have text inside it.
