@@ -3,6 +3,38 @@
 #+filetags:   :emacs:
 #+identifier: 20221221T121324
 
+
+* intro
+stands for directory editor
+
+=M-x dired= :: up directory
+
+=q= :: quit dired mode
+
+=^= :: go to parent
+
+=Enter= :: go inside a directory
+
+=m= :: mark files
+
+=u= :: unmark
+
+=*= :: mark all that fit patter
+
+=t= :: toggle selection
+
+=k= :: kill from buffer but they are still there
+
+=g= :: refresh
+
+=C= :: copy
+
+=R= :: rename/move
+
+=D= :: delete
+
+=M-x find-file-dired= :: search directory and sub directories for file that matches pattern
+
 * open dired
 | keybinding | command                                 |
 |------------+-----------------------------------------|

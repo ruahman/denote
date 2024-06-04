@@ -15,6 +15,131 @@ links notes by using an efficient file naming schema
 --title
 _keyword
 
+
+* Points of entry
+There are five main ways to write a note with Denote:
+invoke the =denote=, =denote-type=, =denote-date=, =denote-subdirectory=, =denote-template=, =denote-signature= commands
+
+
+
+* denote-known-keywords
+preset keywords
+
+* denote-infer-keywords
+infer keywords from other keyword in denote files
+
+* denote-sort-keywords
+how to sort keywords
+
+* denote-prompts
+control what denote prompts for
+
+The user option denote-prompts determines how the denote command will behave
+
+* file-type
+Available candidates are those specified in the user option denote-file-type.
+denote uses the value of denote-file-type.
+
+* subdirectory:
+Prompts with completion for a subdirectory in which to create the note.
+Available candidates are the value of the user option denote-directory and all of its subdirectories.
+Any subdirectory must already exist: Denote will not create it.
+
+* template:
+Prompts for a KEY among the denote-templates.
+The value of that KEY is used to populate the new note with content, which is added after the front matter
+
+* signature:
+Prompts for an arbitrary string that can be used to establish a sequential relationship between files (e.g. 1, 1a, 1b, 1b1, 1b2, …)
+
+* The denote-templates option
+The user option denote-templates is an alist of content templates for new notes.
+A template is arbitrary text that Denote will add to a newly created note right below the front matter. 
+
+#+begin_src emacs-lisp
+  (setq denote-templates
+      '((report . "* Some heading\n\n* Another heading")
+        (memo . "* Some heading
+
+
+
+")))
+#+end_src
+
+#+begin_src emacs-lisp
+  (setq denote-templates
+      `((report . "* Some heading\n\n* Another heading")
+        (memo . ,(concat "* Some heading"
+                         "\n\n"
+                         "* Another heading"
+                         "\n\n"))))
+#+end_src
+
+
+* silos
+There is, however, the possibility to maintain separate directories of notes. By “separate”, we mean that they do not communicate with each other: no linking between them, no common keywords, nothing. Think of the scenario where one set of notes is for private use and another is for an employer. We call these separate directories “silos”. 
+
+* Renaming Files
+Denote provides commands to rename files and update their front matter where relevant.
+
+** denote-rename-file
+The denote-rename-file command renames a file and updates existing front matter if appropriate.
+It is possible to do the same with multiple files
+
+**  denote-rename-file-using-front-matter
+rename base on change in front matter
+
+** denote-dired-rename-files
+rename files that are marked in dired
+
+* Linking Notes
+
+** denote-link
+inserts a link at point to a file specified at the minibuffer prompt
+
+** denote-add-links
+adds links at point matching a regular expression or plain string.
+
+** denote-link-dired-marked-notes
+ Though instead of reading a regular expression, it lets the user mark files in Dired and link to them
+
+ the command denote-link-dired-marked-notes is meant to be used from a Dired buffer. 
+
+* denote-backlinks
+ A “backlink” is a link back to the present entry.
+
+ is designed to display the file name of the note linking to the current entry. 
+
+* meta notes
+A “metanote” is an entry that describes other entries who have something in common.
+
+The commands denote-add-links, denote-link-dired-marked-notes are suited for this task. 
+
+* Org dynamic blocks
+ all dynamic blocks are defined in the file denote-org-extras.el
+
+ There is no need to require the denote-org-extras feature because all of Denote’s Org dynamic blocks are autoloaded (meaning that they work as soon as they are used).
+
+ but you do need to include it if yo want to refresh the block
+
+ Dynamic blocks are particularly useful for metanote entries 
+
+** C-c C-x C-u (org-dblock-update)
+update an org-dblock ???
+
+Typing C-c C-x C-u (org-dblock-update) with point on that line runs (or re-runs) the associated function with the given parameters and populates the block’s contents accordingly.
+
+Type C-c C-x C-u (org-dblock-update) with point on the #+BEGIN line to update the block. 
+
+** denote-org-extras-dblock-insert-links
+ denote-links block can be inserted at point with the command denote-org-extras-dblock-insert-links or by manually including the following in an Org file:
+
+ #+BEGIN: denote-links :regexp "YOUR REGEXP HERE" :sort-by-component nil :reverse-sort nil :id-only nil
+
+#+END:
+
+ The denote-links block is also registered as an option for the command org-dynamic-block-insert-dblock.
+
 * M-x denote
 command for creating a denote
 

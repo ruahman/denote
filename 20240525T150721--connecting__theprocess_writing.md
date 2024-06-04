@@ -9,6 +9,8 @@ all the writing you do to connect and shape your thoughts into a meaningful comp
 
 make as many connections as you can.
 
+all the writing from the first draft to the final revision.
+
 come up with a title
 
 a focus statement

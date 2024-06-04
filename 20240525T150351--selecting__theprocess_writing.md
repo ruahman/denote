@@ -8,3 +8,7 @@ identifier: "20240525T150351"
 the process of choosing a subject. 
 
 select a subject that truly interests you.
+
+create a second brain or SourceBank
+
+take inventory of ideas, journeying 
