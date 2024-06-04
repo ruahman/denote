@@ -1,0 +1,21 @@
+#+title:      GTD
+#+date:       [2023-07-05 Wed 14:57]
+#+filetags:   :meta:
+#+identifier: 20230705T145726
+
+
+* Anxiety is cause by a lack of control, organization, preparation and action
+
+* you brain is for having ideas not for holding them
+
+* get it off your mind and into a system you can trust
+
+* GTD is broken down into 5 steps
+#+BEGIN: denote-links :regexp "_gtd" :sort-by-component nil :reverse-sort nil :id-only nil
+- [[denote:20240604T171346][capture]]
+- [[denote:20240604T171932][clarify]]
+- [[denote:20240604T172318][organize]]
+- [[denote:20240604T172500][review]]
+- [[denote:20240604T172648][engage]]
+#+END:
+

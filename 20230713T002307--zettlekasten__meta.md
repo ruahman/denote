@@ -1,7 +1,7 @@
 ---
 title:      "zettlekasten"
 date:       2023-07-13T00:23:07-04:00
-tags:       ["gtd", "literature"]
+tags:       ["meta"]
 identifier: "20230713T002307"
 ---
 
