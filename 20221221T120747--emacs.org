@@ -100,10 +100,10 @@ packages
 |------------------+--------------------------------|
 | C-w              | kill region                    |
 | M-w              | copy region                    |
-| C-y              | yank                           |
+| C-y              | yank/past region               |
 | M-y              | yank prev to kill ring         |
-| M-Y              | move to next item in kill ring |
 | C-k              | kill till end of line          |
+| M-Y              | move to next item in kill ring |
 | C-u <number> C-k | Kill till number of lines      |
 | C-S-Backspace    | kill line                      |
 | M-d              | kill word                      |
@@ -224,30 +224,30 @@ packages
 * Navigation Movements
 | key       | command                   |
 |-----------+---------------------------|
-| M-f       | move forward by word      |
-| M-b       | move back by word         |
-| C-f       | move forward by char      |
-| C-b       | move back by char         |
-| C-p       | move to previous line     |
-| C-n       | move to next line         |
 | C-a       | move to beginning of line |
 | C-e       | move to end of line       |
+| C-n       | move to next line         |
+| C-p       | move to previous line     |
+| C-f       | move forward by char      |
+| C-b       | move back by char         |
+| M-f       | move forward by word      |
+| M-b       | move back by word         |
 | C-<right> | move forward by a word    |
 | C-<left>  | move back by word         |
 
 * moving by page and scrolling
 | key     | command                     |
 |---------+-----------------------------|
-| C-x ]   | move forward one page       |
-| C-x [   | move back one page          |
 | C-v     | scroll down                 |
 | M-v     | scroll up                   |
+| M->     | move to end of buffer       |
+| M-<     | move to beginning of buffer |
+| C-x ]   | move forward one page       |
+| C-x [   | move back one page          |
 | C-M-v   | scroll down other window    |
 | C-M-S-v | scroll up other window      |
 | C-x <   | scroll left                 |
 | C-x >   | scroll right                |
-| M->     | move to end of buffer       |
-| M-<     | move to beginning of buffer |
 | C-l     | recenter text line          |
 
 * bookmark
