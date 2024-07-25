@@ -1,0 +1,12 @@
+#+title:      tips
+#+date:       [2024-07-24 Wed 11:57]
+#+filetags:   :vim:
+#+identifier: 20240724T115731
+
+* #1: Meet the dot command
+:PROPERTIES:
+:CUSTOM_ID: h:88507bf6-503d-4f2e-8497-5525220ac3b1
+:END:
+the dot command lets you repeat the last change.
+
+think of the dot command as a mini macro
