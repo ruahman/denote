@@ -4,9 +4,32 @@
 #+identifier: 20240724T115731
 
 * #1: Meet the dot command
-:PROPERTIES:
-:CUSTOM_ID: h:88507bf6-503d-4f2e-8497-5525220ac3b1
-:END:
 the dot command lets you repeat the last change.
 
 think of the dot command as a mini macro
+
+* #2: Add semicolon to end of line
+=A;= go to end of line and add semicolon
+=.= repeat last action
+
+* #3: Add spaces to +
+change 
+#+begin_src javascript
+  var foo = "meth("+arg1+", "+arg2+")";
+#+end_src
+to
+#+begin_src javascript
+  var foo = "meth(" + arg1 + ", " + ")";
+#+end_src
+
+1.) =F+= :: find +
+2.) =s" + "= :: sub "+" with " + "
+3.) =;=  :: find next +
+4.) =.= :: repeat
+
+* #4: Reverse/Undo
+| action    | repeat | reverse |
+|-----------+--------+---------|
+| {edit}    | .      | u       |
+| f{char}   | ;      | ,       |
+| /{search} | n      | N       |
