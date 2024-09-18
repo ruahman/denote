@@ -1,6 +1,0 @@
-#+title:      algebra
-#+date:       [2022-12-21 Wed 17:25]
-#+filetags:   :math:
-#+identifier: 20221221T172540
-
-algebra

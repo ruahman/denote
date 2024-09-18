@@ -22,7 +22,7 @@ agreed-on state.
 Payment channels will not appear in the blockchain, except in the 
 case of disputes
 
-Users will be able to enter the system with on blockchain transaction
+Users will be able to enter the system with one blockchain transaction
 and then open many channels without further blockchain contact.
 
 atomic transfers / atomic swaps
@@ -49,34 +49,41 @@ with just a few messages inside the collaborating group
 The first commitment is signed before the funding transaction is broadcast
 - to ensure that both parties can get their money back
 
-# Transaction replacement using timelocks
+it is important to esure that the old version of the commitment transaction
+cannot be used anymore.
 
-channels which replace transactions using timelocks are known as 
-duplex micropayment channels.
+# 2.3 Transaction replacement using timelocks
 
-duplex micropayment channels
-- replace transactions using timelocks
-- subsequent commitment transactions use lower timelocks
+the first commitment transaction is created with a timelock of 100 days
 
-ex:  the first commitment transaction is created with a timelock of 100 days.
-, meaning it cannot be appended to the blockchain untill 100 days have passed.
-The second commitment transaction is created with a timelock of 99 days
-and spends the same funds, so it will be valid first.
-the outdated commitment transactionn will never have a time where it can
-be broadcast, as the referenced output will have been spent already.
-Subseqent commitment transactions use lower timelocks
+the second commitment transaction is created with a timelock of 99 days
+- so it will be valid first
+- the outdated commitment transaction will never have a time where it
+  can be broadcast since it's input is alread spent.
+  
+subsequent commitment transactions use lower timelocks
 
-The commitment with the lowest timelock can be included in the blockchain
-before the others
+the commitment with the lowes timelock can be included in the blockchain
+before the others.
 
-A channel constructed this way has to be closed by broadcasting the 
-newest commitment transaction as soon as the first timelock has elapsed,
-- limiting the maximum lifetime of a channel.
+the problem with that is that a payment channel has a limited lifetime.
+- relative timelocks solve this problem.
 
-this problem can be solved elegantly with a kickoff transaction.
-Timelock only start ticking as soon as the kickoff transaction is broadcast,
-resulting in a potentially unlimited lifetime of a channel.
-- you can't cash in you commitment transaction untill you also submit
+Timelocks only start ticking as soon as the kickoff transaction is broadcast
+- resulting in a potentially unlimited lifetime of a channel.
+
+still there is a limit to how many commitment transactions you can make
+because each susive commitment transaction needs a lower timelock.
+eventually you will run out of commitment transcations you can create.
+
+an invalidation tree solves this.
+- only the path where all transaction have the lowest timelock can
+  be broadcast.
+
+- in this way many commitment transactions can be created before the
+  timelocks get too low and the channel can not be updated anymore.
+
+you can't cash in you commitment transaction untill you also submit
 the kickoff transaction.
 
 a time locks count can be relative to the inclusion of a kickoff transaction.
@@ -86,21 +93,14 @@ as soon as the latest transactions timelock elapsed the
 channel has to be closed.
 - this limits the lifetime of the channel
 
-relative timelocks
-- only when kickoff transaction is broadcast,
-  then will the countdown start
-  
-a tree of transactions???
+the problem is that there are is a limit of how many transactions
+you can create because you can only bring the timelock down so far.
 
-still one will quickly run out of time by doing transaction,
-each requiring a smaller timelock.
-- this was solved with a tree of transactions.
-  + at any point in time only the path where all transactions
-    have the lowest timelock of their siblings can be broadcast.
-  + in this way, many commitment transactions can be created
-    before the timelock get too low and the channel can not be updated any more
+invalidation trees solve this problem.
 
-# transaction replacement using punishment
+
+
+# 2.4 transaction replacement using punishment
 instead of on commitment transaction, two are created for each 
 party with embeds a penaltiy if someone tries to submitt a previous
 transaction.
@@ -110,27 +110,42 @@ revocable transactios to replace the commitments
 
 # Channel factories
 
+funds are locked into a shared ownership between groups of nodes.
+
+which we use to create multi-party micropayment channels which we call *channel factories* 
+- which can quickly fund regular two-party channels.
+
+Similar to reqular micropayment channels, milti-party channels can 
+be implemented with either timelocks or punishments.
+
+timelocks scales much better to larger participants
+
+the reqular micropayment channels can be implemented using timelocks or
+punishments independent from the implementation of the mult-party channels
+implementation.
+
 a new layer between the blockchain and the payment network,
 giving a three-layered system
+- better us the phrase off-chain protocol
 
 better to just say another off-chain protocol. 
 
-this other off-chain protocol creates multi-party micropayment channels
-we call channel factories, which can quickly fund regular two-party 
-channels.
-
-multi-party channels can be implemented with timelocks or punishments
-
 timelocks scales better to larger participant numbers
 
-the reqular micropayment channels can be punishment based
+## Funding transaction ##
+
+is a transaction with an *OP_CHECKMULTISIG* output.
+- that is used to lock funds into a shared ownership between
+  collaborating parties
 
 
-# hook transaction #
-- the hook transaction is the funding transaction of a multi-party channel.
+## hook transaction ##
+
+the hook transaction is the funding transaction of a multi-party channel.
 - it locks the funds of many parties into a shared ownership.
 
-# allocation # 
+## allocation transaction ## 
+
 the allocation is one transaction or a number of sequential transactions
 that take the locked funds from a multi-party channel as an input 
 and fund many mult-party channels with their outputs
@@ -138,13 +153,18 @@ and fund many mult-party channels with their outputs
 the allocation effectively replaces the funding transaction of a number
 of two-party channels.
 
-# commitment #
+## commitment ##
+
 a commitment is a transaction or a number of transaction that
 return the funds of a two-party channel
 
 a channel is constructed by first creating all transactions of the 
 intial state,  then sign all except the hook.
-and then signing and broadcasting the hook.
+and then  broadcasting the hook.
+
+the hook transaction is a simple blockchain transaction which takes
+inputs from all users and creates one n-of-n *OP_CHECKMULTISIG* output
+- which can be spent only with the signatures of all parties.
 
 hooks can only be spent with the signatures of all parties
 
@@ -152,7 +172,8 @@ hooks can only be spent with the signatures of all parties
 
 replaceable transaction with many parties can be implemented 
 similarly to two-party channels based on timelocks with an 
-invalidation tree and a kickoff transaction at the root
+invalidation tree and a kickoff transaction at the root, 
+which starts the timers when broadcast to the blockchain.
 
 the leaves of the invalidation tree create the two-party shared accounts.
 
@@ -163,6 +184,13 @@ which starts the timmers when broadcast to the blockchain
 
 the leaves of the invalidation tree create the two-party shared accounts.
 
+while a reallocation is in progress, new commitments can be made 
+on the subchannels.
+- to ensure that they are valid indeifferent of whether the new
+  allocation succeeds, commitments should be made on bothe the old
+  and new subchannels
+
+
 
 # 3.2 settlement 
 
@@ -170,15 +198,16 @@ when the involved parties cooperatively decide to close a channel factory,
 they can create and broadcast a settlement transaction.
 which pays out the current stake of each party directly from the shared
 account
+- the outputs are to the individuals
 
-only two transactions appear on the blockchain, the hook and the settlement
+this only two transactions appear on the blockchain, the hook and the settlement
 
 I one node decides to close the channel factory, it broadcast this
 decision to all other nodes. everyone stop updating the subchannels and 
 broadcasts the sum of his current stake.  this is enough information
 for each node to create and sign the settlement transaction and broadcast 
 the signature.
-- lying does not help sine if any node gives a number to hight the
+- lying does not help since if any node gives a number to hight the
   total sum would exceed the locked-in funds and the settlement transacttion
   would be invalid
 
@@ -192,10 +221,21 @@ a new allocation is setup which replaces every channel with a balanced new one.
 - new channels can be created
 - or old ones removed.
 
+# 3.4 Including a cold wallet in a channel
+
+When the owner wants to move money from or into the channel,
+the cold wallet can be brought online to create a new allocation.
+- updates to the subchannels do not need the cold wallet
+
 # 3.5 Leaving a group
 
 there may be situations where some nodes wants to leave,
 however the others would like to continue the channel
+- instead of closing the channel factory and opening a new one,
+  both actions can be combined into one trasaction
+  + just create a new hook transaction,
+    the leaving node gets it money while the other can still
+	participate in the channel factory.
 
 the allocation was replaced with a new hook.
 
@@ -210,6 +250,10 @@ need to coordinate the creation of a new allocation transaction
 and all transactions to make the new subchannels of this new allocation.
 
 this could take a long time 
+
+this is not a problem, as normal channel operations can be continued
+as long as care is taken to make changes to the subchannels of both
+the old and the new allocation.
 
 i. a member decides that an update of the allocation is necessary and
    broadcast to all nodes in the group that a new allocation should be
@@ -237,7 +281,12 @@ the number of parties that can stop cooperating and close the channel rises,
 as anyone involved in the multi-party channel can broadcast the allocation
 transaction to the blockchain.
 - afterwards the subchannels can still be used,
+  as the funds are now locked in the two-party accounts,
   but the option to move funds between channels is lost.
+  
+there is no personal advantage in unilaterally closing a channel,
+A selfish user should always prefer a settlement solution in
+comparison to broadcasting the current path of the invalidation tree.
 
 
 
