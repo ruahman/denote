@@ -7,8 +7,254 @@ identifier: "20231018T153123"
 
 run, test, bundle, transpile, package manager all in one.
 
+Elegant APIs. 
+Bun provides a minimal set of highly-optimized APIs for performing common tasks, like starting an HTTP server and writing files.
+
+Bun is designed as a drop-in replacement for Node.js
+
+ It natively implements hundreds of Node.js and Web APIs, including fs, path, Buffer and more.
+ 
+Web-standard APIs
+
+Bun implements the Web-standard APIs you know and love, including fetch, ReadableStream, Request, Response, WebSocket, and FormData.
+
+Watch mode
+
+The bun run CLI provides a smart --watch flag that automatically restarts the process when any imported file changes.
+
+
+JSX just works. 
+Bun internally transpiles JSX syntax to vanilla JavaScript. 
+Like TypeScript itself, Bun assumes React by default but respects custom JSX transforms defined in tsconfig.json.
+
+Cross-platform shell scripts
+
+The Bun.$ API implements a cross-platform bash-like interpreter, shell, and coreutils.
+This makes it easy to run shell scripts from JavaScript for devops tasks.
+
+Crazy fast
+
+Bun uses the fastest system calls available on each operating system to make installs faster than you'd think possible.
+
+Workspaces
+
+Workspaces are supported out of the box. Bun reads the workspaces key from your package.json and installs dependencies for your whole monorepo.
+
+Security by default
+
+Unlike other package managers, Bun doesn't execute postinstall scripts by default. Popular packages are automatically allow-listed; others can be added to the trustedDependencies in your package.json.
+
+Binary lockfile
+
+After installation, Bun creates a binary bun.lockb lockfile with the resolved versions of each dependency. The binary format makes reading and parsing much faster than JSON- or Yaml-based lockfiles.
+
+
+
 install bun
 `curl -fsSL https://bun.sh/install | bash`
+
+
+To install the TypeScript definitions for Bun's built-in APIs, install @types/bun.
+
+``` shell
+bun add -d @types/bun
+```
+
+
+`bun init`
+
+`bun create <template> [<destination>]`
+
+`bun --watch run index.tsx`
+
+# text files
+text file can be imported as string
+
+``` typescript
+import text from "./text.txt";
+console.log(text);
+// => "Hello world!"
+```
+
+for to use bun if shebang points to nodejs
+`bun run --bun vite`
+
+# JSON and TOML
+
+``` typescript
+import pkg from "./package.json";
+import data from "./data.toml";
+```
+
+# WASI
+bun has experimental support for WASI
+`bun ./my-wasm-app.wasm`
+
+# SQLite
+you can import sqlite directly into your code
+``` typescript
+import db from "./my.db" with { type: "sqlite" };
+console.log(db.query("select * from users LIMIT 1").get());
+```
+
+
+# path
+
+``` json
+{
+  "compilerOptions": {
+    "paths": {
+      "config": ["./config.ts"],         // map specifier to file
+      "components/*": ["components/*"],  // wildcard matching
+    }
+  }
+}
+```
+
+``` json
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "data": ["./data.ts"]
+    }
+  }
+}
+```
+
+``` typescript
+// resolves to ./src/components/Button.tsx
+import { Button } from "components/Button.tsx";
+```
+
+``` typescript
+import { foo } from "data";
+console.log(foo); // => "Hello world!"
+```
+
+
+# environment variables
+
+bun reads your .env files automatically
+
+so that we have type completion for Bun.Env
+``` typescript
+declare module "bun" {
+  interface Env {
+    AWESOME: string;
+  }
+}
+```
+
+# Watch mode
+
+bun supports two kinds of automatic reloading
+--watch
+--hot
+
+`bun --watch index.tsx`
+
+When a change is detected, Bun restarts the process,
+
+
+`bun --hot server.ts`
+
+This is distinct from --watch mode in that Bun does not hard-restart the entire process. Instead, it detects code changes and updates its internal module cache with the new code.
+
+ To get hot reloading in the browser, use a framework like Vite.
+ 
+
+# debugger
+
+Bun speaks the WebKit Inspector Protocol, so you can debug your code with an interactive debugger.
+
+``` shell
+bun --inspect server.ts
+```
+- To enable debugging when running code with Bun, use the --inspect flag. This automatically starts a WebSocket server on an available port that can be used to introspect the running Bun process
+
+ 
+The --inspect-brk flag behaves identically to --inspect, except it automatically injects a breakpoint at the first line of the executed script
+ 
+The --inspect-wait flag behaves identically to --inspect, except the code will not execute until a debugger has attached to the running process.
+
+debug.bun.sh
+Bun hosts a web-based debugger at debug.bun.sh. It is a modified version of WebKit's Web Inspector Interface,
+
+# workspaces
+
+``` json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "preact": "^10.5.13"
+  }
+}
+```
+
+Workspaces make it easy to develop complex software as a monorepo consisting of several independent packages.
+
+ the "workspaces" key is used to indicate which subdirectories should be considered packages/workspaces within the monorepo. 
+
+Each workspace has it's own package.json. 
+When referencing other packages in the monorepo  workspace:* can be used as in your package.json.
+
+``` json
+{
+  "name": "pkg-a",
+  "version": "1.0.0",
+  "dependencies": {
+    "pkg-b": "workspace:*"
+  }
+}
+```
+
+Dependencies can be de-duplicated. If a and b share a common dependency, it will be hoisted to the root node_modules directory. 
+
+
+
+# CI/CD
+
+``` yaml
+name: bun-types
+jobs:
+  build:
+    name: build-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
+      - name: Install dependencies
+        run: bun install
+      - name: Build app
+        run: bun run build
+```
+
+``` yaml
+jobs:
+  build:
+    name: build-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install bun
+        uses: oven-sh/setup-bun
+      - name: Install dependencies # (assuming your project has dependencies)
+        run: bun install # You can use npm/yarn/pnpm instead if you prefer
+      - name: Run tests
+        run: bun test
+```
+
+# filter
+
+allows you to execute scripts in multiple packages
+`bun --filter <pattern> <script>`
+
+`bun --filter '*' dev`
+
 
 drop-in replacement for nodejs
 

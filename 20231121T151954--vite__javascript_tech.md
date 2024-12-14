@@ -4,10 +4,25 @@ date:       2023-11-21T15:19:54-04:00
 tags:       ["javascript", "tech"]
 identifier: "20231121T151954"
 ---
+	
+init vite
+`npm init vite`
 
-Instant server start, no bundling required.
+run dev server
+`npm run dev`
 
-replacement for a bundler dev environment like, webpack, rollup, parsel
+build for production
+`npm run build`
+
+preview you production build
+`npm run preview`
+
+vite takes advantage of ES Modules and serves the directly to the browser.
+- it's not rebundling everytime you make a change
+- when there is a change only the module gets loaded
+  
+HMR (Hot Module Replacement)
+	
 
 Lightning Fast HMR
 - hot module replacement (HMR)
@@ -18,12 +33,6 @@ vite takes advantage of native ES modules in the browser
 - that way we don't recompile one big bundle but ship only what changes
 - this also make HMR to go faster
 
-
-only bundle for production
-- we use Rollup as the bundler
-  * there is a rust port to rollup call Rolldown.
-    - this might replace esbuild in the future
-	
 vite is in two major parts
 - a dev server that implements Hot Module Replacement with ES modules
 - a build command that bundles your code using Rollup
